@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "_comment": "Languages with their own spoken lines. Each code needs question_bank.<code>.json (with the readout object) and glossary.<code>.json in this folder. A language without a pack (Tamil, Kannada, ...) is spoken in English by the English voice. See doc/DIALOGUE.md 'Languages'.",
+  "packs": ["hi", "te"]
+}

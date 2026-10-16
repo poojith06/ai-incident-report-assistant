@@ -1,0 +1,2 @@
+contact_id,team_id,number,verified_by,verified_at,expires_at,enabled
+contact:example,team:example,EXAMPLE - replace (never use an unverified number),EXAMPLE - replace,EXAMPLE - replace,EXAMPLE - replace,false
