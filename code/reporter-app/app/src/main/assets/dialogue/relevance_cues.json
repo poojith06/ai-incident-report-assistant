@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "_comment": "Relevance rules of the follow-up planner (dialogue/FollowUpPlanner.kt, doc/DIALOGUE.md 'Relevance'). vague_locations: a location that consists only of these words counts as missing. English words only; the planner asks about a vague location once.",
+  "vague_locations": [
+    "here",
+    "there",
+    "somewhere",
+    "nearby",
+    "near",
+    "outside",
+    "inside",
+    "office",
+    "building",
+    "area",
+    "place",
+    "floor",
+    "the",
+    "a",
+    "in",
+    "at",
+    "this",
+    "that",
+    "around"
+  ]
+}

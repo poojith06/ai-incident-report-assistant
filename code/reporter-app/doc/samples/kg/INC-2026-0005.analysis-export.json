@@ -1,0 +1,236 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0005:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0005",
+        "type": "WATER_LEAK",
+        "severity": "MEDIUM",
+        "status": "ACTIVE",
+        "urgency": null,
+        "locationType": "WASHROOM",
+        "locationLabel": "Nilgiri washroom",
+        "locationRedacted": false,
+        "affectedAssets": [
+            "PIPE"
+        ],
+        "activeHazards": [
+            "SLIP"
+        ],
+        "injuryReported": false,
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": null,
+    "recommendations": [
+        {
+            "id": "rec:warn-slip",
+            "actionId": "action:warn-slip",
+            "title": "Warn others about the wet floor",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.612,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-leak -TRIGGERS_ACTION-> action:warn-slip [edge:incident-type:water-leak>TRIGGERS_ACTION>action:warn-slip]",
+                "incident-type:water-leak -PRODUCES_HAZARD-> hazard:slip -MAY_CAUSE-> consequence:slip-harm -REQUIRES_ACTION-> action:warn-slip [edge:consequence:slip-harm>REQUIRES_ACTION>action:warn-slip]"
+            ],
+            "canonicalText": "Stay away from the wet floor and warn other people about the slip risk.",
+            "renderedText": "Stay away from the wet floor and warn other people about the slip risk.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:report-leak",
+            "actionId": "action:report-leak",
+            "title": "Report the water leak",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.609,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-leak -TRIGGERS_ACTION-> action:report-leak [edge:incident-type:water-leak>TRIGGERS_ACTION>action:report-leak]"
+            ],
+            "canonicalText": "Report the water leak to plumbing or facilities staff.",
+            "renderedText": "Report the water leak to plumbing or facilities staff.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:plumbing",
+            "ownerTeamName": "Plumbing",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:restrict-wet-area",
+            "actionId": "action:restrict-wet-area",
+            "title": "Restrict the wet area",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.606,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-leak -TRIGGERS_ACTION-> action:restrict-wet-area [edge:incident-type:water-leak>TRIGGERS_ACTION>action:restrict-wet-area]"
+            ],
+            "canonicalText": "Ask authorized facilities staff to place warning signs and limit use of the wet area until it is safe.",
+            "renderedText": "Ask authorized facilities staff to place warning signs and limit use of the wet area until it is safe.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:repair-leak",
+            "actionId": "action:repair-leak",
+            "title": "Repair the leak",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.734,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-leak -TRIGGERS_ACTION-> action:repair-leak [edge:incident-type:water-leak>TRIGGERS_ACTION>action:repair-leak]",
+                "asset-type:pipe -REQUIRES_ACTION-> action:repair-leak [edge:asset-type:pipe>REQUIRES_ACTION>action:repair-leak]"
+            ],
+            "canonicalText": "Ask authorized plumbing staff to repair the leak.",
+            "renderedText": "Ask authorized plumbing staff to repair the leak.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:plumbing",
+            "ownerTeamName": "Plumbing",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:inspect-adjoining",
+            "actionId": "action:inspect-adjoining",
+            "title": "Inspect adjoining areas",
+            "phase": "OPERATIONAL",
+            "rank": 3,
+            "score": 0.635,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-leak -TRIGGERS_ACTION-> action:inspect-adjoining [edge:incident-type:water-leak>TRIGGERS_ACTION>action:inspect-adjoining]"
+            ],
+            "canonicalText": "Ask authorized plumbing staff to inspect adjoining areas for moisture or damage.",
+            "renderedText": "Ask authorized plumbing staff to inspect adjoining areas for moisture or damage.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:plumbing",
+            "ownerTeamName": "Plumbing",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:slip-harm",
+            "name": "Slip risk",
+            "text": "People could slip on wet surfaces.",
+            "consequenceType": "SAFETY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:water-leak -PRODUCES_HAZARD-> hazard:slip -MAY_CAUSE-> consequence:slip-harm"
+            ]
+        },
+        {
+            "id": "consequence:repeated-failure",
+            "name": "Repeated failure",
+            "text": "The problem may recur if the underlying cause is not addressed.",
+            "consequenceType": "SECONDARY",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:water-leak -PRODUCES_HAZARD-> hazard:water-accumulation -MAY_CAUSE-> consequence:repeated-failure"
+            ]
+        },
+        {
+            "id": "consequence:water-reaches-power",
+            "name": "Water reaching electricity",
+            "text": "Water may reach electrical equipment.",
+            "consequenceType": "SECONDARY",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:water-leak -PRODUCES_HAZARD-> hazard:water-accumulation -MAY_CAUSE-> consequence:water-reaches-power"
+            ]
+        }
+    ],
+    "temporaryArrangements": [
+        {
+            "id": "arrangement:alternate-washroom",
+            "title": "Alternate washroom request",
+            "text": "Ask facilities staff to point users to an alternate washroom while the affected one is restricted.",
+            "ownerTeamId": "team:facilities",
+            "provenance": [
+                "location-type:washroom -HAS_CONTINUITY_OPTION-> arrangement:alternate-washroom"
+            ],
+            "sourceId": "sop:demo-seed:v1",
+            "unverifiedDraft": false
+        }
+    ],
+    "responsibleTeams": [
+        {
+            "id": "team:facilities",
+            "name": "Facilities",
+            "role": "FACILITIES",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:plumbing",
+            "name": "Plumbing",
+            "role": "PLUMBING",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:confirm-repair",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:water-leak -TRIGGERS_ACTION-> action:confirm-repair"
+        },
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:water-leak -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "action:exclusion-zone-water-power",
+            "kind": "action",
+            "reason": "condition failed: no active hazard of [WATER_NEAR_POWER]",
+            "path": "incident-type:water-leak -PRODUCES_HAZARD-> hazard:water-accumulation -MAY_CAUSE-> consequence:water-reaches-power -REQUIRES_ACTION-> action:exclusion-zone-water-power"
+        },
+        {
+            "candidateId": "action:isolate-power",
+            "kind": "action",
+            "reason": "condition failed: no active hazard of [WATER_NEAR_POWER]",
+            "path": "incident-type:water-leak -PRODUCES_HAZARD-> hazard:water-accumulation -MAY_CAUSE-> consequence:water-reaches-power -REQUIRES_ACTION-> action:isolate-power"
+        },
+        {
+            "candidateId": "rec:follow-water-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:water-leak -TRIGGERS_ACTION-> action:follow-water-sop [edge:incident-type:water-leak>TRIGGERS_ACTION>action:follow-water-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "historyCitations": [],
+    "warnings": []
+}

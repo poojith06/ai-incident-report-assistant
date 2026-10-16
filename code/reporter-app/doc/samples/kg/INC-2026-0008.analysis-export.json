@@ -1,0 +1,174 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0008:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0008",
+        "type": "SPORTS_INJURY",
+        "severity": "HIGH",
+        "status": "UNKNOWN",
+        "urgency": null,
+        "locationType": "FOOTBALL_GROUND",
+        "locationLabel": "Football ground",
+        "locationRedacted": false,
+        "affectedAssets": [],
+        "activeHazards": [],
+        "injuryReported": true,
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": "This is immediate safety guidance, not medical advice. Contact campus medical services or qualified emergency personnel.",
+    "recommendations": [
+        {
+            "id": "rec:medical-contact",
+            "actionId": "action:medical-contact",
+            "title": "Contact medical responders",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.667,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:medical-contact [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:medical-contact]"
+            ],
+            "canonicalText": "Contact campus medical services or qualified emergency responders and follow their instructions.",
+            "renderedText": "Contact campus medical services or qualified emergency responders and follow their instructions.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:medical-services",
+            "ownerTeamName": "Campus medical services",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:stop-play",
+            "actionId": "action:stop-play",
+            "title": "Stop play",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.667,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:stop-play [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:stop-play]"
+            ],
+            "canonicalText": "Stop play and keep other people away from the injured person.",
+            "renderedText": "Stop play and keep other people away from the injured person.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:sports-facilities",
+            "ownerTeamName": "Sports facility staff",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:leave-assessment",
+            "actionId": "action:leave-assessment",
+            "title": "Leave assessment to responders",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.634,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:leave-assessment [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:leave-assessment]"
+            ],
+            "canonicalText": "Leave the assessment of the person to qualified responders.",
+            "renderedText": "Leave the assessment of the person to qualified responders.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:medical-services",
+            "ownerTeamName": "Campus medical services",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:inspect-playing-area",
+            "actionId": "action:inspect-playing-area",
+            "title": "Inspect the playing area",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.53,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:inspect-playing-area [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:inspect-playing-area]"
+            ],
+            "canonicalText": "Ask authorized sports facility staff to inspect the playing area and equipment involved.",
+            "renderedText": "Ask authorized sports facility staff to inspect the playing area and equipment involved.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:sports-facilities",
+            "ownerTeamName": "Sports facility staff",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:review-sports-safety",
+            "actionId": "action:review-sports-safety",
+            "title": "Review sports safety",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.5,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:review-sports-safety [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:review-sports-safety]"
+            ],
+            "canonicalText": "Ask authorized sports facility staff to review field condition and safety equipment checks.",
+            "renderedText": "Ask authorized sports facility staff to review field condition and safety equipment checks.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:sports-facilities",
+            "ownerTeamName": "Sports facility staff",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:medical-attention",
+            "name": "Need for medical attention",
+            "text": "The person may need qualified medical attention.",
+            "consequenceType": "SAFETY",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:sports-injury -PRODUCES_HAZARD-> hazard:injured-person -MAY_CAUSE-> consequence:medical-attention"
+            ]
+        }
+    ],
+    "temporaryArrangements": [],
+    "responsibleTeams": [
+        {
+            "id": "team:medical-services",
+            "name": "Campus medical services",
+            "role": "MEDICAL_SERVICES",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:sports-facilities",
+            "name": "Sports facility staff",
+            "role": "SPORTS_FACILITIES",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "rec:follow-sports-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:sports-injury -TRIGGERS_ACTION-> action:follow-sports-sop [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:follow-sports-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "historyCitations": [],
+    "warnings": []
+}

@@ -1,0 +1,2 @@
+record_type,id,room_id,asset_or_utility_type,owner_team_id,criticality,active,verified_by,verified_at
+ASSET,asset:example,room:example,DESKTOP,team:example,LOW,true,EXAMPLE - replace,EXAMPLE - replace

@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "_comment": "PhraseValidator rejects generated text containing any phrase (case-insensitive, whole words) or any stem (prefix match). Spec v2 section 7.",
+  "phrases": [
+    "why did you", "why didn't you", "why were you", "you should have", "you shouldn't have",
+    "calm down", "relax", "it's not a big deal", "not a big deal", "you're lucky", "you should feel lucky",
+    "you shouldn't feel", "help is on the way", "don't worry", "it's your fault",
+    "you need to see a doctor", "please answer", "i need you to answer", "you didn't answer", "again",
+    "let me ask again", "i'll ask again"
+  ],
+  "stems": ["diagnos"],
+  "why_starters": ["why", "kyun", "kyon", "enduku"]
+}

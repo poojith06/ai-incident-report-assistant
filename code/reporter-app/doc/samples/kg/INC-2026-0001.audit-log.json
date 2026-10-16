@@ -1,0 +1,292 @@
+{
+    "id": "log:INC-2026-0001:g1:1791698400000",
+    "incidentId": "INC-2026-0001",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:leave-area",
+        "rec:follow-evac",
+        "rec:isolate-power",
+        "rec:close-area",
+        "rec:report-fire",
+        "rec:fire-inspection",
+        "rec:electrical-inspection",
+        "rec:reopen-clearance",
+        "rec:review-fire-checks"
+    ],
+    "shown": [
+        {
+            "id": "rec:leave-area",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.672,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:leave-area [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:leave-area]",
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-exposure -REQUIRES_ACTION-> action:leave-area [edge:consequence:smoke-exposure>REQUIRES_ACTION>action:leave-area]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:follow-evac",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.663,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:follow-evac [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:follow-evac]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:report-fire",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.675,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:report-fire [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:report-fire]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:isolate-power",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.657,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:isolate-power [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:isolate-power]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:close-area",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.651,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:close-area [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:close-area]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:fire-inspection",
+            "kind": "recommendation",
+            "phase": "RECOVERY",
+            "rank": 1,
+            "score": 0.592,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:fire-inspection [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:fire-inspection]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:electrical-inspection",
+            "kind": "recommendation",
+            "phase": "RECOVERY",
+            "rank": 2,
+            "score": 0.589,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:electrical-inspection [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:electrical-inspection]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:reopen-clearance",
+            "kind": "recommendation",
+            "phase": "RECOVERY",
+            "rank": 3,
+            "score": 0.577,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:reopen-clearance [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:reopen-clearance]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:review-fire-checks",
+            "kind": "recommendation",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.517,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:review-fire-checks [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:review-fire-checks]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:smoke-exposure",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-exposure"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:smoke-spread",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-spread"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:fire-spread",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:fire -MAY_CAUSE-> consequence:fire-spread"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:structural-damage",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:fire -MAY_CAUSE-> consequence:structural-damage"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "arrangement:alternate-room",
+            "kind": "arrangement",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "location-type:classroom -HAS_CONTINUITY_OPTION-> arrangement:alternate-room"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:campus-security",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:fire-safety",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:electrical-maintenance",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:facilities",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:academic-office",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:classroom-fire -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "arrangement:verified-alternate-room",
+            "kind": "arrangement",
+            "reason": "capacity data unknown: no replacement room is invented",
+            "path": "location-type:classroom -HAS_CONTINUITY_OPTION-> arrangement:verified-alternate-room"
+        },
+        {
+            "candidateId": "edge:location-type:classroom>HAS_CONTINUITY_OPTION>arrangement:alternate-seating",
+            "kind": "edge",
+            "reason": "condition failed: incident type CLASSROOM_FIRE not in [DAMAGED_FURNITURE]",
+            "path": null
+        },
+        {
+            "candidateId": "edge:location-type:classroom>HAS_CONTINUITY_OPTION>arrangement:verified-alternate-room#2",
+            "kind": "edge",
+            "reason": "condition failed: incident type CLASSROOM_FIRE not in [DAMAGED_FURNITURE]",
+            "path": null
+        },
+        {
+            "candidateId": "rec:follow-fire-evac-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:classroom-fire -TRIGGERS_ACTION-> action:follow-fire-evac-sop [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:follow-fire-evac-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "CLASSROOM_FIRE",
+        "severity": "HIGH",
+        "status": "CONTAINED",
+        "locationType": "CLASSROOM",
+        "affectedAssets": [],
+        "activeHazards": [
+            "SMOKE"
+        ],
+        "peopleAffected": null,
+        "operationalEffects": [
+            "ROOM_UNUSABLE"
+        ],
+        "injury": false,
+        "evidenceConfidence": 0.9
+    }
+}

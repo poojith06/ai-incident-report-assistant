@@ -1,0 +1,1 @@
+ "Fire", "severity": "Critical", "location": "canteen kitchen", "datetime": null, "persons_involved": null, "actions_taken": "please come fast", "description": "There's a fire in the canteen kitchen"}

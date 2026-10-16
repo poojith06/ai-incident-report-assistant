@@ -1,0 +1,71 @@
+{
+  "version": 2,
+  "language": "en",
+  "greeting": "Hi, describe your incident.",
+  "fields": {
+    "injured_person": {
+      "CARE": "Was it you who got hurt, or someone else? A name or role is fine."
+    },
+    "injury_type": {
+      "CARE": "What kind of injury is it, like a cut, burn or fall? You can skip this."
+    },
+    "location": {
+      "PLAIN": "Where did this happen? You can say 'here' if it's where you are.",
+      "CARE": "Where did this happen? A rough location is fine, or just say 'here'.",
+      "URGENT": "Where are you right now?"
+    },
+    "description": {
+      "PLAIN": "What did you see?",
+      "CARE": "In your own words, what happened? Only share what you're comfortable with."
+    },
+    "time": {
+      "PLAIN": "Roughly what time was this?",
+      "CARE": "Do you remember roughly when? An estimate is fine."
+    },
+    "immediate_actions": {
+      "PLAIN": "Has anything been done to make the area safe?",
+      "CARE": "Has anyone been able to help yet, like first aid or security?"
+    },
+    "people_involved": {
+      "CARE": "Who was involved? You can also skip this."
+    }
+  },
+  "lines": {
+    "opening_one": "Got it. Just one quick detail.",
+    "opening_many": "Got it. Just a couple of quick details.",
+    "opening_care": "I'm sorry this happened. Thank you for reporting it. I just need a couple of details.",
+    "safety_check": "Are you somewhere safe right now?",
+    "defer": "Your safety comes first. We can finish the details later.",
+    "readback_plain": "Logged: {incident_type}, {location}, {time_phrase}. Please review and tap submit.",
+    "readback_care": "Thank you. Reporting this helps keep everyone safe. I've logged {summary}. {next_step} Please review and tap submit.",
+    "closing_plain": "Report saved.",
+    "closing_care": "Your report is saved. You can add more details any time.",
+    "offer_typing": "You can also type if you'd prefer."
+  },
+  "readout": {
+    "_comment": "Spoken read-outs of the Review and Success screens (FormReadout): the complete key set with its English values; other languages copy this object and translate it (placeholders {location} {severity} {fields} {id} {summary} {h} {mm} {time} stay). Keys left out of a language fall back to these.",
+    "ready": "Your report is ready.",
+    "summary": "{summary}.",
+    "summary_at": "at {location}",
+    "when_now": "just now",
+    "time_h": "{h}",
+    "time_hm": "{h}:{mm}",
+    "time_am": "{time} AM",
+    "time_pm": "{time} PM",
+    "severity": "Severity {severity}.",
+    "hurt": "Someone was hurt.",
+    "not_hurt": "Nobody was hurt.",
+    "missing": "Still missing: {fields}.",
+    "emergency": "Emergency contact numbers are shown after you submit.",
+    "tail": "Please review and tap submit.",
+    "tail_flagged": "Please review the highlighted fields and tap submit.",
+    "submitted": "Report submitted. Reference {id}.",
+    "submitted_severe": "You can call the emergency contacts on screen.",
+    "sep": ", ",
+    "summary_join": " at ",
+    "fallback_incident": "an incident",
+    "fallback_place": "the place you mentioned",
+    "fallback_report": "your report",
+    "time_set_now": "time set to now"
+  }
+}

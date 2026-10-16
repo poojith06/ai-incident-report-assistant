@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 1,
+  "packVersion": 1,
+  "name": "EXAMPLE pack template - replace",
+  "description": "EXAMPLE ONLY: a minimal valid GraphPack with one node of every type. Replace every value before importing.",
+  "createdAt": "2026-10-11T00:00:00+05:30",
+  "nodes": [
+    {
+      "id": "campus:example",
+      "type": "CAMPUS",
+      "name": "EXAMPLE - replace",
+      "properties": {},
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "building:example",
+      "type": "BUILDING",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "aliases": []
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "floor:example",
+      "type": "FLOOR",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "buildingId": "building:example",
+        "label": "EXAMPLE - replace"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "zone:example",
+      "type": "ZONE",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "floorId": "floor:example",
+        "zoneType": "EXAMPLE - replace",
+        "occupancyType": "EXAMPLE - replace"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "room:example",
+      "type": "ROOM",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "zoneId": "zone:example",
+        "roomType": "EXAMPLE_ROOM_TYPE",
+        "criticality": "LOW"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "asset:example",
+      "type": "ASSET",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "roomId": "room:example",
+        "assetType": "EXAMPLE_ASSET",
+        "ownerTeamId": "team:example",
+        "criticality": "LOW"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "utility:example",
+      "type": "UTILITY",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "utilityType": "EXAMPLE_UTILITY",
+        "ownerTeamId": "team:example"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "incident-type:example",
+      "type": "INCIDENT_TYPE",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "code": "EXAMPLE_TYPE",
+        "category": "IT",
+        "description": "EXAMPLE - replace"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "location-type:example",
+      "type": "LOCATION_TYPE",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "code": "EXAMPLE_LOCATION",
+        "category": "ACADEMIC"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "asset-type:example",
+      "type": "ASSET_TYPE",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "code": "EXAMPLE_ASSET"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "hazard:example",
+      "type": "HAZARD",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "code": "EXAMPLE_HAZARD",
+        "hazardClass": "ELECTRICAL",
+        "activeRisk": true
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "consequence:example",
+      "type": "CONSEQUENCE",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "consequenceType": "OPERATIONAL",
+        "impactClass": "EXAMPLE",
+        "text": "EXAMPLE - replace with neutral wording that says may or could."
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "action:example",
+      "type": "ACTION",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "title": "EXAMPLE - replace",
+        "phase": "OPERATIONAL",
+        "userCanPerform": false,
+        "requiresAuthorization": true,
+        "priority": 50,
+        "canonicalText": "EXAMPLE - Ask authorized staff to replace this text.",
+        "canonicalKey": "EXAMPLE_KEY",
+        "orderClass": "RESTORATION",
+        "requiresHumanApproval": true
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "rec:example",
+      "type": "RECOMMENDATION",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "actionId": "action:example",
+        "approvalStatus": "DRAFT"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "arrangement:example",
+      "type": "TEMPORARY_ARRANGEMENT",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "title": "EXAMPLE - replace",
+        "text": "EXAMPLE - replace",
+        "requirements": {
+          "knownCapacity": true,
+          "alternateLocationVerified": true
+        },
+        "ownerTeamId": "team:example"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "team:example",
+      "type": "RESPONSE_TEAM",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "role": "EXAMPLE_ROLE",
+        "label": "EXAMPLE - replace"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "contact:example",
+      "type": "EMERGENCY_CONTACT",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "teamId": "team:example",
+        "number": "EXAMPLE - replace",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "enabled": false
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "pattern:example",
+      "type": "HISTORICAL_PATTERN",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "scope": "ZONE",
+        "incidentTypes": [
+          "EXAMPLE_TYPE"
+        ],
+        "windowDays": 60,
+        "threshold": 3,
+        "description": "EXAMPLE - replace"
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "evidence:example",
+      "type": "EVIDENCE",
+      "name": "EXAMPLE - replace",
+      "properties": {
+        "incidentId": "INC-EXAMPLE",
+        "sourceType": "EXAMPLE",
+        "confidence": 0.5
+      },
+      "verificationStatus": "NEEDS_ADMIN_VERIFICATION",
+      "version": 1,
+      "active": true
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:example:contains:building",
+      "sourceId": "campus:example",
+      "relation": "CONTAINS",
+      "targetId": "building:example",
+      "conditions": {},
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:triggers_action:action",
+      "sourceId": "incident-type:example",
+      "relation": "TRIGGERS_ACTION",
+      "targetId": "action:example",
+      "conditions": {
+        "statuses": [
+          "CONTAINED",
+          "RESOLVED"
+        ]
+      },
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:produces_hazard:hazard",
+      "sourceId": "incident-type:example",
+      "relation": "PRODUCES_HAZARD",
+      "targetId": "hazard:example",
+      "conditions": {},
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:may_cause:consequence",
+      "sourceId": "hazard:example",
+      "relation": "MAY_CAUSE",
+      "targetId": "consequence:example",
+      "conditions": {},
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:requires_action:action",
+      "sourceId": "consequence:example",
+      "relation": "REQUIRES_ACTION",
+      "targetId": "action:example",
+      "conditions": {},
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:has_continuity_option:arrangement",
+      "sourceId": "location-type:example",
+      "relation": "HAS_CONTINUITY_OPTION",
+      "targetId": "arrangement:example",
+      "conditions": {},
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:requires_action:action#2",
+      "sourceId": "asset-type:example",
+      "relation": "REQUIRES_ACTION",
+      "targetId": "action:example",
+      "conditions": {
+        "incidentTypes": [
+          "EXAMPLE_TYPE"
+        ]
+      },
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:owned_by:team",
+      "sourceId": "action:example",
+      "relation": "OWNED_BY",
+      "targetId": "team:example",
+      "conditions": {},
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:supported_by:sop",
+      "sourceId": "rec:example",
+      "relation": "SUPPORTED_BY",
+      "targetId": "sop:example:v1",
+      "conditions": {},
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    },
+    {
+      "id": "edge:example:triggers_action:action#2",
+      "sourceId": "pattern:example",
+      "relation": "TRIGGERS_ACTION",
+      "targetId": "action:example",
+      "conditions": {},
+      "priority": 50,
+      "sourceRef": "sop:example:v1",
+      "approvalStatus": "DRAFT",
+      "version": 1,
+      "active": true
+    }
+  ],
+  "sources": [
+    {
+      "id": "sop:example:v1",
+      "title": "EXAMPLE - replace",
+      "version": "1",
+      "uri": null,
+      "approvedBy": null,
+      "approvedAt": null,
+      "expiresAt": null,
+      "status": "NEEDS_ADMIN_VERIFICATION",
+      "displayLabel": "EXAMPLE - replace"
+    }
+  ],
+  "normalization": {
+    "incidentTypes": [
+      {
+        "code": "EXAMPLE_TYPE",
+        "anyKeywords": [
+          "exampleword"
+        ]
+      }
+    ],
+    "locationTypes": [
+      {
+        "code": "EXAMPLE_LOCATION",
+        "anyKeywords": [
+          "examplelocation"
+        ]
+      }
+    ],
+    "assets": [
+      {
+        "code": "EXAMPLE_ASSET",
+        "anyKeywords": [
+          "exampleasset"
+        ]
+      }
+    ],
+    "hazards": [
+      {
+        "code": "EXAMPLE_HAZARD",
+        "anyKeywords": [
+          "examplehazard"
+        ]
+      }
+    ],
+    "operationalEffects": [],
+    "statuses": [
+      {
+        "status": "CONTAINED",
+        "anyKeywords": [
+          "contained"
+        ]
+      }
+    ],
+    "buildings": [
+      {
+        "code": "building:example",
+        "anyKeywords": [
+          "examplebuilding"
+        ]
+      }
+    ],
+    "residentialLocationTypes": []
+  }
+}

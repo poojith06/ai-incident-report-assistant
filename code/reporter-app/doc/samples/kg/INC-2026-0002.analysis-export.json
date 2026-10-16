@@ -1,0 +1,388 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0002:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0002",
+        "type": "COMPUTER_FIRE",
+        "severity": "HIGH",
+        "status": "CONTAINED",
+        "urgency": null,
+        "locationType": "COMPUTER_LAB",
+        "locationLabel": "KRB computer lab",
+        "locationRedacted": false,
+        "affectedAssets": [
+            "DESKTOP"
+        ],
+        "activeHazards": [
+            "SMOKE"
+        ],
+        "injuryReported": false,
+        "peopleAffected": null,
+        "operationalEffects": [
+            "WORKSTATION_UNAVAILABLE"
+        ],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": null,
+    "recommendations": [
+        {
+            "id": "rec:leave-area",
+            "actionId": "action:leave-area",
+            "title": "Move away from the area",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.68,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:leave-area [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:leave-area]",
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-exposure -REQUIRES_ACTION-> action:leave-area [edge:consequence:smoke-exposure>REQUIRES_ACTION>action:leave-area]"
+            ],
+            "canonicalText": "Move away from the affected area and keep other people away from it.",
+            "renderedText": "Move away from the affected area and keep other people away from it.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:campus-security",
+            "ownerTeamName": "Campus security",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:follow-evac",
+            "actionId": "action:follow-evac",
+            "title": "Follow evacuation instructions",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.671,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:follow-evac [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:follow-evac]"
+            ],
+            "canonicalText": "Follow posted evacuation instructions and move to a safe place away from the building.",
+            "renderedText": "Follow posted evacuation instructions and move to a safe place away from the building.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:report-fire",
+            "actionId": "action:report-fire",
+            "title": "Report the fire or smoke",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.683,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:report-fire [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:report-fire]"
+            ],
+            "canonicalText": "Report the fire or smoke to campus security or fire safety staff and follow their instructions.",
+            "renderedText": "Report the fire or smoke to campus security or fire safety staff and follow their instructions.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:isolate-asset",
+            "actionId": "action:isolate-asset",
+            "title": "Isolate the affected equipment",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.743,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:isolate-asset [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:isolate-asset]",
+                "asset-type:desktop -REQUIRES_ACTION-> action:isolate-asset [edge:asset-type:desktop>REQUIRES_ACTION>action:isolate-asset]"
+            ],
+            "canonicalText": "Ask authorized IT staff to isolate the affected equipment from power and the network.",
+            "renderedText": "Ask authorized IT staff to isolate the affected equipment from power and the network.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:it-operations",
+            "ownerTeamName": "IT operations",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:keep-damaged-unused",
+            "actionId": "action:keep-damaged-unused",
+            "title": "Keep damaged equipment unused",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.653,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:keep-damaged-unused [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:keep-damaged-unused]"
+            ],
+            "canonicalText": "Do not use the damaged equipment until authorized staff have cleared it.",
+            "renderedText": "Do not use the damaged equipment until authorized staff have cleared it.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:it-operations",
+            "ownerTeamName": "IT operations",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:preserve-logs-recovery",
+            "actionId": "action:preserve-logs-recovery",
+            "title": "Preserve logs and backups",
+            "phase": "RECOVERY",
+            "rank": 1,
+            "score": 0.666,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:preserve-logs-recovery [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:preserve-logs-recovery]",
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:data-loss-risk -MAY_CAUSE-> consequence:data-loss -REQUIRES_ACTION-> action:preserve-logs-recovery [edge:consequence:data-loss>REQUIRES_ACTION>action:preserve-logs-recovery]",
+                "asset-type:desktop -REQUIRES_ACTION-> action:preserve-logs-recovery [edge:asset-type:desktop>REQUIRES_ACTION>action:preserve-logs-recovery]"
+            ],
+            "canonicalText": "Ask authorized IT staff to preserve logs and available backups before restoration.",
+            "renderedText": "Ask authorized IT staff to preserve logs and available backups before restoration.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:it-operations",
+            "ownerTeamName": "IT operations",
+            "requiresHumanApproval": true,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:replacement-workstation",
+            "actionId": "action:replacement-workstation",
+            "title": "Replacement workstation",
+            "phase": "RECOVERY",
+            "rank": 2,
+            "score": 0.63,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:replacement-workstation [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:replacement-workstation]",
+                "asset-type:desktop -REQUIRES_ACTION-> action:replacement-workstation [edge:asset-type:desktop>REQUIRES_ACTION>action:replacement-workstation]"
+            ],
+            "canonicalText": "Ask authorized IT staff to arrange a replacement workstation for affected users.",
+            "renderedText": "Ask authorized IT staff to arrange a replacement workstation for affected users.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:it-operations",
+            "ownerTeamName": "IT operations",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:inspect-affected-device",
+            "actionId": "action:inspect-affected-device",
+            "title": "Inspect the affected device",
+            "phase": "RECOVERY",
+            "rank": 3,
+            "score": 0.594,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:inspect-affected-device [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:inspect-affected-device]"
+            ],
+            "canonicalText": "Ask authorized IT staff and electrical maintenance to inspect the affected device and its power supply before it is used again.",
+            "renderedText": "Ask authorized IT staff and electrical maintenance to inspect the affected device and its power supply before it is used again.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:it-operations",
+            "ownerTeamName": "IT operations",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:review-electrical-load",
+            "actionId": "action:review-electrical-load",
+            "title": "Review electrical load",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.531,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:review-electrical-load [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:review-electrical-load]"
+            ],
+            "canonicalText": "Ask authorized electrical maintenance to review the electrical load on the affected circuit.",
+            "renderedText": "Ask authorized electrical maintenance to review the electrical load on the affected circuit.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:electrical-maintenance",
+            "ownerTeamName": "Electrical maintenance",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:review-fire-checks",
+            "actionId": "action:review-fire-checks",
+            "title": "Review fire safety checks",
+            "phase": "PREVENTION",
+            "rank": 2,
+            "score": 0.525,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:review-fire-checks [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:review-fire-checks]"
+            ],
+            "canonicalText": "Ask authorized fire safety staff to review fire safety checks for similar rooms.",
+            "renderedText": "Ask authorized fire safety staff to review fire safety checks for similar rooms.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:smoke-exposure",
+            "name": "Exposure to smoke",
+            "text": "People nearby may be exposed to smoke or fumes.",
+            "consequenceType": "SAFETY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-exposure"
+            ]
+        },
+        {
+            "id": "consequence:smoke-spread",
+            "name": "Smoke spread",
+            "text": "Smoke may spread to nearby rooms.",
+            "consequenceType": "SECONDARY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-spread"
+            ]
+        },
+        {
+            "id": "consequence:data-loss",
+            "name": "Data loss",
+            "text": "Data stored on the affected equipment could be lost.",
+            "consequenceType": "ASSET",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:data-loss-risk -MAY_CAUSE-> consequence:data-loss"
+            ]
+        },
+        {
+            "id": "consequence:equipment-damage",
+            "name": "Equipment damage",
+            "text": "Nearby equipment may be damaged.",
+            "consequenceType": "ASSET",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:electrical-damage -MAY_CAUSE-> consequence:equipment-damage"
+            ]
+        }
+    ],
+    "temporaryArrangements": [
+        {
+            "id": "arrangement:alternate-lab",
+            "title": "Alternate lab space request",
+            "text": "Ask the academic office to identify alternate lab space for the affected session.",
+            "ownerTeamId": "team:academic-office",
+            "provenance": [
+                "location-type:computer-lab -HAS_CONTINUITY_OPTION-> arrangement:alternate-lab"
+            ],
+            "sourceId": "sop:demo-seed:v1",
+            "unverifiedDraft": false
+        },
+        {
+            "id": "arrangement:temporary-workstations",
+            "title": "Temporary workstations request",
+            "text": "Ask IT support to arrange temporary workstations for affected users.",
+            "ownerTeamId": "team:it-operations",
+            "provenance": [
+                "location-type:computer-lab -HAS_CONTINUITY_OPTION-> arrangement:temporary-workstations"
+            ],
+            "sourceId": "sop:demo-seed:v1",
+            "unverifiedDraft": false
+        }
+    ],
+    "responsibleTeams": [
+        {
+            "id": "team:campus-security",
+            "name": "Campus security",
+            "role": "CAMPUS_SECURITY",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:fire-safety",
+            "name": "Fire safety",
+            "role": "FIRE_SAFETY",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:it-operations",
+            "name": "IT operations",
+            "role": "IT_OPERATIONS",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:electrical-maintenance",
+            "name": "Electrical maintenance",
+            "role": "ELECTRICAL_MAINTENANCE",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:academic-office",
+            "name": "Academic office",
+            "role": "ACADEMIC_OFFICE",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:computer-fire -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "arrangement:verified-alternate-room",
+            "kind": "arrangement",
+            "reason": "capacity data unknown: no replacement room is invented",
+            "path": "location-type:computer-lab -HAS_CONTINUITY_OPTION-> arrangement:verified-alternate-room"
+        },
+        {
+            "candidateId": "edge:location-type:computer-lab>HAS_CONTINUITY_OPTION>arrangement:interim-service-workaround",
+            "kind": "edge",
+            "reason": "condition failed: incident type COMPUTER_FIRE not in [SERVER_OVERHEATING, COOLING_FAILURE, STORAGE_FAILURE, NETWORK_OUTAGE, POWER_OUTAGE, SERVER_RACK_FIRE]",
+            "path": null
+        },
+        {
+            "candidateId": "rec:follow-fire-evac-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:computer-fire -TRIGGERS_ACTION-> action:follow-fire-evac-sop [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:follow-fire-evac-sop]"
+        },
+        {
+            "candidateId": "consequence:room-closure",
+            "kind": "consequence",
+            "reason": "consequence limit (4) reached",
+            "path": null
+        }
+    ],
+    "unresolvedQuestions": [],
+    "historyCitations": [],
+    "warnings": []
+}

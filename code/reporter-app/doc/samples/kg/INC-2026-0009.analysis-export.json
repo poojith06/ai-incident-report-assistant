@@ -1,0 +1,239 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0009:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0009",
+        "type": "DAMAGED_FURNITURE",
+        "severity": "LOW",
+        "status": "UNKNOWN",
+        "urgency": null,
+        "locationType": "CLASSROOM",
+        "locationLabel": "Himalaya classroom",
+        "locationRedacted": false,
+        "affectedAssets": [
+            "FURNITURE"
+        ],
+        "activeHazards": [],
+        "injuryReported": false,
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": null,
+    "recommendations": [
+        {
+            "id": "rec:stop-using-furniture",
+            "actionId": "action:stop-using-furniture",
+            "title": "Stop using damaged furniture",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.548,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:stop-using-furniture [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:stop-using-furniture]"
+            ],
+            "canonicalText": "Stop using the damaged furniture and keep other people from using it.",
+            "renderedText": "Stop using the damaged furniture and keep other people from using it.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:report-damage",
+            "actionId": "action:report-damage",
+            "title": "Report the damage",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.542,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:report-damage [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:report-damage]"
+            ],
+            "canonicalText": "Report the damage to facilities staff.",
+            "renderedText": "Report the damage to facilities staff.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:remove-from-use",
+            "actionId": "action:remove-from-use",
+            "title": "Remove damaged furniture from use",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.617,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:remove-from-use [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:remove-from-use]",
+                "asset-type:furniture -REQUIRES_ACTION-> action:remove-from-use [edge:asset-type:furniture>REQUIRES_ACTION>action:remove-from-use]"
+            ],
+            "canonicalText": "Ask authorized facilities staff to remove the damaged furniture from use.",
+            "renderedText": "Ask authorized facilities staff to remove the damaged furniture from use.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:update-capacity",
+            "actionId": "action:update-capacity",
+            "title": "Update available capacity",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.653,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:update-capacity [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:update-capacity]",
+                "incident-type:damaged-furniture -PRODUCES_HAZARD-> hazard:unstable-furniture -MAY_CAUSE-> consequence:reduced-capacity -REQUIRES_ACTION-> action:update-capacity [edge:consequence:reduced-capacity>REQUIRES_ACTION>action:update-capacity]"
+            ],
+            "canonicalText": "Ask the academic office to update the available capacity for the room.",
+            "renderedText": "Ask the academic office to update the available capacity for the room.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:academic-office",
+            "ownerTeamName": "Academic office",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:inspect-similar-items",
+            "actionId": "action:inspect-similar-items",
+            "title": "Inspect similar items",
+            "phase": "OPERATIONAL",
+            "rank": 3,
+            "score": 0.668,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:inspect-similar-items [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:inspect-similar-items]"
+            ],
+            "canonicalText": "Ask authorized facilities staff to inspect similar items in the room.",
+            "renderedText": "Ask authorized facilities staff to inspect similar items in the room.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:schedule-furniture-checks",
+            "actionId": "action:schedule-furniture-checks",
+            "title": "Schedule furniture checks",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.593,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:schedule-furniture-checks [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:schedule-furniture-checks]"
+            ],
+            "canonicalText": "Ask authorized facilities staff to schedule regular furniture checks.",
+            "renderedText": "Ask authorized facilities staff to schedule regular furniture checks.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:harm-nearby",
+            "name": "Harm to people nearby",
+            "text": "People nearby could be hurt.",
+            "consequenceType": "SAFETY",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:damaged-furniture -PRODUCES_HAZARD-> hazard:unstable-furniture -MAY_CAUSE-> consequence:harm-nearby"
+            ]
+        },
+        {
+            "id": "consequence:reduced-capacity",
+            "name": "Reduced capacity",
+            "text": "Available room capacity may be reduced.",
+            "consequenceType": "OPERATIONAL",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:damaged-furniture -PRODUCES_HAZARD-> hazard:unstable-furniture -MAY_CAUSE-> consequence:reduced-capacity"
+            ]
+        }
+    ],
+    "temporaryArrangements": [
+        {
+            "id": "arrangement:alternate-seating",
+            "title": "Alternate seating request",
+            "text": "Ask the academic office to identify alternate seating if fewer seats are available.",
+            "ownerTeamId": "team:academic-office",
+            "provenance": [
+                "location-type:classroom -HAS_CONTINUITY_OPTION-> arrangement:alternate-seating"
+            ],
+            "sourceId": "sop:demo-seed:v1",
+            "unverifiedDraft": false
+        }
+    ],
+    "responsibleTeams": [
+        {
+            "id": "team:facilities",
+            "name": "Facilities",
+            "role": "FACILITIES",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:academic-office",
+            "name": "Academic office",
+            "role": "ACADEMIC_OFFICE",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "edge:location-type:classroom>HAS_CONTINUITY_OPTION>arrangement:alternate-room",
+            "kind": "edge",
+            "reason": "condition failed: incident type DAMAGED_FURNITURE not in [FIRE_SMOKE, CLASSROOM_FIRE, ELECTRICAL_PANEL_FIRE, CEILING_LEAK, CEILING_DAMAGE, PIPE_LEAK, WATER_LEAK, WATER_NEAR_POWER, FALLING_OBJECT, BROKEN_GLASS, POWER_OUTAGE]",
+            "path": null
+        },
+        {
+            "candidateId": "edge:location-type:classroom>HAS_CONTINUITY_OPTION>arrangement:verified-alternate-room",
+            "kind": "edge",
+            "reason": "condition failed: incident type DAMAGED_FURNITURE not in [FIRE_SMOKE, CLASSROOM_FIRE, ELECTRICAL_PANEL_FIRE, CEILING_LEAK, CEILING_DAMAGE, PIPE_LEAK, WATER_LEAK, WATER_NEAR_POWER, FALLING_OBJECT, BROKEN_GLASS, POWER_OUTAGE]",
+            "path": null
+        },
+        {
+            "candidateId": "arrangement:verified-alternate-room",
+            "kind": "arrangement",
+            "reason": "capacity data unknown: no replacement room is invented",
+            "path": "location-type:classroom -HAS_CONTINUITY_OPTION-> arrangement:verified-alternate-room"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "historyCitations": [],
+    "warnings": []
+}

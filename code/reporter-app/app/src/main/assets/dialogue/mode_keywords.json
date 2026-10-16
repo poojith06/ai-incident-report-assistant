@@ -1,0 +1,239 @@
+{
+  "version": 2,
+  "_comment": "Matched on lowercase text with word boundaries. hi/te entries are a starting point and MUST get native review (TODO: native review) before use; do not add more without review. Spec v2 section 3.2. Deviations from the spec list are recorded in doc/DECISIONS.md ADR-020. Hindi Devanagari cues (aag, dhuan, ...) added for answers/narrations in Hindi; negation also looks AFTER the keyword for hi/te (after_words): 'chot nahi'.",
+  "URGENT": {
+    "en": {
+      "keywords": [
+        "fire",
+        "flames",
+        "smoke",
+        "gas leak",
+        "smell gas",
+        "explosion",
+        "exploded",
+        "unconscious",
+        "not breathing",
+        "passed out",
+        "collapsed",
+        "trapped",
+        "stuck inside",
+        "bleeding a lot",
+        "heavy bleeding",
+        "electrocuted",
+        "electric shock",
+        "weapon",
+        "knife",
+        "gun",
+        "attacking",
+        "still happening",
+        "need help",
+        "very urgent",
+        "seriously bleeding",
+        "bleeding badly"
+      ],
+      "negatable": [
+        "need help",
+        "very urgent",
+        "seriously bleeding",
+        "bleeding badly"
+      ]
+    },
+    "hi": {
+      "needs_native_review": true,
+      "keywords": [
+        "aag",
+        "dhuan",
+        "behosh",
+        "khoon bahut",
+        "आग",
+        "धुआं",
+        "धुँआ",
+        "गैस",
+        "बिजली का झटका",
+        "बेहोश",
+        "खून बहुत",
+        "मदद चाहिए",
+        "जल्दी"
+      ],
+      "negatable": [
+        "मदद चाहिए",
+        "जल्दी"
+      ]
+    },
+    "te": {
+      "needs_native_review": true,
+      "keywords": [
+        "nippu",
+        "poga",
+        "spruha ledu"
+      ]
+    }
+  },
+  "CARE": {
+    "en": {
+      "keywords": [
+        "hurt",
+        "injured",
+        "injury",
+        "injuries",
+        "fell",
+        "slipped and fell",
+        "cut",
+        "burn",
+        "burned",
+        "bleeding",
+        "sprain",
+        "broke my",
+        "broke his",
+        "broke her",
+        "broke their",
+        "broke a bone",
+        "broken bone",
+        "broken arm",
+        "broken leg",
+        "fracture",
+        "pain",
+        "bruise",
+        "scared",
+        "afraid",
+        "shaking",
+        "panicking",
+        "crying",
+        "upset",
+        "harass",
+        "harassing",
+        "harassment",
+        "harassed",
+        "threatened",
+        "threat",
+        "assault",
+        "assaulted",
+        "groped",
+        "stalking",
+        "bullied",
+        "my phone was stolen",
+        "my bag was stolen"
+      ],
+      "injury_related": [
+        "hurt",
+        "injured",
+        "injury",
+        "injuries",
+        "fell",
+        "slipped and fell",
+        "cut",
+        "burn",
+        "burned",
+        "bleeding",
+        "sprain",
+        "broke my",
+        "broke his",
+        "broke her",
+        "broke their",
+        "broke a bone",
+        "broken bone",
+        "broken arm",
+        "broken leg",
+        "fracture",
+        "pain",
+        "bruise"
+      ]
+    },
+    "hi": {
+      "needs_native_review": true,
+      "keywords": [
+        "chot",
+        "gir gaya",
+        "gir gayi",
+        "dard",
+        "dar lag",
+        "चोट",
+        "घायल",
+        "गिर गया",
+        "गिर गई",
+        "गिर गयी",
+        "दर्द",
+        "परेशान"
+      ],
+      "injury_related": [
+        "chot",
+        "gir gaya",
+        "gir gayi",
+        "dard",
+        "चोट",
+        "घायल",
+        "गिर गया",
+        "गिर गई",
+        "गिर गयी",
+        "दर्द"
+      ]
+    },
+    "te": {
+      "needs_native_review": true,
+      "keywords": [
+        "debba",
+        "noppi",
+        "bhayam"
+      ],
+      "injury_related": [
+        "debba",
+        "noppi"
+      ]
+    }
+  },
+  "negation": {
+    "window_tokens": 4,
+    "en": {
+      "words": [
+        "no",
+        "not",
+        "nobody",
+        "none",
+        "never",
+        "without",
+        "neither",
+        "nor",
+        "nothing"
+      ]
+    },
+    "hi": {
+      "needs_native_review": true,
+      "words": [
+        "koi",
+        "nahi",
+        "nahin",
+        "कोई",
+        "नहीं",
+        "नही",
+        "बिना",
+        "bina"
+      ],
+      "after_words": [
+        "nahi",
+        "nahin",
+        "नहीं",
+        "नही"
+      ]
+    },
+    "te": {
+      "needs_native_review": true,
+      "words": [
+        "ledu"
+      ],
+      "after_words": [
+        "ledu"
+      ]
+    }
+  },
+  "personal_incident": {
+    "en": [
+      "harass",
+      "threat",
+      "assault",
+      "groped",
+      "stalk",
+      "bully",
+      "bullied"
+    ]
+  }
+}

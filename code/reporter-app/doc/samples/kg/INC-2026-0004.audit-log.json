@@ -1,0 +1,198 @@
+{
+    "id": "log:INC-2026-0004:g1:1791698400000",
+    "incidentId": "INC-2026-0004",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:exclusion-zone-water-power",
+        "rec:isolate-power",
+        "rec:avoid-electrical",
+        "rec:stop-water-source",
+        "rec:report-electrical"
+    ],
+    "shown": [
+        {
+            "id": "rec:exclusion-zone-water-power",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.686,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:exclusion-zone-water-power [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:exclusion-zone-water-power]",
+                "incident-type:water-near-power -PRODUCES_HAZARD-> hazard:water-near-power -MAY_CAUSE-> consequence:water-reaches-power -REQUIRES_ACTION-> action:exclusion-zone-water-power [edge:consequence:water-reaches-power>REQUIRES_ACTION>action:exclusion-zone-water-power]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:avoid-electrical",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.677,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:avoid-electrical [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:avoid-electrical]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:report-electrical",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.665,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:report-electrical [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:report-electrical]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:isolate-power",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.74,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:isolate-power [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:isolate-power]",
+                "incident-type:water-near-power -PRODUCES_HAZARD-> hazard:water-near-power -MAY_CAUSE-> consequence:water-reaches-power -REQUIRES_ACTION-> action:isolate-power [edge:consequence:water-reaches-power>REQUIRES_ACTION>action:isolate-power]",
+                "asset-type:power-strip -REQUIRES_ACTION-> action:isolate-power [edge:asset-type:power-strip>REQUIRES_ACTION>action:isolate-power]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:stop-water-source",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.65,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:stop-water-source [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:stop-water-source]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:shock-exposure",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:water-near-power -PRODUCES_HAZARD-> hazard:water-near-power -MAY_CAUSE-> consequence:shock-exposure"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:water-reaches-power",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:water-near-power -PRODUCES_HAZARD-> hazard:water-near-power -MAY_CAUSE-> consequence:water-reaches-power"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "arrangement:alternate-lab",
+            "kind": "arrangement",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "location-type:research-lab -HAS_CONTINUITY_OPTION-> arrangement:alternate-lab"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:electrical-maintenance",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:plumbing",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:academic-office",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:plumbing-electrical-clearance",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:water-near-power -TRIGGERS_ACTION-> action:plumbing-electrical-clearance"
+        },
+        {
+            "candidateId": "action:electrical-inspection",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:water-near-power -TRIGGERS_ACTION-> action:electrical-inspection"
+        },
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:water-near-power -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "arrangement:verified-alternate-room",
+            "kind": "arrangement",
+            "reason": "capacity data unknown: no replacement room is invented",
+            "path": "location-type:research-lab -HAS_CONTINUITY_OPTION-> arrangement:verified-alternate-room"
+        },
+        {
+            "candidateId": "rec:follow-electrical-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:water-near-power -TRIGGERS_ACTION-> action:follow-electrical-sop [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:follow-electrical-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "WATER_NEAR_POWER",
+        "severity": "HIGH",
+        "status": "ACTIVE",
+        "locationType": "RESEARCH_LAB",
+        "affectedAssets": [
+            "POWER_STRIP"
+        ],
+        "activeHazards": [
+            "WATER_NEAR_POWER"
+        ],
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "injury": false,
+        "evidenceConfidence": 0.9
+    }
+}

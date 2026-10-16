@@ -1,0 +1,22 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# QAIRT runtime libs are pulled from the board (tools/pull_qairt_libs.sh)
+/app/src/main/jniLibs/
+
+# whisper.cpp ggml models (downloaded to build/models, pushed to the board: doc/DEVICE_SETUP.md)
+/build/models/
+*.bin

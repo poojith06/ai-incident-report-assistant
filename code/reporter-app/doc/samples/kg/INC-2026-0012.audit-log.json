@@ -1,0 +1,164 @@
+{
+    "id": "log:INC-2026-0012:g1:1791698400000",
+    "incidentId": "INC-2026-0012",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:report-infra",
+        "rec:assess-service-impact",
+        "rec:invoke-continuity",
+        "rec:preserve-logs-ops"
+    ],
+    "shown": [
+        {
+            "id": "rec:report-infra",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.663,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:network-outage -TRIGGERS_ACTION-> action:report-infra [edge:incident-type:network-outage>TRIGGERS_ACTION>action:report-infra]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:assess-service-impact",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.607,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:network-outage -TRIGGERS_ACTION-> action:assess-service-impact [edge:incident-type:network-outage>TRIGGERS_ACTION>action:assess-service-impact]",
+                "incident-type:network-outage -PRODUCES_HAZARD-> hazard:service-disruption -MAY_CAUSE-> consequence:service-outage -REQUIRES_ACTION-> action:assess-service-impact [edge:consequence:service-outage>REQUIRES_ACTION>action:assess-service-impact]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:invoke-continuity",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.592,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:network-outage -TRIGGERS_ACTION-> action:invoke-continuity [edge:incident-type:network-outage>TRIGGERS_ACTION>action:invoke-continuity]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:preserve-logs-ops",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 3,
+            "score": 0.67,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:network-outage -TRIGGERS_ACTION-> action:preserve-logs-ops [edge:incident-type:network-outage>TRIGGERS_ACTION>action:preserve-logs-ops]",
+                "asset-type:storage-system -REQUIRES_ACTION-> action:preserve-logs-ops [edge:asset-type:storage-system>REQUIRES_ACTION>action:preserve-logs-ops]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:service-outage",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:network-outage -PRODUCES_HAZARD-> hazard:service-disruption -MAY_CAUSE-> consequence:service-outage"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:workstation-unavailable",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:network-outage -PRODUCES_HAZARD-> hazard:service-disruption -MAY_CAUSE-> consequence:workstation-unavailable"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "arrangement:interim-service-workaround",
+            "kind": "arrangement",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "location-type:network-room -HAS_CONTINUITY_OPTION-> arrangement:interim-service-workaround"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:it-operations",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:verify-restoration",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:network-outage -TRIGGERS_ACTION-> action:verify-restoration"
+        },
+        {
+            "candidateId": "action:review-redundancy",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED, UNKNOWN]",
+            "path": "incident-type:network-outage -TRIGGERS_ACTION-> action:review-redundancy"
+        },
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:network-outage -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "action:verify-data-integrity",
+            "kind": "action",
+            "reason": "condition failed: incident type NETWORK_OUTAGE not in [STORAGE_FAILURE]; status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "asset-type:storage-system -REQUIRES_ACTION-> action:verify-data-integrity"
+        },
+        {
+            "candidateId": "rec:follow-it-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:network-outage -TRIGGERS_ACTION-> action:follow-it-sop [edge:incident-type:network-outage>TRIGGERS_ACTION>action:follow-it-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "NETWORK_OUTAGE",
+        "severity": "HIGH",
+        "status": "ACTIVE",
+        "locationType": "NETWORK_ROOM",
+        "affectedAssets": [
+            "STORAGE_SYSTEM"
+        ],
+        "activeHazards": [],
+        "peopleAffected": null,
+        "operationalEffects": [
+            "SERVICE_OUTAGE"
+        ],
+        "injury": false,
+        "evidenceConfidence": 0.9
+    }
+}

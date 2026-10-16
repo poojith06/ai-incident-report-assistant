@@ -1,0 +1,1 @@
+ "Equipment Failure", "severity": "Medium", "location": "lab", "datetime": null, "persons_involved": null, "actions_taken": null, "description": "Something is broken in the lab."}

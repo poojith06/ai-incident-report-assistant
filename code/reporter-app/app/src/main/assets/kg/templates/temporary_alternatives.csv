@@ -1,0 +1,2 @@
+arrangement_id,location_type,title,text,owner_team_id,known_capacity_required,alternate_location_verified_required,alternate_room_id,verified_by,verified_at
+arrangement:example,CLASSROOM,EXAMPLE - replace,EXAMPLE - replace,team:example,true,true,room:example,EXAMPLE - replace,EXAMPLE - replace

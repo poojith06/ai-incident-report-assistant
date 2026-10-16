@@ -1,0 +1,133 @@
+{
+    "id": "log:INC-2026-0008:g1:1791698400000",
+    "incidentId": "INC-2026-0008",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:medical-contact",
+        "rec:stop-play",
+        "rec:leave-assessment",
+        "rec:inspect-playing-area",
+        "rec:review-sports-safety"
+    ],
+    "shown": [
+        {
+            "id": "rec:medical-contact",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.667,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:medical-contact [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:medical-contact]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:stop-play",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.667,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:stop-play [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:stop-play]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:leave-assessment",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.634,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:leave-assessment [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:leave-assessment]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:inspect-playing-area",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.53,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:inspect-playing-area [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:inspect-playing-area]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:review-sports-safety",
+            "kind": "recommendation",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.5,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:sports-injury -TRIGGERS_ACTION-> action:review-sports-safety [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:review-sports-safety]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:medical-attention",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:sports-injury -PRODUCES_HAZARD-> hazard:injured-person -MAY_CAUSE-> consequence:medical-attention"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:medical-services",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:sports-facilities",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "rec:follow-sports-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:sports-injury -TRIGGERS_ACTION-> action:follow-sports-sop [edge:incident-type:sports-injury>TRIGGERS_ACTION>action:follow-sports-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "SPORTS_INJURY",
+        "severity": "HIGH",
+        "status": "UNKNOWN",
+        "locationType": "FOOTBALL_GROUND",
+        "affectedAssets": [],
+        "activeHazards": [],
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "injury": true,
+        "evidenceConfidence": 0.9
+    }
+}

@@ -1,0 +1,193 @@
+{
+    "id": "log:INC-2026-0003:g1:1791698400000",
+    "incidentId": "INC-2026-0003",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:report-infra",
+        "rec:assess-service-impact",
+        "rec:invoke-continuity",
+        "rec:inspect-cooling"
+    ],
+    "shown": [
+        {
+            "id": "rec:report-infra",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.671,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:cooling-failure -TRIGGERS_ACTION-> action:report-infra [edge:incident-type:cooling-failure>TRIGGERS_ACTION>action:report-infra]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:assess-service-impact",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.615,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:cooling-failure -TRIGGERS_ACTION-> action:assess-service-impact [edge:incident-type:cooling-failure>TRIGGERS_ACTION>action:assess-service-impact]",
+                "incident-type:cooling-failure -PRODUCES_HAZARD-> hazard:service-disruption -MAY_CAUSE-> consequence:service-outage -REQUIRES_ACTION-> action:assess-service-impact [edge:consequence:service-outage>REQUIRES_ACTION>action:assess-service-impact]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:invoke-continuity",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.6,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:cooling-failure -TRIGGERS_ACTION-> action:invoke-continuity [edge:incident-type:cooling-failure>TRIGGERS_ACTION>action:invoke-continuity]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:inspect-cooling",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 3,
+            "score": 0.672,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:cooling-failure -TRIGGERS_ACTION-> action:inspect-cooling [edge:incident-type:cooling-failure>TRIGGERS_ACTION>action:inspect-cooling]",
+                "asset-type:cooling-unit -REQUIRES_ACTION-> action:inspect-cooling [edge:asset-type:cooling-unit>REQUIRES_ACTION>action:inspect-cooling]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:thermal-failure",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:cooling-failure -PRODUCES_HAZARD-> hazard:overheating -MAY_CAUSE-> consequence:thermal-failure"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:service-outage",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:cooling-failure -PRODUCES_HAZARD-> hazard:service-disruption -MAY_CAUSE-> consequence:service-outage"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:workstation-unavailable",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:cooling-failure -PRODUCES_HAZARD-> hazard:service-disruption -MAY_CAUSE-> consequence:workstation-unavailable"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "arrangement:interim-service-workaround",
+            "kind": "arrangement",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "location-type:server-room -HAS_CONTINUITY_OPTION-> arrangement:interim-service-workaround"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:it-operations",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:facilities",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:verify-cooling",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:cooling-failure -TRIGGERS_ACTION-> action:verify-cooling"
+        },
+        {
+            "candidateId": "action:review-temp-monitoring",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED, UNKNOWN]",
+            "path": "incident-type:cooling-failure -TRIGGERS_ACTION-> action:review-temp-monitoring"
+        },
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:cooling-failure -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "action:isolate-asset",
+            "kind": "action",
+            "reason": "condition failed: incident type COOLING_FAILURE not in [COMPUTER_FIRE, SERVER_RACK_FIRE]",
+            "path": "asset-type:server -REQUIRES_ACTION-> action:isolate-asset"
+        },
+        {
+            "candidateId": "action:preserve-logs-recovery",
+            "kind": "action",
+            "reason": "condition failed: incident type COOLING_FAILURE not in [COMPUTER_FIRE, SERVER_RACK_FIRE]; status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "asset-type:server -REQUIRES_ACTION-> action:preserve-logs-recovery"
+        },
+        {
+            "candidateId": "rec:follow-it-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:cooling-failure -TRIGGERS_ACTION-> action:follow-it-sop [edge:incident-type:cooling-failure>TRIGGERS_ACTION>action:follow-it-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "COOLING_FAILURE",
+        "severity": "HIGH",
+        "status": "ACTIVE",
+        "locationType": "SERVER_ROOM",
+        "affectedAssets": [
+            "SERVER",
+            "COOLING_UNIT"
+        ],
+        "activeHazards": [
+            "OVERHEATING"
+        ],
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "injury": false,
+        "evidenceConfidence": 0.9
+    }
+}

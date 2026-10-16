@@ -1,0 +1,170 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0011:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0011",
+        "type": "BLOCKED_EXIT",
+        "severity": "MEDIUM",
+        "status": "UNKNOWN",
+        "urgency": null,
+        "locationType": "CORRIDOR",
+        "locationLabel": "Nilgiri corridor",
+        "locationRedacted": false,
+        "affectedAssets": [
+            "FIRE_EXIT"
+        ],
+        "activeHazards": [
+            "BLOCKED_EXIT"
+        ],
+        "injuryReported": null,
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": null,
+    "recommendations": [
+        {
+            "id": "rec:report-blocked-exit",
+            "actionId": "action:report-blocked-exit",
+            "title": "Report the blocked exit",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.625,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:blocked-exit -TRIGGERS_ACTION-> action:report-blocked-exit [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:report-blocked-exit]",
+                "incident-type:blocked-exit -PRODUCES_HAZARD-> hazard:blocked-exit -MAY_CAUSE-> consequence:blocked-route -REQUIRES_ACTION-> action:report-blocked-exit [edge:consequence:blocked-route>REQUIRES_ACTION>action:report-blocked-exit]"
+            ],
+            "canonicalText": "Do not use the blocked exit, use another safe exit and report the blockage to facilities or security.",
+            "renderedText": "Do not use the blocked exit, use another safe exit and report the blockage to facilities or security.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:remove-exit-obstruction",
+            "actionId": "action:remove-exit-obstruction",
+            "title": "Clear the exit route",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.688,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:blocked-exit -TRIGGERS_ACTION-> action:remove-exit-obstruction [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:remove-exit-obstruction]",
+                "asset-type:fire-exit -REQUIRES_ACTION-> action:remove-exit-obstruction [edge:asset-type:fire-exit>REQUIRES_ACTION>action:remove-exit-obstruction]"
+            ],
+            "canonicalText": "Ask authorized facilities staff to remove the obstruction from the exit route.",
+            "renderedText": "Ask authorized facilities staff to remove the obstruction from the exit route.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:inspect-similar-routes",
+            "actionId": "action:inspect-similar-routes",
+            "title": "Inspect similar exit routes",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.627,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:blocked-exit -TRIGGERS_ACTION-> action:inspect-similar-routes [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:inspect-similar-routes]"
+            ],
+            "canonicalText": "Ask authorized facilities staff to inspect similar exit routes in the building.",
+            "renderedText": "Ask authorized facilities staff to inspect similar exit routes in the building.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:compliance-follow-up",
+            "actionId": "action:compliance-follow-up",
+            "title": "Compliance follow up",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.612,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:blocked-exit -TRIGGERS_ACTION-> action:compliance-follow-up [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:compliance-follow-up]"
+            ],
+            "canonicalText": "Ask authorized fire safety staff to record a compliance follow up for the exit route.",
+            "renderedText": "Ask authorized fire safety staff to record a compliance follow up for the exit route.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:blocked-route",
+            "name": "Blocked route",
+            "text": "Evacuation routes could be blocked or reduced.",
+            "consequenceType": "SAFETY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:blocked-exit -PRODUCES_HAZARD-> hazard:blocked-exit -MAY_CAUSE-> consequence:blocked-route"
+            ]
+        }
+    ],
+    "temporaryArrangements": [],
+    "responsibleTeams": [
+        {
+            "id": "team:facilities",
+            "name": "Facilities",
+            "role": "FACILITIES",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:fire-safety",
+            "name": "Fire safety",
+            "role": "FIRE_SAFETY",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury state unknown",
+            "path": "incident-type:blocked-exit -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "rec:follow-compliance-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:blocked-exit -TRIGGERS_ACTION-> action:follow-compliance-sop [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:follow-compliance-sop]"
+        }
+    ],
+    "unresolvedQuestions": [
+        {
+            "id": "q:injury",
+            "text": "Was anyone hurt?"
+        }
+    ],
+    "historyCitations": [],
+    "warnings": []
+}

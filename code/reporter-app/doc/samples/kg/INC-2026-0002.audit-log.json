@@ -1,0 +1,323 @@
+{
+    "id": "log:INC-2026-0002:g1:1791698400000",
+    "incidentId": "INC-2026-0002",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:leave-area",
+        "rec:follow-evac",
+        "rec:isolate-asset",
+        "rec:keep-damaged-unused",
+        "rec:report-fire",
+        "rec:preserve-logs-recovery",
+        "rec:replacement-workstation",
+        "rec:inspect-affected-device",
+        "rec:review-electrical-load",
+        "rec:review-fire-checks"
+    ],
+    "shown": [
+        {
+            "id": "rec:leave-area",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.68,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:leave-area [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:leave-area]",
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-exposure -REQUIRES_ACTION-> action:leave-area [edge:consequence:smoke-exposure>REQUIRES_ACTION>action:leave-area]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:follow-evac",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.671,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:follow-evac [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:follow-evac]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:report-fire",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.683,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:report-fire [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:report-fire]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:isolate-asset",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.743,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:isolate-asset [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:isolate-asset]",
+                "asset-type:desktop -REQUIRES_ACTION-> action:isolate-asset [edge:asset-type:desktop>REQUIRES_ACTION>action:isolate-asset]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:keep-damaged-unused",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.653,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:keep-damaged-unused [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:keep-damaged-unused]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:preserve-logs-recovery",
+            "kind": "recommendation",
+            "phase": "RECOVERY",
+            "rank": 1,
+            "score": 0.666,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:preserve-logs-recovery [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:preserve-logs-recovery]",
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:data-loss-risk -MAY_CAUSE-> consequence:data-loss -REQUIRES_ACTION-> action:preserve-logs-recovery [edge:consequence:data-loss>REQUIRES_ACTION>action:preserve-logs-recovery]",
+                "asset-type:desktop -REQUIRES_ACTION-> action:preserve-logs-recovery [edge:asset-type:desktop>REQUIRES_ACTION>action:preserve-logs-recovery]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:replacement-workstation",
+            "kind": "recommendation",
+            "phase": "RECOVERY",
+            "rank": 2,
+            "score": 0.63,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:replacement-workstation [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:replacement-workstation]",
+                "asset-type:desktop -REQUIRES_ACTION-> action:replacement-workstation [edge:asset-type:desktop>REQUIRES_ACTION>action:replacement-workstation]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:inspect-affected-device",
+            "kind": "recommendation",
+            "phase": "RECOVERY",
+            "rank": 3,
+            "score": 0.594,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:inspect-affected-device [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:inspect-affected-device]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:review-electrical-load",
+            "kind": "recommendation",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.531,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:review-electrical-load [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:review-electrical-load]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:review-fire-checks",
+            "kind": "recommendation",
+            "phase": "PREVENTION",
+            "rank": 2,
+            "score": 0.525,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:computer-fire -TRIGGERS_ACTION-> action:review-fire-checks [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:review-fire-checks]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:smoke-exposure",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-exposure"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:smoke-spread",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-spread"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:data-loss",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:data-loss-risk -MAY_CAUSE-> consequence:data-loss"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:equipment-damage",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:computer-fire -PRODUCES_HAZARD-> hazard:electrical-damage -MAY_CAUSE-> consequence:equipment-damage"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "arrangement:alternate-lab",
+            "kind": "arrangement",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "location-type:computer-lab -HAS_CONTINUITY_OPTION-> arrangement:alternate-lab"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "arrangement:temporary-workstations",
+            "kind": "arrangement",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "location-type:computer-lab -HAS_CONTINUITY_OPTION-> arrangement:temporary-workstations"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:campus-security",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:fire-safety",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:it-operations",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:electrical-maintenance",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:academic-office",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:computer-fire -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "arrangement:verified-alternate-room",
+            "kind": "arrangement",
+            "reason": "capacity data unknown: no replacement room is invented",
+            "path": "location-type:computer-lab -HAS_CONTINUITY_OPTION-> arrangement:verified-alternate-room"
+        },
+        {
+            "candidateId": "edge:location-type:computer-lab>HAS_CONTINUITY_OPTION>arrangement:interim-service-workaround",
+            "kind": "edge",
+            "reason": "condition failed: incident type COMPUTER_FIRE not in [SERVER_OVERHEATING, COOLING_FAILURE, STORAGE_FAILURE, NETWORK_OUTAGE, POWER_OUTAGE, SERVER_RACK_FIRE]",
+            "path": null
+        },
+        {
+            "candidateId": "rec:follow-fire-evac-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:computer-fire -TRIGGERS_ACTION-> action:follow-fire-evac-sop [edge:incident-type:computer-fire>TRIGGERS_ACTION>action:follow-fire-evac-sop]"
+        },
+        {
+            "candidateId": "consequence:room-closure",
+            "kind": "consequence",
+            "reason": "consequence limit (4) reached",
+            "path": null
+        }
+    ],
+    "unresolvedQuestions": [],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "COMPUTER_FIRE",
+        "severity": "HIGH",
+        "status": "CONTAINED",
+        "locationType": "COMPUTER_LAB",
+        "affectedAssets": [
+            "DESKTOP"
+        ],
+        "activeHazards": [
+            "SMOKE"
+        ],
+        "peopleAffected": null,
+        "operationalEffects": [
+            "WORKSTATION_UNAVAILABLE"
+        ],
+        "injury": false,
+        "evidenceConfidence": 0.9
+    }
+}

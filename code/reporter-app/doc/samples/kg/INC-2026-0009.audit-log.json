@@ -1,0 +1,192 @@
+{
+    "id": "log:INC-2026-0009:g1:1791698400000",
+    "incidentId": "INC-2026-0009",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:stop-using-furniture",
+        "rec:remove-from-use",
+        "rec:report-damage",
+        "rec:update-capacity",
+        "rec:inspect-similar-items",
+        "rec:schedule-furniture-checks"
+    ],
+    "shown": [
+        {
+            "id": "rec:stop-using-furniture",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.548,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:stop-using-furniture [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:stop-using-furniture]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:report-damage",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.542,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:report-damage [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:report-damage]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:remove-from-use",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.617,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:remove-from-use [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:remove-from-use]",
+                "asset-type:furniture -REQUIRES_ACTION-> action:remove-from-use [edge:asset-type:furniture>REQUIRES_ACTION>action:remove-from-use]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:update-capacity",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.653,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:update-capacity [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:update-capacity]",
+                "incident-type:damaged-furniture -PRODUCES_HAZARD-> hazard:unstable-furniture -MAY_CAUSE-> consequence:reduced-capacity -REQUIRES_ACTION-> action:update-capacity [edge:consequence:reduced-capacity>REQUIRES_ACTION>action:update-capacity]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:inspect-similar-items",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 3,
+            "score": 0.668,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:inspect-similar-items [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:inspect-similar-items]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:schedule-furniture-checks",
+            "kind": "recommendation",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.593,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:schedule-furniture-checks [edge:incident-type:damaged-furniture>TRIGGERS_ACTION>action:schedule-furniture-checks]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:harm-nearby",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:damaged-furniture -PRODUCES_HAZARD-> hazard:unstable-furniture -MAY_CAUSE-> consequence:harm-nearby"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "consequence:reduced-capacity",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:damaged-furniture -PRODUCES_HAZARD-> hazard:unstable-furniture -MAY_CAUSE-> consequence:reduced-capacity"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "arrangement:alternate-seating",
+            "kind": "arrangement",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "location-type:classroom -HAS_CONTINUITY_OPTION-> arrangement:alternate-seating"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:facilities",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:academic-office",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:damaged-furniture -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "edge:location-type:classroom>HAS_CONTINUITY_OPTION>arrangement:alternate-room",
+            "kind": "edge",
+            "reason": "condition failed: incident type DAMAGED_FURNITURE not in [FIRE_SMOKE, CLASSROOM_FIRE, ELECTRICAL_PANEL_FIRE, CEILING_LEAK, CEILING_DAMAGE, PIPE_LEAK, WATER_LEAK, WATER_NEAR_POWER, FALLING_OBJECT, BROKEN_GLASS, POWER_OUTAGE]",
+            "path": null
+        },
+        {
+            "candidateId": "edge:location-type:classroom>HAS_CONTINUITY_OPTION>arrangement:verified-alternate-room",
+            "kind": "edge",
+            "reason": "condition failed: incident type DAMAGED_FURNITURE not in [FIRE_SMOKE, CLASSROOM_FIRE, ELECTRICAL_PANEL_FIRE, CEILING_LEAK, CEILING_DAMAGE, PIPE_LEAK, WATER_LEAK, WATER_NEAR_POWER, FALLING_OBJECT, BROKEN_GLASS, POWER_OUTAGE]",
+            "path": null
+        },
+        {
+            "candidateId": "arrangement:verified-alternate-room",
+            "kind": "arrangement",
+            "reason": "capacity data unknown: no replacement room is invented",
+            "path": "location-type:classroom -HAS_CONTINUITY_OPTION-> arrangement:verified-alternate-room"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "DAMAGED_FURNITURE",
+        "severity": "LOW",
+        "status": "UNKNOWN",
+        "locationType": "CLASSROOM",
+        "affectedAssets": [
+            "FURNITURE"
+        ],
+        "activeHazards": [],
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "injury": false,
+        "evidenceConfidence": 0.9
+    }
+}

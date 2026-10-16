@@ -1,0 +1,5 @@
+<think>
+</think>
+
+"Was anyone hurt in the workshop?"
+This asks about injuries only.<|im_end|>

@@ -1,0 +1,189 @@
+{
+    "id": "log:INC-2026-0007:g1:1791698400000",
+    "incidentId": "INC-2026-0007",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:leave-area",
+        "rec:no-ignition",
+        "rec:inspect-gas-supply",
+        "rec:report-gas",
+        "rec:suspend-service"
+    ],
+    "shown": [
+        {
+            "id": "rec:leave-area",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.68,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:leave-area [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:leave-area]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:no-ignition",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.683,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:no-ignition [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:no-ignition]",
+                "incident-type:lpg-smell -PRODUCES_HAZARD-> hazard:gas-leak -MAY_CAUSE-> consequence:gas-buildup -REQUIRES_ACTION-> action:no-ignition [edge:consequence:gas-buildup>REQUIRES_ACTION>action:no-ignition]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:report-gas",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.686,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:report-gas [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:report-gas]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:inspect-gas-supply",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.671,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:inspect-gas-supply [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:inspect-gas-supply]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:suspend-service",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.684,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:suspend-service [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:suspend-service]",
+                "asset-type:cooking-equipment -REQUIRES_ACTION-> action:suspend-service [edge:asset-type:cooking-equipment>REQUIRES_ACTION>action:suspend-service]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:gas-buildup",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:lpg-smell -PRODUCES_HAZARD-> hazard:gas-leak -MAY_CAUSE-> consequence:gas-buildup"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "arrangement:alternate-meal-service",
+            "kind": "arrangement",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "location-type:kitchen -HAS_CONTINUITY_OPTION-> arrangement:alternate-meal-service"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:campus-security",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:fire-safety",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:facilities",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:mess-management",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:service-clearance",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:lpg-smell -TRIGGERS_ACTION-> action:service-clearance"
+        },
+        {
+            "candidateId": "action:review-gas-checks",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED, UNKNOWN]",
+            "path": "incident-type:lpg-smell -TRIGGERS_ACTION-> action:review-gas-checks"
+        },
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:lpg-smell -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "rec:follow-lpg-isolation-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:lpg-smell -TRIGGERS_ACTION-> action:follow-lpg-isolation-sop [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:follow-lpg-isolation-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "LPG_SMELL",
+        "severity": "HIGH",
+        "status": "ACTIVE",
+        "locationType": "KITCHEN",
+        "affectedAssets": [
+            "COOKING_EQUIPMENT"
+        ],
+        "activeHazards": [
+            "GAS_LEAK"
+        ],
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "injury": false,
+        "evidenceConfidence": 0.9
+    }
+}

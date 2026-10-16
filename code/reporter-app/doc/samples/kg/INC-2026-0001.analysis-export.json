@@ -1,0 +1,350 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0001:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0001",
+        "type": "CLASSROOM_FIRE",
+        "severity": "HIGH",
+        "status": "CONTAINED",
+        "urgency": null,
+        "locationType": "CLASSROOM",
+        "locationLabel": "Nilgiri classroom",
+        "locationRedacted": false,
+        "affectedAssets": [],
+        "activeHazards": [
+            "SMOKE"
+        ],
+        "injuryReported": false,
+        "peopleAffected": null,
+        "operationalEffects": [
+            "ROOM_UNUSABLE"
+        ],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": null,
+    "recommendations": [
+        {
+            "id": "rec:leave-area",
+            "actionId": "action:leave-area",
+            "title": "Move away from the area",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.672,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:leave-area [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:leave-area]",
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-exposure -REQUIRES_ACTION-> action:leave-area [edge:consequence:smoke-exposure>REQUIRES_ACTION>action:leave-area]"
+            ],
+            "canonicalText": "Move away from the affected area and keep other people away from it.",
+            "renderedText": "Move away from the affected area and keep other people away from it.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:campus-security",
+            "ownerTeamName": "Campus security",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:follow-evac",
+            "actionId": "action:follow-evac",
+            "title": "Follow evacuation instructions",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.663,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:follow-evac [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:follow-evac]"
+            ],
+            "canonicalText": "Follow posted evacuation instructions and move to a safe place away from the building.",
+            "renderedText": "Follow posted evacuation instructions and move to a safe place away from the building.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:report-fire",
+            "actionId": "action:report-fire",
+            "title": "Report the fire or smoke",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.675,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:report-fire [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:report-fire]"
+            ],
+            "canonicalText": "Report the fire or smoke to campus security or fire safety staff and follow their instructions.",
+            "renderedText": "Report the fire or smoke to campus security or fire safety staff and follow their instructions.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:isolate-power",
+            "actionId": "action:isolate-power",
+            "title": "Isolate power to the area",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.657,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:isolate-power [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:isolate-power]"
+            ],
+            "canonicalText": "Ask authorized electrical maintenance to isolate power to the affected area.",
+            "renderedText": "Ask authorized electrical maintenance to isolate power to the affected area.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:electrical-maintenance",
+            "ownerTeamName": "Electrical maintenance",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:close-area",
+            "actionId": "action:close-area",
+            "title": "Keep the area closed",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.651,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:close-area [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:close-area]"
+            ],
+            "canonicalText": "Ask authorized facilities staff to keep the affected room closed until it is cleared.",
+            "renderedText": "Ask authorized facilities staff to keep the affected room closed until it is cleared.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:fire-inspection",
+            "actionId": "action:fire-inspection",
+            "title": "Fire safety inspection",
+            "phase": "RECOVERY",
+            "rank": 1,
+            "score": 0.592,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:fire-inspection [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:fire-inspection]"
+            ],
+            "canonicalText": "Ask authorized fire safety staff to inspect the area and confirm it is safe.",
+            "renderedText": "Ask authorized fire safety staff to inspect the area and confirm it is safe.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:electrical-inspection",
+            "actionId": "action:electrical-inspection",
+            "title": "Electrical inspection",
+            "phase": "RECOVERY",
+            "rank": 2,
+            "score": 0.589,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:electrical-inspection [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:electrical-inspection]"
+            ],
+            "canonicalText": "Ask authorized electrical maintenance to inspect the wiring and equipment before the area is used again.",
+            "renderedText": "Ask authorized electrical maintenance to inspect the wiring and equipment before the area is used again.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:electrical-maintenance",
+            "ownerTeamName": "Electrical maintenance",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:reopen-clearance",
+            "actionId": "action:reopen-clearance",
+            "title": "Clearance before reopening",
+            "phase": "RECOVERY",
+            "rank": 3,
+            "score": 0.577,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:reopen-clearance [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:reopen-clearance]"
+            ],
+            "canonicalText": "Ask authorized facilities staff to confirm clearance before the room is reopened for use.",
+            "renderedText": "Ask authorized facilities staff to confirm clearance before the room is reopened for use.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:review-fire-checks",
+            "actionId": "action:review-fire-checks",
+            "title": "Review fire safety checks",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.517,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:classroom-fire -TRIGGERS_ACTION-> action:review-fire-checks [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:review-fire-checks]"
+            ],
+            "canonicalText": "Ask authorized fire safety staff to review fire safety checks for similar rooms.",
+            "renderedText": "Ask authorized fire safety staff to review fire safety checks for similar rooms.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:smoke-exposure",
+            "name": "Exposure to smoke",
+            "text": "People nearby may be exposed to smoke or fumes.",
+            "consequenceType": "SAFETY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-exposure"
+            ]
+        },
+        {
+            "id": "consequence:smoke-spread",
+            "name": "Smoke spread",
+            "text": "Smoke may spread to nearby rooms.",
+            "consequenceType": "SECONDARY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:smoke -MAY_CAUSE-> consequence:smoke-spread"
+            ]
+        },
+        {
+            "id": "consequence:fire-spread",
+            "name": "Fire spread",
+            "text": "The fire could spread to nearby areas.",
+            "consequenceType": "SECONDARY",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:fire -MAY_CAUSE-> consequence:fire-spread"
+            ]
+        },
+        {
+            "id": "consequence:structural-damage",
+            "name": "Structural damage",
+            "text": "The structure of the area may be damaged.",
+            "consequenceType": "ASSET",
+            "likelihood": "POSSIBLE",
+            "provenance": [
+                "incident-type:classroom-fire -PRODUCES_HAZARD-> hazard:fire -MAY_CAUSE-> consequence:structural-damage"
+            ]
+        }
+    ],
+    "temporaryArrangements": [
+        {
+            "id": "arrangement:alternate-room",
+            "title": "Alternate room request",
+            "text": "Ask the academic office to identify an alternate room of suitable size.",
+            "ownerTeamId": "team:academic-office",
+            "provenance": [
+                "location-type:classroom -HAS_CONTINUITY_OPTION-> arrangement:alternate-room"
+            ],
+            "sourceId": "sop:demo-seed:v1",
+            "unverifiedDraft": false
+        }
+    ],
+    "responsibleTeams": [
+        {
+            "id": "team:campus-security",
+            "name": "Campus security",
+            "role": "CAMPUS_SECURITY",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:fire-safety",
+            "name": "Fire safety",
+            "role": "FIRE_SAFETY",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:electrical-maintenance",
+            "name": "Electrical maintenance",
+            "role": "ELECTRICAL_MAINTENANCE",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:facilities",
+            "name": "Facilities",
+            "role": "FACILITIES",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:academic-office",
+            "name": "Academic office",
+            "role": "ACADEMIC_OFFICE",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:classroom-fire -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "arrangement:verified-alternate-room",
+            "kind": "arrangement",
+            "reason": "capacity data unknown: no replacement room is invented",
+            "path": "location-type:classroom -HAS_CONTINUITY_OPTION-> arrangement:verified-alternate-room"
+        },
+        {
+            "candidateId": "edge:location-type:classroom>HAS_CONTINUITY_OPTION>arrangement:alternate-seating",
+            "kind": "edge",
+            "reason": "condition failed: incident type CLASSROOM_FIRE not in [DAMAGED_FURNITURE]",
+            "path": null
+        },
+        {
+            "candidateId": "edge:location-type:classroom>HAS_CONTINUITY_OPTION>arrangement:verified-alternate-room#2",
+            "kind": "edge",
+            "reason": "condition failed: incident type CLASSROOM_FIRE not in [DAMAGED_FURNITURE]",
+            "path": null
+        },
+        {
+            "candidateId": "rec:follow-fire-evac-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:classroom-fire -TRIGGERS_ACTION-> action:follow-fire-evac-sop [edge:incident-type:classroom-fire>TRIGGERS_ACTION>action:follow-fire-evac-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "historyCitations": [],
+    "warnings": []
+}

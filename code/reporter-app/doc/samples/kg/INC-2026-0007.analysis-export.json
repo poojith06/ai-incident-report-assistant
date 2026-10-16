@@ -1,0 +1,224 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0007:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0007",
+        "type": "LPG_SMELL",
+        "severity": "HIGH",
+        "status": "ACTIVE",
+        "urgency": null,
+        "locationType": "KITCHEN",
+        "locationLabel": "Mess kitchen",
+        "locationRedacted": false,
+        "affectedAssets": [
+            "COOKING_EQUIPMENT"
+        ],
+        "activeHazards": [
+            "GAS_LEAK"
+        ],
+        "injuryReported": false,
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": null,
+    "recommendations": [
+        {
+            "id": "rec:leave-area",
+            "actionId": "action:leave-area",
+            "title": "Move away from the area",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.68,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:leave-area [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:leave-area]"
+            ],
+            "canonicalText": "Move away from the affected area and keep other people away from it.",
+            "renderedText": "Move away from the affected area and keep other people away from it.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:campus-security",
+            "ownerTeamName": "Campus security",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:no-ignition",
+            "actionId": "action:no-ignition",
+            "title": "Avoid flames and switches",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.683,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:no-ignition [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:no-ignition]",
+                "incident-type:lpg-smell -PRODUCES_HAZARD-> hazard:gas-leak -MAY_CAUSE-> consequence:gas-buildup -REQUIRES_ACTION-> action:no-ignition [edge:consequence:gas-buildup>REQUIRES_ACTION>action:no-ignition]"
+            ],
+            "canonicalText": "Do not use open flames, switches or electrical devices near the gas smell.",
+            "renderedText": "Do not use open flames, switches or electrical devices near the gas smell.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:report-gas",
+            "actionId": "action:report-gas",
+            "title": "Report the gas smell",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.686,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:report-gas [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:report-gas]"
+            ],
+            "canonicalText": "Move away from the gas smell and report it immediately to fire safety or facilities staff.",
+            "renderedText": "Move away from the gas smell and report it immediately to fire safety or facilities staff.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:fire-safety",
+            "ownerTeamName": "Fire safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:inspect-gas-supply",
+            "actionId": "action:inspect-gas-supply",
+            "title": "Inspect the gas supply",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.671,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:inspect-gas-supply [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:inspect-gas-supply]"
+            ],
+            "canonicalText": "Ask authorized fire safety or facilities staff to inspect the gas supply and confirm it is safe.",
+            "renderedText": "Ask authorized fire safety or facilities staff to inspect the gas supply and confirm it is safe.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:facilities",
+            "ownerTeamName": "Facilities",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:suspend-service",
+            "actionId": "action:suspend-service",
+            "title": "Suspend food service",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.684,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:lpg-smell -TRIGGERS_ACTION-> action:suspend-service [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:suspend-service]",
+                "asset-type:cooking-equipment -REQUIRES_ACTION-> action:suspend-service [edge:asset-type:cooking-equipment>REQUIRES_ACTION>action:suspend-service]"
+            ],
+            "canonicalText": "Ask authorized mess management to suspend cooking service in the affected area until it is cleared.",
+            "renderedText": "Ask authorized mess management to suspend cooking service in the affected area until it is cleared.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:mess-management",
+            "ownerTeamName": "Mess management",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:gas-buildup",
+            "name": "Gas build up",
+            "text": "Gas could build up and become an ignition risk.",
+            "consequenceType": "SAFETY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:lpg-smell -PRODUCES_HAZARD-> hazard:gas-leak -MAY_CAUSE-> consequence:gas-buildup"
+            ]
+        }
+    ],
+    "temporaryArrangements": [
+        {
+            "id": "arrangement:alternate-meal-service",
+            "title": "Alternate meal service request",
+            "text": "Ask mess management to identify an alternate arrangement for serving meals while the area is closed.",
+            "ownerTeamId": "team:mess-management",
+            "provenance": [
+                "location-type:kitchen -HAS_CONTINUITY_OPTION-> arrangement:alternate-meal-service"
+            ],
+            "sourceId": "sop:demo-seed:v1",
+            "unverifiedDraft": false
+        }
+    ],
+    "responsibleTeams": [
+        {
+            "id": "team:campus-security",
+            "name": "Campus security",
+            "role": "CAMPUS_SECURITY",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:fire-safety",
+            "name": "Fire safety",
+            "role": "FIRE_SAFETY",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:facilities",
+            "name": "Facilities",
+            "role": "FACILITIES",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:mess-management",
+            "name": "Mess management",
+            "role": "MESS_MANAGEMENT",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:service-clearance",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:lpg-smell -TRIGGERS_ACTION-> action:service-clearance"
+        },
+        {
+            "candidateId": "action:review-gas-checks",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED, UNKNOWN]",
+            "path": "incident-type:lpg-smell -TRIGGERS_ACTION-> action:review-gas-checks"
+        },
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:lpg-smell -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "rec:follow-lpg-isolation-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:lpg-smell -TRIGGERS_ACTION-> action:follow-lpg-isolation-sop [edge:incident-type:lpg-smell>TRIGGERS_ACTION>action:follow-lpg-isolation-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "historyCitations": [],
+    "warnings": []
+}

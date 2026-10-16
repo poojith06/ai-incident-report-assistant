@@ -1,0 +1,1 @@
+ "Accident", "severity": "Medium", "location": "near the cafeteria stairs", "datetime": null, "persons_involved": "someone", "actions_taken": null, "description": "Someone slipped near the cafeteria stairs and hurt his ankle."}

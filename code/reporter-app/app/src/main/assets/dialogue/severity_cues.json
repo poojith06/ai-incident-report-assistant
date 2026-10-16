@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "_comment": "Deterministic severity policy (domain/service/SeverityPolicy.kt, doc/DATA_SCHEMA.md 'Severity policy'). The LLM severity is only a hint: final = max(hint, floors). escalation_cues: with an URGENT mode (or injury) they make the severity Critical; matched on lowercase text with word boundaries and the negation guard of mode_keywords.json (\"it's not urgent\" does not count). high_incident_types: at least High on their own. escalation_cues is English; escalation_cues_other holds Hindi cues marked needs_native_review.",
+  "escalation_cues": [
+    "urgent",
+    "very urgent",
+    "emergency",
+    "need help",
+    "please help",
+    "help me",
+    "hurry",
+    "come fast",
+    "come quickly",
+    "trapped",
+    "not breathing",
+    "unconscious",
+    "heavy bleeding",
+    "serious bleeding",
+    "seriously bleeding",
+    "a lot of bleeding",
+    "bleeding a lot",
+    "bleeding badly"
+  ],
+  "high_incident_types": [
+    "Fire",
+    "Gas Leak",
+    "Electrical Hazard"
+  ],
+  "escalation_cues_other": {
+    "hi": {
+      "needs_native_review": true,
+      "cues": [
+        "मदद चाहिए",
+        "जल्दी",
+        "बेहोश",
+        "खून बहुत",
+        "madad chahiye",
+        "jaldi",
+        "behosh",
+        "khoon bahut",
+        "फंसा",
+        "फँसा"
+      ]
+    }
+  }
+}

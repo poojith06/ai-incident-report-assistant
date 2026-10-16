@@ -1,0 +1,13 @@
+# Local audit notes (not part of the project)
+PROJECT_SUMMARY.md
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Python
+__pycache__/
+*.pyc

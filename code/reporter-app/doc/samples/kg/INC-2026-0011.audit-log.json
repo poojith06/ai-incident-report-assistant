@@ -1,0 +1,137 @@
+{
+    "id": "log:INC-2026-0011:g1:1791698400000",
+    "incidentId": "INC-2026-0011",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "userConfirmed": true,
+    "abstained": false,
+    "recommendationIds": [
+        "rec:remove-exit-obstruction",
+        "rec:report-blocked-exit",
+        "rec:inspect-similar-routes",
+        "rec:compliance-follow-up"
+    ],
+    "shown": [
+        {
+            "id": "rec:report-blocked-exit",
+            "kind": "recommendation",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.625,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:blocked-exit -TRIGGERS_ACTION-> action:report-blocked-exit [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:report-blocked-exit]",
+                "incident-type:blocked-exit -PRODUCES_HAZARD-> hazard:blocked-exit -MAY_CAUSE-> consequence:blocked-route -REQUIRES_ACTION-> action:report-blocked-exit [edge:consequence:blocked-route>REQUIRES_ACTION>action:report-blocked-exit]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:remove-exit-obstruction",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.688,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:blocked-exit -TRIGGERS_ACTION-> action:remove-exit-obstruction [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:remove-exit-obstruction]",
+                "asset-type:fire-exit -REQUIRES_ACTION-> action:remove-exit-obstruction [edge:asset-type:fire-exit>REQUIRES_ACTION>action:remove-exit-obstruction]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:inspect-similar-routes",
+            "kind": "recommendation",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.627,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:blocked-exit -TRIGGERS_ACTION-> action:inspect-similar-routes [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:inspect-similar-routes]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "rec:compliance-follow-up",
+            "kind": "recommendation",
+            "phase": "PREVENTION",
+            "rank": 1,
+            "score": 0.612,
+            "sourceId": "sop:demo-seed:v1",
+            "provenance": [
+                "incident-type:blocked-exit -TRIGGERS_ACTION-> action:compliance-follow-up [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:compliance-follow-up]"
+            ],
+            "renderMode": "TEMPLATE"
+        },
+        {
+            "id": "consequence:blocked-route",
+            "kind": "consequence",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [
+                "incident-type:blocked-exit -PRODUCES_HAZARD-> hazard:blocked-exit -MAY_CAUSE-> consequence:blocked-route"
+            ],
+            "renderMode": null
+        },
+        {
+            "id": "team:facilities",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        },
+        {
+            "id": "team:fire-safety",
+            "kind": "team",
+            "phase": null,
+            "rank": null,
+            "score": null,
+            "sourceId": null,
+            "provenance": [],
+            "renderMode": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury state unknown",
+            "path": "incident-type:blocked-exit -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "rec:follow-compliance-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:blocked-exit -TRIGGERS_ACTION-> action:follow-compliance-sop [edge:incident-type:blocked-exit>TRIGGERS_ACTION>action:follow-compliance-sop]"
+        }
+    ],
+    "unresolvedQuestions": [
+        {
+            "id": "q:injury",
+            "text": "Was anyone hurt?"
+        }
+    ],
+    "warnings": [],
+    "historyCitations": [],
+    "inputFacts": {
+        "type": "BLOCKED_EXIT",
+        "severity": "MEDIUM",
+        "status": "UNKNOWN",
+        "locationType": "CORRIDOR",
+        "affectedAssets": [
+            "FIRE_EXIT"
+        ],
+        "activeHazards": [
+            "BLOCKED_EXIT"
+        ],
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "injury": null,
+        "evidenceConfidence": 0.9
+    }
+}

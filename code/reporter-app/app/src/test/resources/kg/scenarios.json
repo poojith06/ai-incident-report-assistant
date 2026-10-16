@@ -1,0 +1,782 @@
+[
+  {
+    "name": "1 Classroom fire",
+    "report": {
+      "appType": "Fire",
+      "description": "A fire broke out in a classroom and has now been contained. The room is closed and smoke remains.",
+      "location": "Nilgiri classroom",
+      "hazardStillActive": false,
+      "injury": false,
+      "severity": "High",
+      "immediateActions": "Everyone left the room"
+    },
+    "expected": {
+      "type": "CLASSROOM_FIRE",
+      "locationType": "CLASSROOM",
+      "locationId": "building:nilgiri",
+      "status": "CONTAINED",
+      "assets": [],
+      "hazards": [
+        "SMOKE"
+      ],
+      "operationalEffects": [
+        "ROOM_UNUSABLE"
+      ]
+    },
+    "incident": {
+      "incidentId": "INC-2026-0001",
+      "type": "CLASSROOM_FIRE",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "CONTAINED",
+      "locationId": "building:nilgiri",
+      "locationType": "CLASSROOM",
+      "affectedAssets": [],
+      "activeHazards": [
+        "SMOKE"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [
+        "ROOM_UNUSABLE"
+      ],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "Nilgiri classroom"
+    },
+    "mustInclude": [
+      "rec:report-fire",
+      "rec:leave-area",
+      "rec:follow-evac",
+      "rec:isolate-power",
+      "rec:close-area",
+      "rec:fire-inspection",
+      "rec:electrical-inspection",
+      "rec:review-fire-checks"
+    ],
+    "optionalDependents": [
+      "rec:reopen-clearance"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-fire-evac-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-fire-evac-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:alternate-room"
+    ],
+    "suppressedArrangements": [
+      "arrangement:verified-alternate-room"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=3, OPERATIONAL=2, RECOVERY=3, PREVENTION=1; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "2 Computer fire",
+    "report": {
+      "appType": "Fire",
+      "description": "A desktop computer caught fire in the computer lab. The fire is now isolated and the desktop is unusable, a little smoke remains.",
+      "location": "KRB computer lab",
+      "hazardStillActive": false,
+      "injury": false,
+      "severity": "High",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "COMPUTER_FIRE",
+      "locationType": "COMPUTER_LAB",
+      "locationId": "building:krb",
+      "status": "CONTAINED",
+      "assets": [
+        "DESKTOP"
+      ],
+      "hazards": [
+        "SMOKE"
+      ],
+      "operationalEffects": [
+        "WORKSTATION_UNAVAILABLE"
+      ]
+    },
+    "incident": {
+      "incidentId": "INC-2026-0002",
+      "type": "COMPUTER_FIRE",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "CONTAINED",
+      "locationId": "building:krb",
+      "locationType": "COMPUTER_LAB",
+      "affectedAssets": [
+        "DESKTOP"
+      ],
+      "activeHazards": [
+        "SMOKE"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [
+        "WORKSTATION_UNAVAILABLE"
+      ],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "KRB computer lab"
+    },
+    "mustInclude": [
+      "rec:report-fire",
+      "rec:leave-area",
+      "rec:follow-evac",
+      "rec:isolate-asset",
+      "rec:keep-damaged-unused",
+      "rec:inspect-affected-device",
+      "rec:preserve-logs-recovery",
+      "rec:replacement-workstation",
+      "rec:review-electrical-load",
+      "rec:review-fire-checks"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-fire-evac-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-fire-evac-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:alternate-lab",
+      "arrangement:temporary-workstations"
+    ],
+    "suppressedArrangements": [
+      "arrangement:verified-alternate-room"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=3, OPERATIONAL=2, RECOVERY=3, PREVENTION=2; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "3 Server cooling failure",
+    "report": {
+      "appType": "Equipment Failure",
+      "description": "The cooling system in the server room has failed and the servers are getting hot. The problem is still there.",
+      "location": "KRB server room",
+      "hazardStillActive": true,
+      "injury": false,
+      "severity": "High",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "COOLING_FAILURE",
+      "locationType": "SERVER_ROOM",
+      "locationId": "building:krb",
+      "status": "ACTIVE",
+      "assets": [
+        "SERVER",
+        "COOLING_UNIT"
+      ],
+      "hazards": [
+        "OVERHEATING"
+      ],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0003",
+      "type": "COOLING_FAILURE",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "ACTIVE",
+      "locationId": "building:krb",
+      "locationType": "SERVER_ROOM",
+      "affectedAssets": [
+        "SERVER",
+        "COOLING_UNIT"
+      ],
+      "activeHazards": [
+        "OVERHEATING"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "KRB server room"
+    },
+    "mustInclude": [
+      "rec:report-infra",
+      "rec:assess-service-impact",
+      "rec:invoke-continuity",
+      "rec:inspect-cooling"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-it-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-it-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:interim-service-workaround"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=1, OPERATIONAL=3, RECOVERY=0, PREVENTION=0; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "4 Water near power strip",
+    "report": {
+      "appType": "Electrical Hazard",
+      "description": "There is water near the power strip on the floor and it is still spreading.",
+      "location": "Himalaya lab",
+      "hazardStillActive": true,
+      "injury": false,
+      "severity": "High",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "WATER_NEAR_POWER",
+      "locationType": "RESEARCH_LAB",
+      "locationId": "building:himalaya",
+      "status": "ACTIVE",
+      "assets": [
+        "POWER_STRIP"
+      ],
+      "hazards": [
+        "WATER_NEAR_POWER"
+      ],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0004",
+      "type": "WATER_NEAR_POWER",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "ACTIVE",
+      "locationId": "building:himalaya",
+      "locationType": "RESEARCH_LAB",
+      "affectedAssets": [
+        "POWER_STRIP"
+      ],
+      "activeHazards": [
+        "WATER_NEAR_POWER"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "Himalaya lab"
+    },
+    "mustInclude": [
+      "rec:exclusion-zone-water-power",
+      "rec:avoid-electrical",
+      "rec:report-electrical",
+      "rec:isolate-power"
+    ],
+    "optionalDependents": [
+      "rec:stop-water-source"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-electrical-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-electrical-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:alternate-lab"
+    ],
+    "suppressedArrangements": [
+      "arrangement:verified-alternate-room"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=3, OPERATIONAL=2, RECOVERY=0, PREVENTION=0; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "5 Repeated washroom leak",
+    "report": {
+      "appType": "Water Leak",
+      "description": "Water keeps leaking from a tap in the washroom and the floor is slippery. This has happened several times.",
+      "location": "Nilgiri washroom",
+      "hazardStillActive": true,
+      "injury": false,
+      "severity": "Medium",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "WATER_LEAK",
+      "locationType": "WASHROOM",
+      "locationId": "building:nilgiri",
+      "status": "ACTIVE",
+      "assets": [
+        "PIPE"
+      ],
+      "hazards": [
+        "SLIP"
+      ],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0005",
+      "type": "WATER_LEAK",
+      "severity": "MEDIUM",
+      "urgency": null,
+      "status": "ACTIVE",
+      "locationId": "building:nilgiri",
+      "locationType": "WASHROOM",
+      "affectedAssets": [
+        "PIPE"
+      ],
+      "activeHazards": [
+        "SLIP"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "Nilgiri washroom"
+    },
+    "mustInclude": [
+      "rec:warn-slip",
+      "rec:report-leak",
+      "rec:repair-leak",
+      "rec:restrict-wet-area",
+      "rec:inspect-adjoining"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-water-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-water-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:alternate-washroom"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=2, OPERATIONAL=3, RECOVERY=0, PREVENTION=0; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required.",
+    "historyDependent": [
+      "rec:inspect-shared-plumbing"
+    ]
+  },
+  {
+    "name": "6 Hostel smoke",
+    "report": {
+      "appType": "Fire / Smoke",
+      "description": "Smoke was coming from a room in the hostel. The fire alarm rang and the smoke has stopped now.",
+      "location": "hostel room",
+      "hazardStillActive": false,
+      "injury": false,
+      "severity": "High",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "HOSTEL_FIRE",
+      "locationType": "HOSTEL_ROOM",
+      "locationId": "building:hostels-area",
+      "status": "CONTAINED",
+      "assets": [],
+      "hazards": [
+        "SMOKE"
+      ],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0006",
+      "type": "HOSTEL_FIRE",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "CONTAINED",
+      "locationId": "building:hostels-area",
+      "locationType": "HOSTEL_ROOM",
+      "affectedAssets": [],
+      "activeHazards": [
+        "SMOKE"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "hostel room"
+    },
+    "mustInclude": [
+      "rec:report-fire",
+      "rec:leave-area",
+      "rec:follow-evac",
+      "rec:isolate-power",
+      "rec:hostel-close-area",
+      "rec:fire-inspection",
+      "rec:electrical-inspection",
+      "rec:review-fire-checks"
+    ],
+    "optionalDependents": [
+      "rec:reopen-clearance"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-fire-evac-sop",
+      "rec:follow-hostel-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-fire-evac-sop",
+      "rec:follow-hostel-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:temporary-accommodation"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=3, OPERATIONAL=2, RECOVERY=3, PREVENTION=1; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "7 Mess LPG smell",
+    "report": {
+      "appType": "Gas Leak",
+      "description": "Strong smell of LPG gas near the gas stove, the smell is still there.",
+      "location": "Mess kitchen",
+      "hazardStillActive": true,
+      "injury": false,
+      "severity": "High",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "LPG_SMELL",
+      "locationType": "KITCHEN",
+      "locationId": "building:mess-area",
+      "status": "ACTIVE",
+      "assets": [
+        "COOKING_EQUIPMENT"
+      ],
+      "hazards": [
+        "GAS_LEAK"
+      ],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0007",
+      "type": "LPG_SMELL",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "ACTIVE",
+      "locationId": "building:mess-area",
+      "locationType": "KITCHEN",
+      "affectedAssets": [
+        "COOKING_EQUIPMENT"
+      ],
+      "activeHazards": [
+        "GAS_LEAK"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "Mess kitchen"
+    },
+    "mustInclude": [
+      "rec:report-gas",
+      "rec:no-ignition",
+      "rec:leave-area",
+      "rec:inspect-gas-supply",
+      "rec:suspend-service"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-lpg-isolation-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-lpg-isolation-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:alternate-meal-service"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=3, OPERATIONAL=2, RECOVERY=0, PREVENTION=0; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "8 Football injury",
+    "report": {
+      "appType": "Injury",
+      "description": "A player fell during the football match and is on the ground holding his leg.",
+      "location": "Football ground",
+      "hazardStillActive": null,
+      "injury": true,
+      "severity": "High",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "SPORTS_INJURY",
+      "locationType": "FOOTBALL_GROUND",
+      "locationId": "building:outdoor-area",
+      "status": "UNKNOWN",
+      "assets": [],
+      "hazards": [],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0008",
+      "type": "SPORTS_INJURY",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "UNKNOWN",
+      "locationId": "building:outdoor-area",
+      "locationType": "FOOTBALL_GROUND",
+      "affectedAssets": [],
+      "activeHazards": [],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": true,
+      "locationText": "Football ground"
+    },
+    "mustInclude": [
+      "rec:medical-contact",
+      "rec:stop-play",
+      "rec:leave-assessment",
+      "rec:inspect-playing-area",
+      "rec:review-sports-safety"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-sports-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-sports-sop"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=3, OPERATIONAL=1, RECOVERY=0, PREVENTION=1; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "9 Broken classroom furniture",
+    "report": {
+      "appType": "Equipment Damage",
+      "description": "Two chairs and one bench in the classroom are broken.",
+      "location": "Himalaya classroom",
+      "hazardStillActive": false,
+      "injury": false,
+      "severity": "Low",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "DAMAGED_FURNITURE",
+      "locationType": "CLASSROOM",
+      "locationId": "building:himalaya",
+      "status": "UNKNOWN",
+      "assets": [
+        "FURNITURE"
+      ],
+      "hazards": [],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0009",
+      "type": "DAMAGED_FURNITURE",
+      "severity": "LOW",
+      "urgency": null,
+      "status": "UNKNOWN",
+      "locationId": "building:himalaya",
+      "locationType": "CLASSROOM",
+      "affectedAssets": [
+        "FURNITURE"
+      ],
+      "activeHazards": [],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "Himalaya classroom"
+    },
+    "mustInclude": [
+      "rec:stop-using-furniture",
+      "rec:report-damage",
+      "rec:remove-from-use",
+      "rec:inspect-similar-items",
+      "rec:update-capacity",
+      "rec:schedule-furniture-checks"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:alternate-seating"
+    ],
+    "suppressedArrangements": [
+      "arrangement:verified-alternate-room"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=2, OPERATIONAL=3, RECOVERY=0, PREVENTION=1; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "10 Chemical spill",
+    "report": {
+      "appType": "Spill",
+      "description": "A bottle of acid broke and the chemical spilled on the floor, the liquid is still spreading.",
+      "location": "Chemistry lab",
+      "hazardStillActive": true,
+      "injury": false,
+      "severity": "High",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "CHEMICAL_SPILL",
+      "locationType": "RESEARCH_LAB",
+      "locationId": null,
+      "status": "ACTIVE",
+      "assets": [
+        "CHEMICAL_CONTAINER"
+      ],
+      "hazards": [
+        "CHEMICAL_EXPOSURE"
+      ],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0010",
+      "type": "CHEMICAL_SPILL",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "ACTIVE",
+      "locationId": null,
+      "locationType": "RESEARCH_LAB",
+      "affectedAssets": [
+        "CHEMICAL_CONTAINER"
+      ],
+      "activeHazards": [
+        "CHEMICAL_EXPOSURE"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "Chemistry lab"
+    },
+    "mustInclude": [
+      "rec:avoid-chemical",
+      "rec:report-chemical",
+      "rec:isolate-chemical-area",
+      "rec:specialist-chemical"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-chemical-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-chemical-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:alternate-lab"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=2, OPERATIONAL=2, RECOVERY=0, PREVENTION=0; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "11 Blocked fire exit",
+    "report": {
+      "appType": "Other",
+      "description": "The fire exit is blocked by stored boxes.",
+      "location": "Nilgiri corridor",
+      "hazardStillActive": null,
+      "injury": null,
+      "severity": "Medium",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "BLOCKED_EXIT",
+      "locationType": "CORRIDOR",
+      "locationId": "building:nilgiri",
+      "status": "UNKNOWN",
+      "assets": [
+        "FIRE_EXIT"
+      ],
+      "hazards": [
+        "BLOCKED_EXIT"
+      ],
+      "operationalEffects": []
+    },
+    "incident": {
+      "incidentId": "INC-2026-0011",
+      "type": "BLOCKED_EXIT",
+      "severity": "MEDIUM",
+      "urgency": null,
+      "status": "UNKNOWN",
+      "locationId": "building:nilgiri",
+      "locationType": "CORRIDOR",
+      "affectedAssets": [
+        "FIRE_EXIT"
+      ],
+      "activeHazards": [
+        "BLOCKED_EXIT"
+      ],
+      "peopleAffected": null,
+      "operationalEffects": [],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": null,
+      "locationText": "Nilgiri corridor"
+    },
+    "mustInclude": [
+      "rec:report-blocked-exit",
+      "rec:remove-exit-obstruction",
+      "rec:inspect-similar-routes",
+      "rec:compliance-follow-up"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-compliance-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-compliance-sop"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=1, OPERATIONAL=2, RECOVERY=0, PREVENTION=1; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  },
+  {
+    "name": "12 Network and storage outage",
+    "report": {
+      "appType": "Equipment Failure",
+      "description": "The network is down and the storage system is not reachable, many services are unavailable.",
+      "location": "KRB network room",
+      "hazardStillActive": true,
+      "injury": false,
+      "severity": "High",
+      "immediateActions": null
+    },
+    "expected": {
+      "type": "NETWORK_OUTAGE",
+      "locationType": "NETWORK_ROOM",
+      "locationId": "building:krb",
+      "status": "ACTIVE",
+      "assets": [
+        "STORAGE_SYSTEM"
+      ],
+      "hazards": [],
+      "operationalEffects": [
+        "SERVICE_OUTAGE"
+      ]
+    },
+    "incident": {
+      "incidentId": "INC-2026-0012",
+      "type": "NETWORK_OUTAGE",
+      "severity": "HIGH",
+      "urgency": null,
+      "status": "ACTIVE",
+      "locationId": "building:krb",
+      "locationType": "NETWORK_ROOM",
+      "affectedAssets": [
+        "STORAGE_SYSTEM"
+      ],
+      "activeHazards": [],
+      "peopleAffected": null,
+      "operationalEffects": [
+        "SERVICE_OUTAGE"
+      ],
+      "evidenceConfidence": 0.9,
+      "timestamp": "2026-10-11T10:00:00+05:30",
+      "userConfirmed": true,
+      "injury": false,
+      "locationText": "KRB network room"
+    },
+    "mustInclude": [
+      "rec:report-infra",
+      "rec:assess-service-impact",
+      "rec:preserve-logs-ops",
+      "rec:invoke-continuity"
+    ],
+    "mustNotShowReporter": [
+      "rec:follow-it-sop"
+    ],
+    "adminOnlyPresent": [
+      "rec:follow-it-sop"
+    ],
+    "mustIncludeArrangements": [
+      "arrangement:interim-service-workaround"
+    ],
+    "note": "Phase candidate counts (reporter) IMMEDIATE=1, OPERATIONAL=3, RECOVERY=0, PREVENTION=0; all within output limits so mustInclude is independent of ranking. optionalDependents have a DEPENDS_ON prerequisite and are not required."
+  }
+]

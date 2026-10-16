@@ -1,0 +1,234 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0004:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0004",
+        "type": "WATER_NEAR_POWER",
+        "severity": "HIGH",
+        "status": "ACTIVE",
+        "urgency": null,
+        "locationType": "RESEARCH_LAB",
+        "locationLabel": "Himalaya lab",
+        "locationRedacted": false,
+        "affectedAssets": [
+            "POWER_STRIP"
+        ],
+        "activeHazards": [
+            "WATER_NEAR_POWER"
+        ],
+        "injuryReported": false,
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": null,
+    "recommendations": [
+        {
+            "id": "rec:exclusion-zone-water-power",
+            "actionId": "action:exclusion-zone-water-power",
+            "title": "Keep clear of the wet area near power",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.686,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:exclusion-zone-water-power [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:exclusion-zone-water-power]",
+                "incident-type:water-near-power -PRODUCES_HAZARD-> hazard:water-near-power -MAY_CAUSE-> consequence:water-reaches-power -REQUIRES_ACTION-> action:exclusion-zone-water-power [edge:consequence:water-reaches-power>REQUIRES_ACTION>action:exclusion-zone-water-power]"
+            ],
+            "canonicalText": "Stay away from the wet area near the power equipment and keep other people away from it.",
+            "renderedText": "Stay away from the wet area near the power equipment and keep other people away from it.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:electrical-maintenance",
+            "ownerTeamName": "Electrical maintenance",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:avoid-electrical",
+            "actionId": "action:avoid-electrical",
+            "title": "Stay away from electrical equipment",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.677,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:avoid-electrical [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:avoid-electrical]"
+            ],
+            "canonicalText": "Stay away from the affected electrical equipment and do not touch it.",
+            "renderedText": "Stay away from the affected electrical equipment and do not touch it.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:electrical-maintenance",
+            "ownerTeamName": "Electrical maintenance",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:report-electrical",
+            "actionId": "action:report-electrical",
+            "title": "Report the electrical problem",
+            "phase": "IMMEDIATE",
+            "rank": 3,
+            "score": 0.665,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:report-electrical [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:report-electrical]"
+            ],
+            "canonicalText": "Report the electrical problem to electrical maintenance.",
+            "renderedText": "Report the electrical problem to electrical maintenance.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:electrical-maintenance",
+            "ownerTeamName": "Electrical maintenance",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:isolate-power",
+            "actionId": "action:isolate-power",
+            "title": "Isolate power to the area",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.74,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:isolate-power [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:isolate-power]",
+                "incident-type:water-near-power -PRODUCES_HAZARD-> hazard:water-near-power -MAY_CAUSE-> consequence:water-reaches-power -REQUIRES_ACTION-> action:isolate-power [edge:consequence:water-reaches-power>REQUIRES_ACTION>action:isolate-power]",
+                "asset-type:power-strip -REQUIRES_ACTION-> action:isolate-power [edge:asset-type:power-strip>REQUIRES_ACTION>action:isolate-power]"
+            ],
+            "canonicalText": "Ask authorized electrical maintenance to isolate power to the affected area.",
+            "renderedText": "Ask authorized electrical maintenance to isolate power to the affected area.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:electrical-maintenance",
+            "ownerTeamName": "Electrical maintenance",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:stop-water-source",
+            "actionId": "action:stop-water-source",
+            "title": "Stop the water source",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.65,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:water-near-power -TRIGGERS_ACTION-> action:stop-water-source [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:stop-water-source]"
+            ],
+            "canonicalText": "Ask authorized plumbing staff to stop the water source once the area is safe.",
+            "renderedText": "Ask authorized plumbing staff to stop the water source once the area is safe.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:plumbing",
+            "ownerTeamName": "Plumbing",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:shock-exposure",
+            "name": "Electrical exposure",
+            "text": "People nearby could be exposed to an electrical hazard.",
+            "consequenceType": "SAFETY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:water-near-power -PRODUCES_HAZARD-> hazard:water-near-power -MAY_CAUSE-> consequence:shock-exposure"
+            ]
+        },
+        {
+            "id": "consequence:water-reaches-power",
+            "name": "Water reaching electricity",
+            "text": "Water may reach electrical equipment.",
+            "consequenceType": "SECONDARY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:water-near-power -PRODUCES_HAZARD-> hazard:water-near-power -MAY_CAUSE-> consequence:water-reaches-power"
+            ]
+        }
+    ],
+    "temporaryArrangements": [
+        {
+            "id": "arrangement:alternate-lab",
+            "title": "Alternate lab space request",
+            "text": "Ask the academic office to identify alternate lab space for the affected session.",
+            "ownerTeamId": "team:academic-office",
+            "provenance": [
+                "location-type:research-lab -HAS_CONTINUITY_OPTION-> arrangement:alternate-lab"
+            ],
+            "sourceId": "sop:demo-seed:v1",
+            "unverifiedDraft": false
+        }
+    ],
+    "responsibleTeams": [
+        {
+            "id": "team:electrical-maintenance",
+            "name": "Electrical maintenance",
+            "role": "ELECTRICAL_MAINTENANCE",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:plumbing",
+            "name": "Plumbing",
+            "role": "PLUMBING",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:academic-office",
+            "name": "Academic office",
+            "role": "ACADEMIC_OFFICE",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:plumbing-electrical-clearance",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:water-near-power -TRIGGERS_ACTION-> action:plumbing-electrical-clearance"
+        },
+        {
+            "candidateId": "action:electrical-inspection",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:water-near-power -TRIGGERS_ACTION-> action:electrical-inspection"
+        },
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:water-near-power -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "arrangement:verified-alternate-room",
+            "kind": "arrangement",
+            "reason": "capacity data unknown: no replacement room is invented",
+            "path": "location-type:research-lab -HAS_CONTINUITY_OPTION-> arrangement:verified-alternate-room"
+        },
+        {
+            "candidateId": "rec:follow-electrical-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:water-near-power -TRIGGERS_ACTION-> action:follow-electrical-sop [edge:incident-type:water-near-power>TRIGGERS_ACTION>action:follow-electrical-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "historyCitations": [],
+    "warnings": []
+}

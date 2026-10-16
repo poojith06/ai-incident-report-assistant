@@ -1,0 +1,205 @@
+{
+    "schemaVersion": 1,
+    "exportId": "export:INC-2026-0010:g1",
+    "createdAt": "2026-10-11T06:00:00Z",
+    "graphVersion": 1,
+    "audience": "REPORTER",
+    "incident": {
+        "incidentId": "INC-2026-0010",
+        "type": "CHEMICAL_SPILL",
+        "severity": "HIGH",
+        "status": "ACTIVE",
+        "urgency": null,
+        "locationType": "RESEARCH_LAB",
+        "locationLabel": "Chemistry lab",
+        "locationRedacted": false,
+        "affectedAssets": [
+            "CHEMICAL_CONTAINER"
+        ],
+        "activeHazards": [
+            "CHEMICAL_EXPOSURE"
+        ],
+        "injuryReported": false,
+        "peopleAffected": null,
+        "operationalEffects": [],
+        "evidenceConfidence": 0.9,
+        "occurredAt": "2026-10-11T10:00:00+05:30"
+    },
+    "abstained": false,
+    "guidanceLabel": "Demo guidance - pending IIIT-H admin approval",
+    "medicalFooter": null,
+    "recommendations": [
+        {
+            "id": "rec:avoid-chemical",
+            "actionId": "action:avoid-chemical",
+            "title": "Stay away from the spilled material",
+            "phase": "IMMEDIATE",
+            "rank": 1,
+            "score": 0.683,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:chemical-spill -TRIGGERS_ACTION-> action:avoid-chemical [edge:incident-type:chemical-spill>TRIGGERS_ACTION>action:avoid-chemical]",
+                "incident-type:chemical-spill -PRODUCES_HAZARD-> hazard:chemical-exposure -MAY_CAUSE-> consequence:chem-exposure -REQUIRES_ACTION-> action:avoid-chemical [edge:consequence:chem-exposure>REQUIRES_ACTION>action:avoid-chemical]"
+            ],
+            "canonicalText": "Stay away from the spilled material, keep other people away and do not touch it.",
+            "renderedText": "Stay away from the spilled material, keep other people away and do not touch it.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:lab-safety",
+            "ownerTeamName": "Lab safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:report-chemical",
+            "actionId": "action:report-chemical",
+            "title": "Report the spill",
+            "phase": "IMMEDIATE",
+            "rank": 2,
+            "score": 0.68,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:chemical-spill -TRIGGERS_ACTION-> action:report-chemical [edge:incident-type:chemical-spill>TRIGGERS_ACTION>action:report-chemical]"
+            ],
+            "canonicalText": "Report the spill to lab safety staff and wait for specialist responders.",
+            "renderedText": "Report the spill to lab safety staff and wait for specialist responders.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:lab-safety",
+            "ownerTeamName": "Lab safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:isolate-chemical-area",
+            "actionId": "action:isolate-chemical-area",
+            "title": "Isolate the area",
+            "phase": "OPERATIONAL",
+            "rank": 1,
+            "score": 0.746,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:chemical-spill -TRIGGERS_ACTION-> action:isolate-chemical-area [edge:incident-type:chemical-spill>TRIGGERS_ACTION>action:isolate-chemical-area]",
+                "asset-type:chemical-container -REQUIRES_ACTION-> action:isolate-chemical-area [edge:asset-type:chemical-container>REQUIRES_ACTION>action:isolate-chemical-area]"
+            ],
+            "canonicalText": "Ask authorized lab safety staff to isolate the affected area.",
+            "renderedText": "Ask authorized lab safety staff to isolate the affected area.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:lab-safety",
+            "ownerTeamName": "Lab safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        },
+        {
+            "id": "rec:specialist-chemical",
+            "actionId": "action:specialist-chemical",
+            "title": "Arrange specialist responders",
+            "phase": "OPERATIONAL",
+            "rank": 2,
+            "score": 0.665,
+            "sourceId": "sop:demo-seed:v1",
+            "sourceLabel": "Demo guidance - pending IIIT-H admin approval",
+            "provenance": [
+                "incident-type:chemical-spill -TRIGGERS_ACTION-> action:specialist-chemical [edge:incident-type:chemical-spill>TRIGGERS_ACTION>action:specialist-chemical]"
+            ],
+            "canonicalText": "Ask authorized lab safety staff to arrange specialist responders for the spill.",
+            "renderedText": "Ask authorized lab safety staff to arrange specialist responders for the spill.",
+            "renderMode": "TEMPLATE",
+            "ownerTeamId": "team:lab-safety",
+            "ownerTeamName": "Lab safety",
+            "requiresHumanApproval": false,
+            "unverifiedDraft": false,
+            "historyPatternIds": []
+        }
+    ],
+    "consequences": [
+        {
+            "id": "consequence:chem-exposure",
+            "name": "Exposure to material",
+            "text": "People nearby may be exposed to hazardous material.",
+            "consequenceType": "SAFETY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:chemical-spill -PRODUCES_HAZARD-> hazard:chemical-exposure -MAY_CAUSE-> consequence:chem-exposure"
+            ]
+        },
+        {
+            "id": "consequence:contamination-spread",
+            "name": "Spread of material",
+            "text": "The material may spread to adjoining areas.",
+            "consequenceType": "SECONDARY",
+            "likelihood": "LIKELY",
+            "provenance": [
+                "incident-type:chemical-spill -PRODUCES_HAZARD-> hazard:chemical-exposure -MAY_CAUSE-> consequence:contamination-spread"
+            ]
+        }
+    ],
+    "temporaryArrangements": [
+        {
+            "id": "arrangement:alternate-lab",
+            "title": "Alternate lab space request",
+            "text": "Ask the academic office to identify alternate lab space for the affected session.",
+            "ownerTeamId": "team:academic-office",
+            "provenance": [
+                "location-type:research-lab -HAS_CONTINUITY_OPTION-> arrangement:alternate-lab"
+            ],
+            "sourceId": "sop:demo-seed:v1",
+            "unverifiedDraft": false
+        }
+    ],
+    "responsibleTeams": [
+        {
+            "id": "team:lab-safety",
+            "name": "Lab safety",
+            "role": "LAB_SAFETY",
+            "verified": false,
+            "contactNumber": null
+        },
+        {
+            "id": "team:academic-office",
+            "name": "Academic office",
+            "role": "ACADEMIC_OFFICE",
+            "verified": false,
+            "contactNumber": null
+        }
+    ],
+    "suppressed": [
+        {
+            "candidateId": "action:chemical-clearance",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED]",
+            "path": "incident-type:chemical-spill -TRIGGERS_ACTION-> action:chemical-clearance"
+        },
+        {
+            "candidateId": "action:review-chemical-storage",
+            "kind": "action",
+            "reason": "condition failed: status ACTIVE not in [CONTAINED, RESOLVED, UNKNOWN]",
+            "path": "incident-type:chemical-spill -TRIGGERS_ACTION-> action:review-chemical-storage"
+        },
+        {
+            "candidateId": "action:medical-contact",
+            "kind": "action",
+            "reason": "condition failed: injury is false, needs true",
+            "path": "incident-type:chemical-spill -TRIGGERS_ACTION-> action:medical-contact"
+        },
+        {
+            "candidateId": "edge:location-type:research-lab>HAS_CONTINUITY_OPTION>arrangement:verified-alternate-room",
+            "kind": "edge",
+            "reason": "condition failed: incident type CHEMICAL_SPILL not in [FIRE_SMOKE, CLASSROOM_FIRE, ELECTRICAL_PANEL_FIRE, CEILING_LEAK, CEILING_DAMAGE, PIPE_LEAK, WATER_LEAK, WATER_NEAR_POWER, FALLING_OBJECT, BROKEN_GLASS, POWER_OUTAGE, COMPUTER_FIRE]",
+            "path": null
+        },
+        {
+            "candidateId": "rec:follow-chemical-sop",
+            "kind": "action",
+            "reason": "recommendation is not approved (status DRAFT)",
+            "path": "incident-type:chemical-spill -TRIGGERS_ACTION-> action:follow-chemical-sop [edge:incident-type:chemical-spill>TRIGGERS_ACTION>action:follow-chemical-sop]"
+        }
+    ],
+    "unresolvedQuestions": [],
+    "historyCitations": [],
+    "warnings": []
+}

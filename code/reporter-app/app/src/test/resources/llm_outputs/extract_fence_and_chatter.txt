@@ -1,0 +1,5 @@
+Sure! Here is the incident report:
+```json
+{"incident_type": "Equipment Failure", "severity": "Medium", "location": "line 3", "datetime": "this morning", "persons_involved": null, "actions_taken": null, "description": "Conveyor stopped on line 3."}
+```
+Let me know if you need anything else.
