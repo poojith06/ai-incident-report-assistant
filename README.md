@@ -35,8 +35,6 @@ decided by deterministic, unit-tested Kotlin.
   The shipped guidance is demo content, not real SOPs.
 - **Admin dashboard**: PIN-gated (demo gate, not real security) with report history, logs, statistics, an interactive
   graph view and a versioned knowledge editor.
-- **Built-in evaluation**: a developer-menu eval run (WER, field match, dialogue invariants, latency) and a Mock AI mode
-  for demos without model files.
 
 ## Architecture
 
@@ -62,7 +60,6 @@ The app starts in Mock AI mode; with Real AI on, the default backend is Qwen3-4B
 |---|---|---|
 | Speech-to-text | whisper.cpp `small.en` (CPU, English) | Gemma native audio input |
 | Extraction LLM | Qwen3-4B-Instruct-2507 (w4a16) via QAIRT/Genie, Hexagon NPU | Gemma 4 E2B (q4_0) via llama.cpp (JNI): LLM on the NPU, audio/image encoder on the Adreno GPU |
-| Photos | attached only | described by Gemma |
 | Speech output | sherpa-onnx: Piper (English) + AI4Bharat Rasa (Indic), Android TTS fallback | same |
 
 Models are not included in the repository; see the setup guide.
@@ -116,19 +113,6 @@ Full instructions (model copy commands, on-device tests, and why not to use `con
 | sherpa-onnx v1.13.8 Android libraries | [sherpa-onnx v1.13.8 release](https://github.com/k2-fsa/sherpa-onnx/releases/tag/v1.13.8) (fetched by `android/tools/pull_sherpa_libs.sh`) |
 | Piper `en_US-amy-medium` (int8) voice | [sherpa-onnx TTS models](https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models) |
 | AI4Bharat Rasa Indic voice (`vits_rasa_13`, int8) | [ai4bharat/vits_rasa_13 on Hugging Face](https://huggingface.co/ai4bharat/vits_rasa_13) |
-
-## Evaluation highlights
-
-| Measurement | Result | Source |
-|---|---|---|
-| LLM selection, 35-case dev set (4 fields per case) | Qwen3-4B: 93.6% field accuracy, 100% valid JSON, 1 hallucinated field. Llama 3.2 1B: 47.9%, 68.6% valid JSON, 8 hallucinated fields | `research/rules_and_evaluation/results/` |
-| Rule layer on the same set | Qwen3-4B + rules: 100%, 0 hallucinated fields (dev-set figure, optimistic: the rules were written against this set) | `research/rules_and_evaluation/results/` |
-| Whisper on the QIDK CPU (4 clips) | `small.en`, 6 threads: 0.0% WER, 3,052 ms median; `base.en`: 11.1% WER, 1,021 ms (approximate references) | `android/doc/MODEL_INTEGRATION.md` |
-| Qwen3-4B extraction on the NPU (24 runs) | prefill median 758 ms, decode median 6,859 ms; model load 3.1-3.7 s | `android/doc/PROMPTS.md` |
-| End-to-end audio run (Qwen + Whisper, 4 recordings) | end of speech to filled form: 12,313 ms median; WER 0.0%; field accuracy 6/9 | `android/doc/EVAL_RESULTS.md` |
-| Photo-only reports (Gemma, 6 photos) | 6/6 runs ok, 11/12 fields correct, 0 questions asked, every severity floor met | `android/doc/TESTING.md` |
-| Multilingual speech (Gemma) | language identified correctly for Assamese, Odia and Telugu; Tamil needed the language set manually | `android/doc/TESTING.md` |
-| Tests | 900+ JVM unit tests and 26 on-device tests | `android/app/src/test`, `android/app/src/androidTest` |
 
 ## License
 
