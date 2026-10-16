@@ -1,2 +1,0 @@
-building_id,floor_label,zone_name,room_id,room_name,room_type,capacity,criticality,active,verified_by,verified_at
-building:example,EXAMPLE - replace,EXAMPLE - replace,room:example,EXAMPLE - replace,CLASSROOM,EXAMPLE - replace (whole number),LOW,true,EXAMPLE - replace,EXAMPLE - replace

@@ -1,5 +1,0 @@
-<think>
-The user reports a spill. I should answer in JSON.
-</think>
-
- "Spill", "severity": "Low", "location": "corridor", "datetime": null, "persons_involved": null, "actions_taken": "cleaned it", "description": "Glass spill in the corridor."}

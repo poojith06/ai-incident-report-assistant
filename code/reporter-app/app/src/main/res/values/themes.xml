@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Dark only. In-app colors come from ui/theme/Theme.kt (doc/THEMING.md). -->
-    <style name="Theme.Test_app" parent="android:Theme.Material.NoActionBar" />
-</resources>

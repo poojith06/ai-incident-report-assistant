@@ -1,1 +1,0 @@
- "", "transcript": "", "image_description": "A large building engulfed in flames with thick smoke.", "incident_type": "Fire", "severity": "Critical", "location": "building facade", "datetime": null, "persons_involved": null, "actions_taken": null, "description": "A building is on fire."}

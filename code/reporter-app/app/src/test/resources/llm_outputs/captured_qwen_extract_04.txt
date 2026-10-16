@@ -1,1 +1,0 @@
- null, "severity": null, "location": null, "datetime": null, "persons_involved": null, "actions_taken": null, "description": null}

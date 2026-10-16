@@ -1,1 +1,0 @@
- "Electrical Hazard", "severity": "Low", "location": "room 4", "datetime": null, "persons_involved": null, "actions_taken": null, "description": "The printer gave off a spark in room 4. Nobody was hurt."}

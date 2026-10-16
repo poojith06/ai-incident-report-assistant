@@ -1,5 +1,0 @@
-{
-  "version": 1,
-  "_comment": "Languages offered by Settings > Spoken language (and the Home language chip). Names only: the name is told to the speech model (Prompts.transcriptionForced) and stored as input.language (lowercased, English = en). Add or remove names here, no code change. Used by the Gemma backend only.",
-  "languages": ["English", "Hindi", "Tamil", "Telugu", "Kannada", "Malayalam", "Marathi", "Gujarati", "Punjabi", "Bengali", "Assamese", "Odia", "Urdu"]
-}

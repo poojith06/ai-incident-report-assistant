@@ -1,3 +1,0 @@
- "Gas Leak", "severity": "High", "location": "boiler room", "datetime": "10:30 pm", "persons_involved": "two technicians", "actions_taken": null, "description": "Gas leak in the boiler room."}<|im_end|>
-<|im_start|>user
-Thanks! Anything else?

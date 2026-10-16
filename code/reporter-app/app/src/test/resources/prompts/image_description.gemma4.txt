@@ -1,6 +1,0 @@
-<|turn>user
-This photo was taken to report an incident at a workplace or campus. Look for what went wrong: fire, flames, smoke, soot or burn marks, damaged electrical parts, water leaking or flooding, a burst or broken pipe, spilled liquid or foam, broken equipment, structural damage, or a person who is hurt.
-Respond with ONLY a JSON object, no markdown, in exactly this shape:
-{"description": "<two short sentences: first the place or setting and what is visible, then what is wrong or dangerous>", "tags": ["<up to 5 lowercase keywords>"]}<__media__><turn|>
-<|turn>model
-{"description":

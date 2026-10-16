@@ -1,1 +1,0 @@
- "Injury", "severity": "High", "location": "workshop", "datetime": "just now", "persons_involved": "a worker", "actions_taken": null, "description": "A worker cut his hand on a mac

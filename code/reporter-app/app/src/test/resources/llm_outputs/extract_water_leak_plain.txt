@@ -1,1 +1,0 @@
- "Water Leak", "severity": "Medium", "location": "Conference Room 2", "datetime": "around 10 AM", "persons_involved": null, "actions_taken": "Maintenance isolated the area", "description": "Water leak near Conference Room 2, area isolated."}

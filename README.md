@@ -1,106 +1,105 @@
-# Setup and run
+# AI Incident Report Assistant
 
-Android app (Kotlin, Jetpack Compose) in `reporter-app/`. Target device: Qualcomm Innovators Development Kit (QIDK), Snapdragon 8 Elite (SM8750P), Android 15, QAIRT 2.45. Everything runs offline.
+**Winner, Megathon X (IIIT Hyderabad), Qualcomm track**
 
-## Requirements
+An Android app that turns a spoken (or photographed) incident into a structured, reviewable incident report,
+running entirely on a Qualcomm QIDK (Snapdragon 8 Elite, Hexagon NPU). There is no cloud API and no
+`INTERNET` permission: the app works in airplane mode.
 
-- Windows, macOS or Linux host with Android SDK, JDK 17 or newer, and `adb` (USB debugging enabled on the device)
-- Android NDK 28.2 (installed by Android Studio / Gradle on first build)
-- A QIDK board connected over USB. `adb devices` must list it. Below, `<serial>` is its adb serial.
-- About 8 GB of free storage on the device (Qwen3-4B 3 GB, Gemma 4 E2B 4.4 GB, Whisper 0.5 GB, TTS 0.1 GB; install only the backends you want)
+The design principle is **the model proposes, the code verifies**: the on-device LLM only turns language into
+fields, while severity, which follow-up question to ask, when to stop, and what is said about emergencies are
+decided by deterministic, unit-tested Kotlin.
 
-## 1. Get the code
+<p>
+  <img src="docs/images/processing.png" width="19%" alt="Processing a spoken report">
+  <img src="docs/images/review-ai-filled-vs-answered.png" width="19%" alt="Review form with AI-filled fields">
+  <img src="docs/images/report-submitted.png" width="19%" alt="Submitted report">
+  <img src="docs/images/hindi-readback.png" width="19%" alt="Hindi read-back">
+  <img src="docs/images/admin-knowledge-graph.png" width="19%" alt="Admin knowledge-graph view">
+</p>
 
-```sh
-git clone <repository-url>
-cd <repository>/reporter-app
+## Features
+
+- **Voice reporting**: speak naturally; the app transcribes, extracts the report fields and fills an editable review form.
+- **Photo input**: attach up to 3 gallery photos (downscaled to 512 px); with the Gemma backend each photo is
+  described and used in extraction. A photo-only mode files a report without speaking.
+- **Short, deterministic follow-ups**: asks only about fields that are still missing, each at most once, at most
+  2 questions per report; tone modes PLAIN / CARE / URGENT with a negation guard ("no one was hurt").
+- **Rule-based severity**: final severity = max(model hint, rule floors); fire, gas and electrical hazards are at
+  least High. URGENT reports show an emergency banner and ask one safety question (nothing is sent automatically).
+- **Multilingual**: with Gemma, speech in Indian languages is transcribed on the device and the report is written in
+  English. Questions and read-backs are spoken in Hindi and Telugu (translations pending native review);
+  offline speech output via sherpa-onnx (Piper for English, AI4Bharat Rasa for Indic scripts).
+- **Post-incident guidance**: after submission, an offline knowledge graph (458 nodes, 872 edges, 56 incident types)
+  suggests ranked next steps, with safety and medical filters, and abstains when evidence is weak.
+  The shipped guidance is demo content, not real SOPs.
+- **Admin dashboard**: PIN-gated (demo gate, not real security) with report history, logs, statistics, an interactive
+  graph view and a versioned knowledge editor.
+- **Built-in evaluation**: a developer-menu eval run (WER, field match, dialogue invariants, latency) and a Mock AI mode
+  for demos without model files.
+
+## Architecture
+
+```mermaid
+flowchart LR
+  A["Mic / gallery photos"] --> B["Speech-to-text<br/>Gemma audio or whisper.cpp"]
+  A -->|photos, Gemma only| C
+  B --> C["LLM extraction<br/>Qwen3-4B or Gemma 4 E2B"]
+  C --> D["Rule layer<br/>parser, severity floors, tone mode"]
+  D --> E["Follow-up planner<br/>ask-once, max 2 questions"]
+  E -->|spoken question and answer| B
+  E --> F["Review form"]
+  F --> G["Submit<br/>saved on device"]
+  G --> H["Knowledge graph<br/>post-incident guidance"]
 ```
 
-## 2. Pull the runtime libraries (once per checkout, git-ignored)
+## Models and runtimes
 
-```sh
-tools/pull_qairt_libs.sh <serial>      # QAIRT runtime for Qwen3-4B (Genie)
-tools/pull_llama_libs.sh <serial>      # llama.cpp libraries, only for the Gemma backend
-sh tools/pull_sherpa_libs.sh           # sherpa-onnx libraries (downloads from GitHub), for spoken output
+Two switchable on-device backends, selected in the hidden developer menu (long-press the Home title).
+The app starts in Mock AI mode; with Real AI on, the default backend is Qwen3-4B + Whisper.
+
+| Role | Backend 1: Qwen3-4B + Whisper | Backend 2: Gemma 4 E2B |
+|---|---|---|
+| Speech-to-text | whisper.cpp `small.en` (CPU, English) | Gemma native audio input |
+| Extraction LLM | Qwen3-4B-Instruct-2507 (w4a16) via QAIRT/Genie, Hexagon NPU | Gemma 4 E2B (q4_0) via llama.cpp (JNI): LLM on the NPU, audio/image encoder on the Adreno GPU |
+| Photos | attached only | described by Gemma |
+| Speech output | sherpa-onnx: Piper (English) + AI4Bharat Rasa (Indic), Android TTS fallback | same |
+
+Models are not included in the repository; see the setup guide.
+
+## Repository structure
+
+```
+.
+├── android/     Android app (Gradle project): app/, doc/, eval/, tools/
+├── research/    Rule-layer prototype, severity framework, multilingual benchmark
+├── docs/        Setup guide and screenshots
+├── LICENSE
+└── README.md
 ```
 
-The `pull_*_libs.sh` scripts read the libraries from the board. They expect the QAIRT SDK in `/data/local/tmp/qairt/` and the llama.cpp build in `/data/local/tmp/models/llama_snap/`.
-
-## 3. Build and install
+## Quick start
 
 ```sh
-./gradlew assembleDebug testDebugUnitTest     # use gradlew.bat on Windows
-python tools/check_apk_libs.py                # optional: checks the APK's native libraries
-adb -s <serial> install -r app/build/outputs/apk/debug/app-debug.apk
+cd android
+./gradlew assembleDebug testDebugUnitTest      # gradlew.bat on Windows; unit tests need no device
 ```
 
-The first Gradle build downloads dependencies and takes several minutes. Run unit tests alone with `./gradlew testDebugUnitTest` (no device needed).
+Running on a QIDK (runtime libraries, model files, on-device tests): **[docs/SETUP.md](docs/SETUP.md)**.
 
-## 4. Put the models on the device
+## Evaluation highlights
 
-Models are not in the repository. Copy each into the app's internal folder with `run-as` (needs the debug build). **Uninstalling the app deletes the models; copy them again.**
-
-**Qwen3-4B (LLM on the NPU), required for the Qwen backend.** Push the Genie bundle to `/data/local/tmp/qwen4b/`, then:
-
-```sh
-adb -s <serial> shell "run-as com.example.test_app sh -c 'mkdir -p files/qwen4b && cp /data/local/tmp/qwen4b/* files/qwen4b/'"
-```
-
-**Whisper `small.en` (speech to text on the CPU), for the Qwen backend:**
-
-```sh
-mkdir -p build/models
-curl -L -o build/models/ggml-small.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.en.bin
-adb -s <serial> shell mkdir -p /data/local/tmp/whisper
-adb -s <serial> push build/models/ggml-small.en.bin /data/local/tmp/whisper/
-adb -s <serial> shell "run-as com.example.test_app sh -c 'mkdir -p files/whisper && cp /data/local/tmp/whisper/* files/whisper/'"
-```
-
-**Gemma 4 E2B (speech, photo and text in one model), optional:**
-
-```sh
-adb -s <serial> shell "run-as com.example.test_app sh -c 'mkdir -p files/gemma && cp /data/local/tmp/models/gemma/gemma-4-E2B_q4_0-it.gguf /data/local/tmp/models/gemma/gemma-4-E2B-it-mmproj.gguf files/gemma/'"
-```
-
-**Spoken output (sherpa-onnx: Piper English + Rasa Indic), optional.** Put the files in `/data/local/tmp/tts/piper-amy/` (`en_US-amy-medium.onnx`, `tokens.txt`, `espeak-ng-data/`) and `/data/local/tmp/tts/rasa/` (`indic_model_int8.onnx`, `tokens.txt`), then:
-
-```sh
-adb -s <serial> shell "run-as com.example.test_app sh -c 'mkdir -p files/tts && cp -r /data/local/tmp/tts/piper-amy /data/local/tmp/tts/rasa files/tts/'"
-```
-
-Without the TTS files the app uses the Android text-to-speech engine.
-
-## 5. Run
-
-```sh
-adb -s <serial> shell am start -n com.example.test_app/.MainActivity
-```
-
-Tap the microphone and describe an incident. The app works in airplane mode. To switch models or run the evaluation set, long-press the "Incident Assistant" title on the Home screen to open the developer menu: turn on **Real AI**, choose the backend (Qwen3-4B + Whisper, or Gemma 4 E2B), then **Run eval set**.
-
-## 6. On-device tests (optional)
-
-```sh
-./gradlew :app:installDebug :app:installDebugAndroidTest
-adb -s <serial> shell am instrument -w -e class com.example.test_app.ai.GenieLlmBenchmarkTest \
-  com.example.test_app.test/androidx.test.runner.AndroidJUnitRunner
-```
-
-Do not use `connectedAndroidTest`: it uninstalls the app and deletes the models.
-
-## Externally hosted models and data
-
-| Item | Where to get it |
-|---|---|
-| Qwen3-4B-Instruct-2507 (w4a16) Genie bundle for Snapdragon 8 Elite | Qualcomm AI Hub: https://aihub.qualcomm.com |
-| QAIRT / Genie runtime 2.45 | Qualcomm AI Runtime SDK, preinstalled on the QIDK at `/data/local/tmp/qairt/` |
-| Whisper `ggml-small.en.bin` (488 MB) | https://huggingface.co/ggerganov/whisper.cpp |
-| Gemma 4 E2B `q4_0` GGUF and mmproj, llama.cpp b11552 (Snapdragon build) | Provided on the board under `/data/local/tmp/models/` |
-| sherpa-onnx v1.13.8 Android libraries | https://github.com/k2fsa/sherpa-onnx/releases/tag/v1.13.8 (fetched by `tools/pull_sherpa_libs.sh`) |
-| Piper `en_US-amy-medium` (int8) voice | https://github.com/k2fsa/sherpa-onnx/releases/tag/tts-models |
-| AI4Bharat Rasa Indic voice (`vits_rasa_13`, int8) | https://huggingface.co/ai4bharat/vits_rasa_13 |
-| Evaluation sets | In this repository: `reporter-app/app/src/main/assets/eval/cases.json`, `reporter-app/eval/audio/`, `code/benchmarking/office_severity_benchmark.json` |
+| Measurement | Result | Source |
+|---|---|---|
+| LLM selection, 35-case dev set (4 fields per case) | Qwen3-4B: 93.6% field accuracy, 100% valid JSON, 1 hallucinated field. Llama 3.2 1B: 47.9%, 68.6% valid JSON, 8 hallucinated fields | `research/rules_and_evaluation/results/` |
+| Rule layer on the same set | Qwen3-4B + rules: 100%, 0 hallucinated fields (dev-set figure, optimistic: the rules were written against this set) | `research/rules_and_evaluation/results/` |
+| Whisper on the QIDK CPU (4 clips) | `small.en`, 6 threads: 0.0% WER, 3,052 ms median; `base.en`: 11.1% WER, 1,021 ms (approximate references) | `android/doc/MODEL_INTEGRATION.md` |
+| Qwen3-4B extraction on the NPU (24 runs) | prefill median 758 ms, decode median 6,859 ms; model load 3.1-3.7 s | `android/doc/PROMPTS.md` |
+| End-to-end audio run (Qwen + Whisper, 4 recordings) | end of speech to filled form: 12,313 ms median; WER 0.0%; field accuracy 6/9 | `android/doc/EVAL_RESULTS.md` |
+| Photo-only reports (Gemma, 6 photos) | 6/6 runs ok, 11/12 fields correct, 0 questions asked, every severity floor met | `android/doc/TESTING.md` |
+| Multilingual speech (Gemma) | language identified correctly for Assamese, Odia and Telugu; Tamil needed the language set manually | `android/doc/TESTING.md` |
+| Tests | 900+ JVM unit tests and 26 on-device tests | `android/app/src/test`, `android/app/src/androidTest` |
 
 ## License
 
-MIT, see `LICENSE`.
+MIT, see [LICENSE](LICENSE).
