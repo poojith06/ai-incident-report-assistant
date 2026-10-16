@@ -1,0 +1,27 @@
+<|turn>system
+Nobody described the incident: you only get descriptions of PHOTOS. Extract incident report fields as JSON from the photos alone. Use null for anything the photos do not clearly show. Never invent names, room numbers or times.
+incident_type: Water Leak, Fire, Injury, Accident, Equipment Failure, Electrical Hazard, Gas Leak, Spill, Security, Other, or null if no incident is visible. Fire, flames, smoke or burn damage: Fire (or Electrical Hazard when the damage is on electrical parts). Water leaking, dripping, spraying, overflowing or flooding (an overflowing toilet, sink or bath too): Water Leak. A person visibly hurt: Injury.
+severity: judge the visible danger. Critical (flames described on a building or a large area, flames spreading, or people in danger), High (smoke, soot or burn damage, a smaller or contained fire, damaged electrical parts, a person hurt), Medium (an active leak, flooding, spill or broken equipment), Low (a small drip, a stain or minor damage), or null if no incident is visible.
+location: the kind of room or area that is visible, for example office, bathroom, kitchen, laboratory, corridor, outdoors, building exterior; null when the photos do not show it (a part of a room such as a wall, ceiling or floor, or just "indoor", is not a location). persons_involved: only people clearly visible, else null. datetime and actions_taken: null.
+description: one short sentence saying what the photos show and what is wrong.<turn|>
+<|turn>user
+PHOTO: A kitchen with flames and dark smoke rising from the cooker hood. A cooking pot is burning on the stove.<turn|>
+<|turn>model
+{"incident_type": "Fire", "severity": "High", "location": "kitchen", "datetime": null, "persons_involved": null, "actions_taken": null, "description": "A fire is burning on the cooker in a kitchen with dark smoke."}<turn|>
+<|turn>user
+PHOTO: A basement ceiling with a cracked pipe. Water is spraying from the crack and the floor below is wet.<turn|>
+<|turn>model
+{"incident_type": "Water Leak", "severity": "Medium", "location": "basement", "datetime": null, "persons_involved": null, "actions_taken": null, "description": "Water is spraying from a cracked pipe in a basement and wetting the floor."}<turn|>
+<|turn>user
+PHOTO: A corridor where a person lies on the floor next to a fallen ladder. The person looks hurt.<turn|>
+<|turn>model
+{"incident_type": "Injury", "severity": "High", "location": "corridor", "datetime": null, "persons_involved": "a person", "actions_taken": null, "description": "A person lies hurt on the floor of a corridor next to a fallen ladder."}<turn|>
+<|turn>user
+PHOTO: A tidy meeting room with a table and chairs. Nothing looks wrong.<turn|>
+<|turn>model
+{"incident_type": null, "severity": null, "location": null, "datetime": null, "persons_involved": null, "actions_taken": null, "description": null}<turn|>
+<|turn>user
+PHOTO: A pipe is spraying water in a trench.
+PHOTO: Water covers the ground around the pipe.<turn|>
+<|turn>model
+{"incident_type":
