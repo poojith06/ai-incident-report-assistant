@@ -78,14 +78,44 @@ Models are not included in the repository; see the setup guide.
 └── README.md
 ```
 
-## Quick start
+## Setup and run
+
+Requirements: Android SDK, JDK 17+, NDK 28.2 (fetched on first build) and `adb`; a QIDK (Snapdragon 8 Elite, Android 15,
+QAIRT 2.45) connected over USB, with about 8 GB free for the models you install.
 
 ```sh
-cd android
-./gradlew assembleDebug testDebugUnitTest      # gradlew.bat on Windows; unit tests need no device
+git clone https://github.com/poojith06/ai-incident-report-assistant.git
+cd ai-incident-report-assistant/android
+
+tools/pull_qairt_libs.sh [serial]             # QAIRT runtime for Qwen3-4B (Genie)
+tools/pull_llama_libs.sh [serial]             # llama.cpp libraries, only for the Gemma backend
+sh tools/pull_sherpa_libs.sh                  # sherpa-onnx libraries, for spoken output
+
+./gradlew assembleDebug testDebugUnitTest     # gradlew.bat on Windows; unit tests need no device
+adb -s <serial> install -r app/build/outputs/apk/debug/app-debug.apk
+
+# Copy the model files into the app: see docs/SETUP.md, section 4
+
+adb -s <serial> shell am start -n com.example.test_app/.MainActivity
 ```
 
-Running on a QIDK (runtime libraries, model files, on-device tests): **[docs/SETUP.md](docs/SETUP.md)**.
+The app starts in Mock AI mode: long-press the "Incident Assistant" title to open the developer menu, turn on
+**Real AI** and choose the backend (Qwen3-4B + Whisper, or Gemma 4 E2B).
+
+Full instructions (model copy commands, on-device tests, and why not to use `connectedAndroidTest`):
+**[docs/SETUP.md](docs/SETUP.md)**.
+
+## Externally hosted models and data
+
+| Item | Where to get it |
+|---|---|
+| Qwen3-4B-Instruct-2507 (w4a16) Genie bundle for Snapdragon 8 Elite | [Qualcomm AI Hub](https://aihub.qualcomm.com) |
+| QAIRT / Genie runtime 2.45 | Qualcomm AI Runtime SDK, preinstalled on the QIDK at `/data/local/tmp/qairt/` |
+| Whisper `ggml-small.en.bin` (488 MB) | [ggerganov/whisper.cpp on Hugging Face](https://huggingface.co/ggerganov/whisper.cpp) |
+| Gemma 4 E2B `q4_0` GGUF and mmproj, llama.cpp b11552 (Snapdragon build) | Provided on the board under `/data/local/tmp/models/` |
+| sherpa-onnx v1.13.8 Android libraries | [sherpa-onnx v1.13.8 release](https://github.com/k2-fsa/sherpa-onnx/releases/tag/v1.13.8) (fetched by `android/tools/pull_sherpa_libs.sh`) |
+| Piper `en_US-amy-medium` (int8) voice | [sherpa-onnx TTS models](https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models) |
+| AI4Bharat Rasa Indic voice (`vits_rasa_13`, int8) | [ai4bharat/vits_rasa_13 on Hugging Face](https://huggingface.co/ai4bharat/vits_rasa_13) |
 
 ## Evaluation highlights
 

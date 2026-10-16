@@ -100,8 +100,8 @@ Do not use `connectedAndroidTest`: it uninstalls the app and deletes the models.
 | QAIRT / Genie runtime 2.45 | Qualcomm AI Runtime SDK, preinstalled on the QIDK at `/data/local/tmp/qairt/` |
 | Whisper `ggml-small.en.bin` (488 MB) | https://huggingface.co/ggerganov/whisper.cpp |
 | Gemma 4 E2B `q4_0` GGUF and mmproj, llama.cpp b11552 (Snapdragon build) | Provided on the board under `/data/local/tmp/models/` |
-| sherpa-onnx v1.13.8 Android libraries | https://github.com/k2fsa/sherpa-onnx/releases/tag/v1.13.8 (fetched by `tools/pull_sherpa_libs.sh`) |
-| Piper `en_US-amy-medium` (int8) voice | https://github.com/k2fsa/sherpa-onnx/releases/tag/tts-models |
+| sherpa-onnx v1.13.8 Android libraries | https://github.com/k2-fsa/sherpa-onnx/releases/tag/v1.13.8 (fetched by `tools/pull_sherpa_libs.sh`) |
+| Piper `en_US-amy-medium` (int8) voice | https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models |
 | AI4Bharat Rasa Indic voice (`vits_rasa_13`, int8) | https://huggingface.co/ai4bharat/vits_rasa_13 |
 | Evaluation sets | In this repository: `android/app/src/main/assets/eval/cases.json`, `android/eval/audio/`, `research/benchmarking/office_severity_benchmark.json` |
 
