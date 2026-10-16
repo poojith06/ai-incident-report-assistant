@@ -1,0 +1,238 @@
+[
+  {
+    "domain": "Primary Care Patient Safety Incidents",
+    "source": "Primary Care Harm Severity Classification System, 2018 (Cooper et al., 2018)",
+    "severity_mappings": [
+      {
+        "severity_level": "No harm",
+        "conditions": [
+          "Any incident that ran to completion but no harm occurred to the patient."
+        ]
+      },
+      {
+        "severity_level": "No harm outcome due to mitigating action",
+        "conditions": [
+          "Any incident that had the potential to cause harm to a patient but resulted in no harm."
+        ]
+      },
+      {
+        "severity_level": "Mild harm",
+        "conditions": [
+          "Patient was harmed, with mild and short-term impact, on physical, mental or social functioning, that was expected to resolve in a few hours.",
+          "Patient was harmed but required no or minimal intervention/treatment, e.g. anti-emetic, oral antibiotic or repeat of a minor procedure such as vaccination or insertion of contraceptive implant.",
+          "Patient or their loved ones experienced transient emotional distress but no long-term consequences and incident report contains words, e.g. angry, anxious, confused, distressed, frightened, frustrated, humiliated or upset, that might describe a feeling that occurs at the time of the incident but soon passes."
+        ]
+      },
+      {
+        "severity_level": "Moderate harm",
+        "conditions": [
+          "Patient was harmed, causing a medium-term impact on physical, mental or social functioning that was expected to resolve in days.",
+          "Patient required medical intervention in the form of treatment, e.g. antibiotics or intravenous fluids.",
+          "Patient required short-term hospitalization for assessment and/or minor treatment in either ED or a hospital ward.",
+          "Patient or their loved ones experienced psychological difficulty of a more longstanding nature but not requiring formal treatment, e.g. as indicated by evidence in the report of more longstanding anxiety, insomnia, or low mood."
+        ]
+      },
+      {
+        "severity_level": "Severe harm",
+        "conditions": [
+          "Patient was harmed, causing a major long-term or permanent impact on physical, mental or social function or shortening of life-expectancy.",
+          "Patient was harmed and required major medical or surgical intervention that, most often, was delivered in a hospital setting, e.g. cardioversion, any major surgery.",
+          "Patient was harmed and required prolonged hospitalization or admission to CCU, HDU and/or ICU.",
+          "Patient or their loved ones experienced enduring psychological difficulty that required specialist treatment, e.g. as indicated in the report by evidence of chronic anxiety or depression or psychosis."
+        ]
+      },
+      {
+        "severity_level": "Death",
+        "conditions": [
+          "Incident in which, on the balance of probabilities, death of the patient was caused or brought forward in the short term by the incident."
+        ]
+      },
+      {
+        "severity_level": "Insufficient detail",
+        "conditions": [
+          "Incident for which the report carries insufficient information to evaluate the severity of harm."
+        ]
+      }
+    ]
+  },
+  {
+    "domain": "International Classification for Patient Safety",
+    "source": "World Health Organization (WHO) Descriptions of Harm Severity",
+    "severity_mappings": [
+      {
+        "severity_level": "None",
+        "conditions": [
+          "Outcome was not symptomatic or no symptoms were detected and no treatment was required."
+        ]
+      },
+      {
+        "severity_level": "Mild",
+        "conditions": [
+          "Patient outcome was symptomatic, symptoms were mild, loss of function or harm was either minimal or intermediate but short-term and no intervention or only a minimal intervention, e.g. extra observation, investigation, review or minor treatment, was required."
+        ]
+      },
+      {
+        "severity_level": "Moderate",
+        "conditions": [
+          "Patient outcome was symptomatic, required more than a minimal intervention, e.g. additional operative procedure or additional therapeutic treatment, and/or an increased length of stay and/or caused permanent or long-term harm or loss of function."
+        ]
+      },
+      {
+        "severity_level": "Severe",
+        "conditions": [
+          "Patient outcome was symptomatic, required a life-saving or other major medical/surgical intervention, shortened life expectancy and/or caused major permanent or long-term harm or loss of function."
+        ]
+      },
+      {
+        "severity_level": "Death",
+        "conditions": [
+          "On balance of probabilities, death was caused or brought forward in the short-term by the incident."
+        ]
+      }
+    ]
+  },
+  {
+    "domain": "Traffic Crash Severity",
+    "source": "KABCO Scale (Highway Safety Manual)",
+    "severity_mappings": [
+      {
+        "severity_level": "K",
+        "conditions": [
+          "Fatal injury"
+        ]
+      },
+      {
+        "severity_level": "A",
+        "conditions": [
+          "Severe injury"
+        ]
+      },
+      {
+        "severity_level": "B",
+        "conditions": [
+          "Moderate injury"
+        ]
+      },
+      {
+        "severity_level": "C",
+        "conditions": [
+          "Complaint"
+        ]
+      },
+      {
+        "severity_level": "O",
+        "conditions": [
+          "No injury"
+        ]
+      }
+    ]
+  },
+  {
+    "domain": "Occupational Injuries",
+    "source": "OSHA Severe Injury Reports",
+    "severity_mappings": [
+      {
+        "severity_level": "Hospitalization",
+        "conditions": [
+          "Worker was admitted to a hospital (Yes/No)"
+        ]
+      },
+      {
+        "severity_level": "Amputation",
+        "conditions": [
+          "Worker suffered an amputation (Yes/No)"
+        ]
+      }
+    ]
+  },
+  {
+    "domain": "Construction Collapse Accidents",
+    "source": "China's 2021 Production Safety Accident Report and Investigation Regulations",
+    "severity_mappings": [
+      {
+        "severity_level": "General accident",
+        "conditions": [
+          "Classified based on lower threshold number of deaths, injuries, and economic losses."
+        ]
+      },
+      {
+        "severity_level": "Large accident",
+        "conditions": [
+          "Classified based on moderate threshold number of deaths, injuries, and economic losses."
+        ]
+      },
+      {
+        "severity_level": "Major accident",
+        "conditions": [
+          "Classified based on high threshold number of deaths, injuries, and economic losses."
+        ]
+      },
+      {
+        "severity_level": "Particularly significant accident",
+        "conditions": [
+          "Classified based on extreme threshold number of deaths, injuries, and economic losses."
+        ]
+      }
+    ]
+  },
+  {
+    "domain": "IT Incident Severity",
+    "source": "AIOps Level of Impact",
+    "severity_mappings": [
+      {
+        "severity_level": "1",
+        "conditions": [
+          "High Impact"
+        ]
+      },
+      {
+        "severity_level": "2",
+        "conditions": [
+          "Medium Impact"
+        ]
+      },
+      {
+        "severity_level": "3",
+        "conditions": [
+          "Low Impact"
+        ]
+      },
+      {
+        "severity_level": "4",
+        "conditions": [
+          "None"
+        ]
+      }
+    ]
+  },
+  {
+    "domain": "Hospital-level Patient Safety Incidents",
+    "source": "Severity Assessment Codes (SAC) - US Veterans Administration",
+    "severity_mappings": [
+      {
+        "severity_level": "SAC1",
+        "conditions": [
+          "Extreme severity and recurrence likelihood"
+        ]
+      },
+      {
+        "severity_level": "SAC2",
+        "conditions": [
+          "High severity and recurrence likelihood"
+        ]
+      },
+      {
+        "severity_level": "SAC3",
+        "conditions": [
+          "Medium severity and recurrence likelihood"
+        ]
+      },
+      {
+        "severity_level": "SAC4",
+        "conditions": [
+          "Low severity and recurrence likelihood"
+        ]
+      }
+    ]
+  }
+]

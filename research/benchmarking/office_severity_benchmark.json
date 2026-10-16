@@ -1,0 +1,2274 @@
+{
+  "metadata": {
+    "name": "Office Incident Severity Benchmark",
+    "version": "1.0",
+    "created": "2026-10-11",
+    "description": "Spoken office incident reports (and some non-incident chatter) in six languages, with gold labels for incident type, severity, urgency, status and field extraction. OFF-001 to OFF-005 come from Benchmarking.txt. OFF-006 to OFF-030 are added everyday office situations, most of them not emergencies.",
+    "languages": {
+      "en": "English",
+      "hi": "Hindi (Devanagari, code-mixed with English)",
+      "as": "Assamese (Bengali-Assamese script)",
+      "or": "Odia (Odia script)",
+      "te": "Telugu (Telugu script, code-mixed with English)",
+      "ta": "Tamil (Tamil script)"
+    },
+    "narration_format": "narrations.<lang>.text is the spoken report as a reporter would say it. narrations.<lang>.translit is a Roman-script transliteration of the same text, for checking the native text and for testing romanised ASR output. English has no translit.",
+    "labels": {
+      "incident_type": [
+        "Water Leak",
+        "Fire",
+        "Injury",
+        "Accident",
+        "Equipment Failure",
+        "Electrical Hazard",
+        "Gas Leak",
+        "Spill",
+        "Security",
+        "Other"
+      ],
+      "severity_scale": {
+        "0": "None / Near-miss: no harm, or harm prevented",
+        "1": "Low: minor, transient, first aid or no intervention",
+        "2": "Moderate: needs formal intervention, or localised service disruption",
+        "3": "High: serious harm, or high-value assets / people actively exposed",
+        "4": "Critical: life-threatening or fatal"
+      },
+      "severity_to_app": {
+        "0": "Low",
+        "1": "Low",
+        "2": "Medium",
+        "3": "High",
+        "4": "Critical"
+      },
+      "urgency_scale": {
+        "U0": "Routine: no time pressure, log and review",
+        "U1": "Soon / Prompt: respond within hours, situation is stable",
+        "U2": "Urgent: respond within minutes, could get worse",
+        "U3": "Immediate: ongoing or escalating danger to life"
+      },
+      "status": [
+        "Ongoing",
+        "Contained",
+        "Resolved"
+      ],
+      "emergency": "true when the gold urgency is U3, false for U0/U1, null (not scored) for U2."
+    },
+    "gold_fields": {
+      "is_incident": "false for chatter or requests that are not incidents. All other gold fields are then null and the model should return null for everything.",
+      "incident_type": "Best label. incident_type_acceptable lists every label that should count as correct.",
+      "severity_score": "Best 0-4 score. severity_acceptable lists every score that should count as correct.",
+      "app_severity": "severity_score mapped to the app's Low/Medium/High/Critical labels.",
+      "urgency": "Best urgency. urgency_acceptable lists every level that should count as correct.",
+      "expected_extraction": "Values in English. A null value means the report does not say it and the model must return null (hallucination check). Non-null values should be compared by meaning, not exact string. key_facts are facts a good summary should keep."
+    },
+    "scoring": {
+      "run_unit": "One test = one scenario x one language. Use narrations.<lang>.text as input; optionally run translit as a separate romanised-input track.",
+      "metrics": [
+        "incident_type accuracy (prediction in incident_type_acceptable)",
+        "severity band accuracy (prediction in severity_acceptable) and exact accuracy (prediction == severity_score)",
+        "under-triage rate: predicted severity below min(severity_acceptable). This is the main safety metric and should be near zero.",
+        "over-triage rate: predicted severity above max(severity_acceptable)",
+        "urgency band accuracy (prediction in urgency_acceptable)",
+        "non-incident false-positive rate (is_incident false but the model fills an incident_type)",
+        "emergency flag precision and recall (only where gold emergency is not null)",
+        "extraction hallucination rate (model fills a field whose gold value is null)",
+        "extraction recall (non-null gold fields the model gets right by meaning)"
+      ],
+      "breakdowns": [
+        "language",
+        "category",
+        "tag"
+      ]
+    },
+    "total_cases": 30,
+    "from_benchmark_txt": 5,
+    "added_cases": 25,
+    "languages_per_case": 6
+  },
+  "cases": [
+    {
+      "id": "OFF-001",
+      "source": "Benchmarking.txt",
+      "title": "Air-conditioner drip",
+      "category": "Facilities",
+      "tests": "Contained low-risk leak; approximate time extraction.",
+      "tags": [
+        "contained",
+        "non_escalation",
+        "minimal_pair"
+      ],
+      "source_labels": {
+        "severity": "Low",
+        "urgency": "Routine"
+      },
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Water Leak",
+        "incident_type_acceptable": [
+          "Water Leak"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U0",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Contained",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "outside Meeting Room 4",
+        "datetime": "since about 11:00",
+        "persons_involved": null,
+        "actions_taken": "bucket placed underneath; floor wiped dry",
+        "key_facts": [
+          "slow drip",
+          "bucket placed",
+          "floor dry",
+          "no electrical sockets nearby"
+        ]
+      },
+      "traps": [
+        "Pairs with OFF-025: same kind of leak, but there the water reaches a live power strip."
+      ],
+      "narrations": {
+        "en": {
+          "text": "The air conditioner outside Meeting Room Four has been dripping slowly since about eleven. A bucket is underneath it, the floor has been wiped dry, and there are no electrical sockets nearby."
+        },
+        "hi": {
+          "text": "Meeting Room Four के बाहर का AC करीब 11 बजे से धीरे-धीरे टपक रहा है। नीचे एक बाल्टी रख दी है, floor पोंछ दिया है, और आस-पास कोई electrical socket नहीं है।",
+          "translit": "Meeting Room Four ke bahar ka AC kareeb 11 baje se dheere-dheere tapak raha hai. Neeche ek balti rakh di hai, floor ponchh diya hai, aur aas-paas koi electrical socket nahi hai."
+        },
+        "as": {
+          "text": "মিটিং ৰুম ফ'ৰৰ বাহিৰৰ এচিটো প্ৰায় ১১ বজাৰ পৰা লাহে লাহে পানী পৰি আছে। তলত এটা বাল্টি থোৱা হৈছে, মজিয়াখন মচি শুকাই দিয়া হৈছে, আৰু ওচৰত কোনো ইলেক্ট্ৰিকেল চকেট নাই।",
+          "translit": "Meeting Room Four'or bahiror AC'to pray 11 bojar pora lahe lahe paani pori ase. Tolot eta balti thowa hoise, moziyakhon mosi xukai diya hoise, aru osorot kuno electrical socket nai."
+        },
+        "or": {
+          "text": "ମିଟିଂ ରୁମ୍ ଫୋର୍ ବାହାରେ ଥିବା ଏସି ପ୍ରାୟ ୧୧ଟାରୁ ଧୀରେ ଧୀରେ ପାଣି ଟୋପା ଟୋପା ପଡ଼ୁଛି। ତଳେ ଗୋଟିଏ ବାଲ୍ଟି ରଖାଯାଇଛି, ଚଟାଣ ପୋଛି ଶୁଖାଇ ଦିଆଯାଇଛି, ଆଉ ପାଖରେ କିଛି ବି ଇଲେକ୍ଟ୍ରିକାଲ୍ ସକେଟ୍ ନାହିଁ।",
+          "translit": "Meeting Room Four bahare thiba AC praya 11'taru dhire dhire pani topa topa paduchi. Tale gotie balti rakhajaichi, chatana pochhi sukhai diajaichi, au pakhare kichhi bi electrical socket nahi."
+        },
+        "te": {
+          "text": "Meeting Room Four బయట ఉన్న ఏసీ సుమారు 11 గంటల నుంచి నెమ్మదిగా కారుతోంది. కింద ఒక బకెట్ పెట్టారు, floor తుడిచేశారు, చుట్టుపక్కల electrical sockets ఏమీ లేవు.",
+          "translit": "Meeting Room Four bayata unna AC sumaru 11 gantala nunchi nemmadiga kaarutondi. Kinda oka bucket pettaru, floor tudichesaru, chuttupakkala electrical sockets emi levu."
+        },
+        "ta": {
+          "text": "மீட்டிங் ரூம் ஃபோருக்கு வெளியே இருக்கிற ஏசி சுமார் 11 மணியிலிருந்து மெதுவாக சொட்டுது. கீழே ஒரு பக்கெட் வெச்சிருக்கு, தரை துடைச்சாச்சு, பக்கத்துல எந்த எலக்ட்ரிக்கல் சாக்கெட்டும் இல்லை.",
+          "translit": "Meeting Room Four-kku veliye irukkira AC sumaar 11 maniyilirundhu medhuvaaga sottudhu. Keezhe oru bucket vechirukku, tharai thudaicchaachu, pakkatthula endha electrical socket-um illai."
+        }
+      }
+    },
+    {
+      "id": "OFF-002",
+      "source": "Benchmarking.txt",
+      "title": "Active server-room pipe burst",
+      "category": "Facilities",
+      "tests": "Escalation when high-value assets are exposed and mitigation (finding the valve) is unresolved.",
+      "tags": [
+        "unresolved_mitigation",
+        "escalation"
+      ],
+      "source_labels": {
+        "severity": "High",
+        "urgency": "Urgent"
+      },
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Water Leak",
+        "incident_type_acceptable": [
+          "Water Leak",
+          "Electrical Hazard",
+          "Equipment Failure"
+        ],
+        "severity_score": 3,
+        "severity_label": "High",
+        "severity_acceptable": [
+          3,
+          4
+        ],
+        "app_severity": "High",
+        "urgency": "U2",
+        "urgency_acceptable": [
+          "U2",
+          "U3"
+        ],
+        "status": "Ongoing",
+        "emergency": null
+      },
+      "expected_extraction": {
+        "location": "server room",
+        "datetime": null,
+        "persons_involved": "staff (evacuated)",
+        "actions_taken": "staff evacuated",
+        "key_facts": [
+          "overhead pipe burst",
+          "water falling on 2 racks",
+          "racks still powered on",
+          "staff evacuated",
+          "main valve location unknown"
+        ]
+      },
+      "traps": [
+        "No time is given; datetime must stay null.",
+        "'Staff evacuated' is a real action; 'nobody knows where the valve is' is an unresolved gap, not an action."
+      ],
+      "narrations": {
+        "en": {
+          "text": "An overhead pipe burst in the server room. Water is falling onto two racks; the racks are still powered on. Staff have evacuated, but nobody knows the location of the main valve."
+        },
+        "hi": {
+          "text": "Server room में ऊपर का pipe फट गया है। दो racks पर पानी गिर रहा है, racks अभी भी on हैं। Staff बाहर आ गया है, लेकिन main valve कहाँ है किसी को नहीं पता।",
+          "translit": "Server room mein oopar ka pipe phat gaya hai. Do racks par paani gir raha hai, racks abhi bhi on hain. Staff bahar aa gaya hai, lekin main valve kahan hai kisi ko nahi pata."
+        },
+        "as": {
+          "text": "চাৰ্ভাৰ ৰুমত ওপৰৰ পাইপটো ফাটি গৈছে। দুটা ৰেকৰ ওপৰত পানী পৰি আছে, ৰেকবোৰ এতিয়াও অন হৈ আছে। ষ্টাফ বাহিৰলৈ ওলাই আহিছে, কিন্তু মেইন ভালভটো ক'ত আছে কোনেও নাজানে।",
+          "translit": "Server room'ot oporor pipe'to phati goise. Duta rack'or oporot paani pori ase, rackbor etiyao on hoi ase. Staff bahirolai olai ahise, kintu main valve'to kot ase kuneo nazane."
+        },
+        "or": {
+          "text": "ସର୍ଭର୍ ରୁମରେ ଉପର ପାଇପ୍ ଫାଟିଯାଇଛି। ଦୁଇଟି ର୍ୟାକ୍ ଉପରେ ପାଣି ପଡ଼ୁଛି, ର୍ୟାକ୍ ଏବେ ବି ଅନ୍ ଅଛି। ଷ୍ଟାଫ୍ ବାହାରକୁ ଆସିଯାଇଛନ୍ତି, କିନ୍ତୁ ମେନ୍ ଭଲ୍ଭ କେଉଁଠି ଅଛି କାହାକୁ ଜଣାନାହିଁ।",
+          "translit": "Server room're upara pipe phatijaichi. Duiti rack upare pani paduchi, rack ebe bi on achi. Staff baharaku asijaichhanti, kintu main valve keunthi achi kahaku jananahi."
+        },
+        "te": {
+          "text": "Server room లో overhead pipe పగిలిపోయింది. రెండు racks మీద నీళ్ళు పడుతున్నాయి, racks ఇంకా on లోనే ఉన్నాయి. Staff బయటకు వచ్చేశారు, కానీ main valve ఎక్కడుందో ఎవరికీ తెలియదు.",
+          "translit": "Server room lo overhead pipe pagilipoyindi. Rendu racks meeda neellu padutunnayi, racks inka on lone unnayi. Staff bayataku vachesaru, kani main valve ekkadundo evariki teliyadu."
+        },
+        "ta": {
+          "text": "சர்வர் ரூமில் மேல் பைப் வெடித்துவிட்டது. இரண்டு ரேக்குகளில் தண்ணீர் கொட்டுது, ரேக்குகள் இன்னும் ஆன்-லதான் இருக்கு. ஸ்டாஃப் வெளியே வந்துட்டாங்க, ஆனா மெயின் வால்வ் எங்கே இருக்குன்னு யாருக்கும் தெரியாது.",
+          "translit": "Server room-il mel pipe vedithuvittadhu. Irandu rack-ugalil thanneer kottudhu, rack-ugal innum on-ladhaan irukku. Staff veliye vandhuttaanga, aana main valve enge irukkunnu yaarukkum theriyadhu."
+        }
+      }
+    },
+    {
+      "id": "OFF-003",
+      "source": "Benchmarking.txt",
+      "title": "Headache after paint odour",
+      "category": "Medical",
+      "tests": "Several people affected, but symptoms have resolved and the area is ventilated, so severity stays moderate.",
+      "tags": [
+        "resolved",
+        "multiple_people",
+        "unknown_source"
+      ],
+      "source_labels": {
+        "severity": "Moderate",
+        "urgency": "Prompt"
+      },
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Other",
+        "incident_type_acceptable": [
+          "Other",
+          "Injury"
+        ],
+        "severity_score": 2,
+        "severity_label": "Moderate",
+        "severity_acceptable": [
+          1,
+          2
+        ],
+        "app_severity": "Medium",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U1",
+          "U2"
+        ],
+        "status": "Contained",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "Room 108",
+        "datetime": "around 3:00 (15:00)",
+        "persons_involved": "two employees",
+        "actions_taken": "moved outside; ventilation running",
+        "key_facts": [
+          "2 employees",
+          "mild headache",
+          "paint smell",
+          "symptoms resolved",
+          "ventilation active",
+          "source unknown"
+        ]
+      },
+      "traps": [
+        "A smell is not a gas leak; 'Gas Leak' is not acceptable here."
+      ],
+      "narrations": {
+        "en": {
+          "text": "Two employees reported a mild headache after noticing a paint smell in Room 108 at around three. They moved outside, both symptoms have resolved, and ventilation is now running. The source of the smell has not been confirmed."
+        },
+        "hi": {
+          "text": "करीब तीन बजे Room 108 में paint की smell आने के बाद दो लोगों के सिर में हल्का दर्द हुआ। वे बाहर चले गए, दोनों अब ठीक हैं, और ventilation चालू है। Smell कहाँ से आ रही है अभी पता नहीं चला।",
+          "translit": "Kareeb teen baje Room 108 mein paint ki smell aane ke baad do logon ke sir mein halka dard hua. Ve bahar chale gaye, dono ab theek hain, aur ventilation chaalu hai. Smell kahan se aa rahi hai abhi pata nahi chala."
+        },
+        "as": {
+          "text": "প্ৰায় তিনি বজাত ৰুম ১০৮ত ৰঙৰ গোন্ধ পোৱাৰ পিছত দুজন মানুহৰ অলপ মূৰৰ বিষ হৈছিল। তেওঁলোক বাহিৰলৈ গ'ল, দুয়ো এতিয়া ঠিক হৈ গৈছে, আৰু ভেন্টিলেশ্যন চলি আছে। গোন্ধটো ক'ৰ পৰা আহিছে গম পোৱা নাই।",
+          "translit": "Pray tini bojat Room 108-t rongor gondho powar pisot dujon manuhor olop muror bikh hoisil. Teolok bahirolai gol, duyo etiya thik hoi goise, aru ventilation soli ase. Gondhuto kor pora ahise gom powa nai."
+        },
+        "or": {
+          "text": "ପ୍ରାୟ ୩ଟା ବେଳେ ରୁମ୍ ୧୦୮ରେ ପେଣ୍ଟ୍ ଗନ୍ଧ ହେବା ପରେ ଦୁଇଜଣଙ୍କର ଟିକେ ମୁଣ୍ଡ ବିନ୍ଧିଲା। ସେମାନେ ବାହାରକୁ ଗଲେ, ଦୁଇଜଣ ଯାକ ଏବେ ଠିକ୍ ଅଛନ୍ତି, ଆଉ ଭେଣ୍ଟିଲେସନ୍ ଚାଲୁଛି। ଗନ୍ଧ କେଉଁଠୁ ଆସୁଛି ଜଣାପଡ଼ିନାହିଁ।",
+          "translit": "Praya 3'ta bele Room 108-re paint gandha heba pare duijananka tike munda bindhila. Semane baharaku gale, duijana jaka ebe thik achhanti, au ventilation chaluchi. Gandha keunthu asuchi janapadinaahi."
+        },
+        "te": {
+          "text": "సుమారు మూడు గంటలకి Room 108 లో paint వాసన వచ్చిన తర్వాత ఇద్దరికి తలనొప్పి వచ్చింది. వాళ్ళు బయటకు వెళ్ళారు, ఇద్దరికీ ఇప్పుడు తగ్గిపోయింది, ventilation ఆన్ చేశారు. వాసన ఎక్కడి నుంచి వస్తుందో ఇంకా తెలీదు.",
+          "translit": "Sumaru moodu gantalaki Room 108 lo paint vaasana vachina tarvata iddariki thalanoppi vachindi. Vallu bayataku vellaru, iddariki ippudu taggipoyindi, ventilation on chesaru. Vaasana ekkadi nunchi vastundo inka teleedu."
+        },
+        "ta": {
+          "text": "சுமார் மூன்று மணிக்கு ரூம் 108-ல் பெயிண்ட் வாசனை வந்த பிறகு ரெண்டு பேருக்கு லேசான தலைவலி வந்தது. அவங்க வெளியே போனாங்க, ரெண்டு பேருக்குமே இப்போ சரியாயிடுச்சு, வென்டிலேஷன் ஓடுது. வாசனை எங்கிருந்து வருதுன்னு இன்னும் தெரியல.",
+          "translit": "Sumaar moondru manikku Room 108-l paint vaasanai vandha piragu rendu perukku lesaana thalaivali vandhadhu. Avanga veliye ponaanga, rendu perukkume ippo sariyaayiduchu, ventilation odudhu. Vaasanai engirundhu varudhunnu innum theriyala."
+        }
+      }
+    },
+    {
+      "id": "OFF-004",
+      "source": "Benchmarking.txt",
+      "title": "Cosmetic door damage",
+      "category": "Facilities",
+      "tests": "The word 'damage' alone must not raise severity when the door still works and nobody is hurt.",
+      "tags": [
+        "non_escalation",
+        "resolved"
+      ],
+      "source_labels": {
+        "severity": "Low",
+        "urgency": "Routine"
+      },
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Accident",
+        "incident_type_acceptable": [
+          "Accident",
+          "Other",
+          "Equipment Failure"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U0",
+        "urgency_acceptable": [
+          "U0"
+        ],
+        "status": "Resolved",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "Conference Room 1 door",
+        "datetime": "around 12:00",
+        "persons_involved": null,
+        "actions_taken": null,
+        "key_facts": [
+          "dent caused by delivery trolley",
+          "door works normally",
+          "exit clear",
+          "no injuries"
+        ]
+      },
+      "traps": [],
+      "narrations": {
+        "en": {
+          "text": "A delivery trolley caused a dent on the door of Conference Room One. The door is still opening and closing properly, the exit is not blocked, and there are no injuries. The incident happened at around twelve."
+        },
+        "hi": {
+          "text": "Delivery trolley लगने से Conference Room One के दरवाज़े पर एक dent आ गया है। दरवाज़ा अभी भी ठीक से खुल और बंद हो रहा है, रास्ता बंद नहीं है, और किसी को चोट नहीं लगी। ये करीब बारह बजे हुआ।",
+          "translit": "Delivery trolley lagne se Conference Room One ke darwaze par ek dent aa gaya hai. Darwaza abhi bhi theek se khul aur band ho raha hai, raasta band nahi hai, aur kisi ko chot nahi lagi. Ye kareeb baarah baje hua."
+        },
+        "as": {
+          "text": "ডেলিভাৰী ট্ৰলী এখন লাগি কনফাৰেন্স ৰুম ৱানৰ দৰ্জাত এটা ডেন্ট পৰিছে। দৰ্জাখন এতিয়াও ঠিকমতে খোল খাইছে আৰু বন্ধ হৈছে, ওলোৱা বাট বন্ধ হোৱা নাই, আৰু কাৰো দুখ পোৱা নাই। এইটো প্ৰায় বাৰ বজাত হৈছিল।",
+          "translit": "Delivery trolley ekhon lagi Conference Room One'or dorjat eta dent porise. Dorjakhon etiyao thikmote khol khaise aru bondho hoise, uluwa bat bondho howa nai, aru karo dukh powa nai. Eito pray baro bojat hoisil."
+        },
+        "or": {
+          "text": "ଗୋଟିଏ ଡେଲିଭରୀ ଟ୍ରଲି ବାଜି କନଫରେନ୍ସ ରୁମ୍ ୱାନର କବାଟରେ ଗୋଟିଏ ଡେଣ୍ଟ୍ ହୋଇଯାଇଛି। କବାଟ ଏବେ ବି ଠିକ୍ ଭାବରେ ଖୋଲୁଛି ଆଉ ବନ୍ଦ ହେଉଛି, ବାଟ ବନ୍ଦ ହୋଇନାହିଁ, ଆଉ କାହାକୁ ଚୋଟ ଲାଗିନାହିଁ। ଏହା ପ୍ରାୟ ବାରଟା ବେଳେ ହୋଇଥିଲା।",
+          "translit": "Gotie delivery trolley baji Conference Room One'ra kabatare gotie dent hoijaichi. Kabata ebe bi thik bhabare kholuchi au banda heuchi, bata banda hoinaahi, au kahaku chota laginaahi. Eha praya barata bele hoithila."
+        },
+        "te": {
+          "text": "Delivery trolley తగిలి Conference Room One door కి dent పడింది. Door ఇంకా సరిగానే తెరుచుకుంటోంది, మూసుకుంటోంది. Exit block కాలేదు, ఎవరికీ దెబ్బ తగలలేదు. ఇది సుమారు పన్నెండు గంటలకు జరిగింది.",
+          "translit": "Delivery trolley tagili Conference Room One door ki dent padindi. Door inka sarigane teruchukuntondi, moosukuntondi. Exit block kaledu, evariki debba tagalaledu. Idi sumaru pannendu gantalaku jarigindi."
+        },
+        "ta": {
+          "text": "டெலிவரி ட்ராலி பட்டு கான்ஃபரன்ஸ் ரூம் ஒன் கதவில் ஒரு டெண்ட் விழுந்துவிட்டது. கதவு இப்போதும் சரியாக திறந்து மூடுது, வழி எதுவும் அடைக்கல, யாருக்கும் அடி படல. இது சுமார் பன்னிரண்டு மணிக்கு நடந்தது.",
+          "translit": "Delivery trolley pattu Conference Room One kadhavil oru dent vizhundhuvittadhu. Kadhavu ippodhum sariyaaga thirandhu moodudhu, vazhi edhuvum adaikkala, yaarukkum adi padala. Idhu sumaar pannirandu manikku nadandhadhu."
+        }
+      }
+    },
+    {
+      "id": "OFF-005",
+      "source": "Benchmarking.txt",
+      "title": "Mild allergic rash",
+      "category": "Medical",
+      "tests": "Medical boundary: allergy with no airway symptoms must be kept apart from anaphylaxis.",
+      "tags": [
+        "medical_boundary",
+        "non_escalation"
+      ],
+      "source_labels": {
+        "severity": "Low",
+        "urgency": "Prompt monitoring"
+      },
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Other",
+        "incident_type_acceptable": [
+          "Other",
+          "Injury"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U1"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": null,
+        "datetime": "after lunch",
+        "persons_involved": "an employee",
+        "actions_taken": null,
+        "key_facts": [
+          "rash on both hands",
+          "breathing normal",
+          "no face or tongue swelling",
+          "speaking normally",
+          "allergen unknown"
+        ]
+      },
+      "traps": [
+        "No location is given; it must stay null."
+      ],
+      "narrations": {
+        "en": {
+          "text": "After lunch, an employee developed a mild rash on both hands. Breathing is normal, there is no face or tongue swelling, and they are speaking comfortably. The allergen is unknown."
+        },
+        "hi": {
+          "text": "Lunch के बाद एक employee के दोनों हाथों पर हल्के rash आ गए हैं। साँस नॉर्मल है, चेहरे या जीभ पर कोई सूजन नहीं है, और वो ठीक से बात कर रहे हैं। किस चीज़ से allergy हुई पता नहीं है।",
+          "translit": "Lunch ke baad ek employee ke dono hathon par halke rash aa gaye hain. Saans normal hai, chehre ya jeebh par koi soojan nahi hai, aur wo theek se baat kar rahe hain. Kis cheez se allergy hui pata nahi hai."
+        },
+        "as": {
+          "text": "লাঞ্চৰ পিছত এজন মানুহৰ দুয়োখন হাততে হালকা ৰেশ ওলাইছে। উশাহ-নিশাহ ঠিক আছে, মুখ বা জিভাত কোনো ফুলা নাই, আৰু তেওঁ আৰামতে কথা পাতি আছে। কিহৰ পৰা এলাৰ্জি হৈছে গম পোৱা নাই।",
+          "translit": "Lunch'or pisot ejon manuhor duyokhon hatote halka rash olaise. Uxah-nixah thik ase, mukh ba zibhat kunu phula nai, aru teo aaramote kotha pati ase. Kihor pora allergy hoise gom powa nai."
+        },
+        "or": {
+          "text": "ଲଞ୍ଚ୍ ପରେ ଜଣେ କର୍ମଚାରୀଙ୍କ ଦୁଇ ହାତରେ ହାଲୁକା ରାସ୍ ବାହାରିଛି। ନିଶ୍ୱାସ ଠିକ୍ ଅଛି, ମୁହଁ କି ଜିଭ ଫୁଲିନାହିଁ, ଆଉ ସେ ଆରାମରେ କଥା ହେଉଛନ୍ତି। କାହିଁକି ଏଲର୍ଜି ହେଲା ଜଣାନାହିଁ।",
+          "translit": "Lunch pare jane karmachari'nka dui hatare haluka rash baharichi. Nishwasa thik achi, munha ki jibha phulinahi, au se aramre katha heuchhanti. Kahinki allergy hela jananahi."
+        },
+        "te": {
+          "text": "Lunch తర్వాత ఒక employee కి రెండు చేతుల మీద చిన్న rash వచ్చింది. ఊపిరి సరిగానే తీసుకుంటున్నారు, ముఖం లేదా నాలుక వాపు ఏమీ లేదు, బాగానే మాట్లాడుతున్నారు. ఎందువల్ల allergy వచ్చిందో తెలీదు.",
+          "translit": "Lunch tarvata oka employee ki rendu chetula meeda chinna rash vachindi. Oopiri sarigane teesukuntunnaru, mukham leda naaluka vaapu emi ledu, baagaane maatladutunnaru. Enduvalla allergy vachindo teleedu."
+        },
+        "ta": {
+          "text": "லஞ்சுக்கு அப்புறம் ஒரு ஊழியருக்கு ரெண்டு கைகளிலும் லேசான ரேஷ் வந்துருக்கு. மூச்சு நார்மலா இருக்கு, முகம் அல்லது நாக்கில் வீக்கம் இல்லை, நன்றாகப் பேசுகிறார். அலர்ஜி எதனால வந்ததுன்னு தெரியல.",
+          "translit": "Lunch-ukku appuram oru oozhiyarukku rendu kaigalilum lesaana rash vandhurukku. Moochu normal-aa irukku, mugam alladhu naakkil veekkam illai, nandraaga pesugiraar. Allergy edhanaala vandhadhunnu theriyala."
+        }
+      }
+    },
+    {
+      "id": "OFF-006",
+      "source": "added",
+      "title": "Printer jam with 'killed my morning'",
+      "category": "IT & Equipment",
+      "tests": "Everyday equipment fault described with a violent idiom. Must stay Low.",
+      "tags": [
+        "keyword_trap",
+        "idiom",
+        "non_escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Equipment Failure",
+        "incident_type_acceptable": [
+          "Equipment Failure"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U0",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "near the HR bay, second floor",
+        "datetime": "since 9:30",
+        "persons_involved": null,
+        "actions_taken": "IT ticket raised",
+        "key_facts": [
+          "printer jamming repeatedly",
+          "no harm",
+          "IT ticket raised"
+        ]
+      },
+      "traps": [
+        "English text contains 'killed', which is in the FATAL keyword list in IncidentRules.kt and forces Critical plus the emergency banner."
+      ],
+      "narrations": {
+        "en": {
+          "text": "The printer near the HR bay on the second floor has been jamming again and again since nine thirty. Honestly, it has killed my whole morning. I've already raised an IT ticket."
+        },
+        "hi": {
+          "text": "Second floor पर HR bay के पास वाला printer साढ़े नौ बजे से बार-बार jam हो रहा है। सच में, इसने मेरी पूरी morning kill कर दी है। मैंने IT ticket already raise कर दिया है।",
+          "translit": "Second floor par HR bay ke paas wala printer saadhe nau baje se baar-baar jam ho raha hai. Sach mein, isne meri poori morning kill kar di hai. Maine IT ticket already raise kar diya hai."
+        },
+        "as": {
+          "text": "ছেকেণ্ড ফ্লোৰত এইচআৰ বে'ৰ ওচৰৰ প্ৰিণ্টাৰটো সাৰে ন বজাৰ পৰা বাৰে বাৰে জাম হৈ আছে। সঁচাকৈয়ে, ই মোৰ গোটেই পুৱাটো নষ্ট কৰি দিলে। মই ইতিমধ্যে আইটি টিকেট দি থৈছোঁ।",
+          "translit": "Second floor'ot HR bay'or osoror printer'to xare no bojar pora bare bare jam hoi ase. Xosakoiye, i mor gutei puwato nosto kori dile. Moi itimodhye IT ticket di thoysu."
+        },
+        "or": {
+          "text": "ସେକେଣ୍ଡ ଫ୍ଲୋରରେ ଏଚଆର ବେ ପାଖ ପ୍ରିଣ୍ଟର ସାଢ଼େ ନଅଟାରୁ ବାରମ୍ବାର ଜାମ୍ ହେଉଛି। ସତରେ, ଏଇଟା ମୋର ପୂରା ସକାଳ ନଷ୍ଟ କରିଦେଲା। ମୁଁ ଆଗରୁ ଆଇଟି ଟିକେଟ୍ କରିସାରିଛି।",
+          "translit": "Second floor're HR bay pakha printer sadhe na'ta ru barambar jam heuchi. Satare, eita mora pura sakala nasta karidela. Mun agaru IT ticket karisarichi."
+        },
+        "te": {
+          "text": "Second floor లో HR bay దగ్గర ఉన్న printer తొమ్మిదిన్నర నుంచి మాటిమాటికీ jam అవుతోంది. నిజంగా, ఇది నా morning మొత్తం kill చేసేసింది. ఇప్పటికే IT ticket raise చేశాను.",
+          "translit": "Second floor lo HR bay daggara unna printer tommidinnara nunchi maatimaatiki jam avutondi. Nijanga, idi naa morning mottam kill chesesindi. Ippatike IT ticket raise chesanu."
+        },
+        "ta": {
+          "text": "செகண்ட் ஃப்ளோர்ல ஹெச்ஆர் பே பக்கத்துல இருக்கிற பிரிண்டர் ஒன்பதரை மணியிலிருந்து அடிக்கடி ஜாம் ஆகுது. நிஜமாவே, என் காலை நேரத்தையே பாழாக்கிடுச்சு. நான் ஏற்கனவே ஐடி டிக்கெட் போட்டுட்டேன்.",
+          "translit": "Second floor-la HR bay pakkatthula irukkira printer onbadharai maniyilirundhu adikkadi jam aagudhu. Nijamaave, en kaalai nerathaiye paazhaakkiduchu. Naan yerkanave IT ticket pottutten."
+        }
+      }
+    },
+    {
+      "id": "OFF-007",
+      "source": "added",
+      "title": "Fire drill announcement",
+      "category": "Non-incident",
+      "tests": "Scheduled drill announcement. Not an incident, even though it says 'fire' and 'alarm'.",
+      "tags": [
+        "non_incident",
+        "keyword_trap"
+      ],
+      "gold": {
+        "is_incident": false,
+        "incident_type": null,
+        "incident_type_acceptable": [
+          null
+        ],
+        "severity_score": null,
+        "severity_label": null,
+        "severity_acceptable": [
+          null
+        ],
+        "app_severity": null,
+        "urgency": null,
+        "urgency_acceptable": [
+          null
+        ],
+        "status": null,
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": null,
+        "datetime": null,
+        "persons_involved": null,
+        "actions_taken": null,
+        "key_facts": []
+      },
+      "traps": [
+        "If the model returns null, the rule-D safety net in IncidentRules.kt assigns 'Fire' from the keyword, and rule G then gives it the Fire default severity (High)."
+      ],
+      "narrations": {
+        "en": {
+          "text": "Just a reminder: there is a fire drill this Friday at four PM. When the alarm rings, please take the staircase near the cafeteria and gather at the main parking lot."
+        },
+        "hi": {
+          "text": "बस एक reminder: इस Friday शाम चार बजे fire drill है। जब alarm बजे, तो please cafeteria के पास वाली सीढ़ियों से नीचे आएँ और main parking lot में इकट्ठा हों।",
+          "translit": "Bas ek reminder: is Friday shaam chaar baje fire drill hai. Jab alarm baje, to please cafeteria ke paas wali seedhiyon se neeche aayein aur main parking lot mein ikattha hon."
+        },
+        "as": {
+          "text": "মনত পেলাই দিছোঁ: এই শুক্ৰবাৰে আবেলি চাৰি বজাত ফায়াৰ ড্ৰিল আছে। এলাৰ্ম বাজিলে প্লিজ কেফেটেৰিয়াৰ ওচৰৰ চিৰিৰে নামি আহি মেইন পাৰ্কিং লটত গোট খাব।",
+          "translit": "Monot pelai disu: ei xukrobare abeli sari bojat fire drill ase. Alarm bazile please cafeteria'r osoror siri're nami ahi main parking lot'ot gut khabo."
+        },
+        "or": {
+          "text": "ଖାଲି ମନେ ପକାଇ ଦେଉଛି: ଏହି ଶୁକ୍ରବାର ଚାରିଟା ବେଳେ ଫାୟାର୍ ଡ୍ରିଲ୍ ଅଛି। ଆଲାର୍ମ ବାଜିଲେ ପ୍ଲିଜ୍ କ୍ୟାଫେଟେରିଆ ପାଖ ସିଡ଼ି ଦେଇ ଓହ୍ଲାଇ ମେନ୍ ପାର୍କିଂ ଲଟରେ ଏକାଠି ହୁଅନ୍ତୁ।",
+          "translit": "Khali mane pakai deuchi: ehi sukrabara charita bele fire drill achi. Alarm bajile please cafeteria pakha sidi dei ohlai main parking lot're ekathi huantu."
+        },
+        "te": {
+          "text": "ఒక reminder: ఈ Friday సాయంత్రం నాలుగు గంటలకు fire drill ఉంది. Alarm మోగినప్పుడు, దయచేసి cafeteria దగ్గర మెట్ల నుంచి కిందకి వచ్చి main parking lot లో కలవండి.",
+          "translit": "Oka reminder: ee Friday saayantram naalugu gantalaku fire drill undi. Alarm moginappudu, dayachesi cafeteria daggara metla nunchi kindaki vachi main parking lot lo kalavandi."
+        },
+        "ta": {
+          "text": "ஒரு ரிமைண்டர்: இந்த வெள்ளிக்கிழமை சாயங்காலம் நாலு மணிக்கு ஃபயர் டிரில் இருக்கு. அலாரம் அடிக்கும்போது, கஃபேடீரியா பக்கத்து படிக்கட்டு வழியா இறங்கி மெயின் பார்க்கிங் லாட்டுக்கு வாங்க.",
+          "translit": "Oru reminder: indha velli-kizhamai saayangalam naalu manikku fire drill irukku. Alarm adikkumbodhu, cafeteria pakkathu padikkattu vazhiya irangi main parking lot-ukku vaanga."
+        }
+      }
+    },
+    {
+      "id": "OFF-008",
+      "source": "added",
+      "title": "'On fire' idiom",
+      "category": "Non-incident",
+      "tests": "Office small talk with a fire idiom, a place and a time. Not an incident.",
+      "tags": [
+        "non_incident",
+        "keyword_trap",
+        "idiom"
+      ],
+      "gold": {
+        "is_incident": false,
+        "incident_type": null,
+        "incident_type_acceptable": [
+          null
+        ],
+        "severity_score": null,
+        "severity_label": null,
+        "severity_acceptable": [
+          null
+        ],
+        "app_severity": null,
+        "urgency": null,
+        "urgency_acceptable": [
+          null
+        ],
+        "status": null,
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": null,
+        "datetime": null,
+        "persons_involved": null,
+        "actions_taken": null,
+        "key_facts": []
+      },
+      "traps": [
+        "'fire' keyword triggers the rule-D safety net (Fire).",
+        "'pantry' and 'at five' may be pulled into location/datetime even though nothing happened."
+      ],
+      "narrations": {
+        "en": {
+          "text": "Ravi is on fire today, he closed three client deals before lunch! Let's order a cake for the team at five in the pantry."
+        },
+        "hi": {
+          "text": "Ravi आज full on fire है, उसने lunch से पहले तीन client deals close कर दीं! चलो शाम पाँच बजे pantry में team के लिए cake order करते हैं।",
+          "translit": "Ravi aaj full on fire hai, usne lunch se pehle teen client deals close kar deen! Chalo shaam paanch baje pantry mein team ke liye cake order karte hain."
+        },
+        "as": {
+          "text": "ৰবি আজি ফুল অন ফায়াৰ, লাঞ্চৰ আগতেই তিনিটা ক্লায়েণ্ট ডিল ক্ল'জ কৰিলে! বলা, আবেলি পাঁচ বজাত পেণ্ট্ৰিত টিমৰ বাবে কেক অৰ্ডাৰ কৰোঁ।",
+          "translit": "Robi aji full on fire, lunch'or agotei tinita client deal close korile! Bola, abeli pans bojat pantry't team'or babe cake order koru."
+        },
+        "or": {
+          "text": "ରବି ଆଜି ପୂରା ଅନ୍ ଫାୟାର୍, ଲଞ୍ଚ ଆଗରୁ ତିନିଟା କ୍ଲାଏଣ୍ଟ ଡିଲ୍ କ୍ଲୋଜ୍ କରିଦେଲା! ଚାଲ, ସନ୍ଧ୍ୟା ପାଞ୍ଚଟାରେ ପ୍ୟାଣ୍ଟ୍ରିରେ ଟିମ୍ ପାଇଁ କେକ୍ ଅର୍ଡର କରିବା।",
+          "translit": "Rabi aaji pura on fire, lunch agaru tinita client deal close karidela! Chala, sandhya panchata re pantry're team pain cake order kariba."
+        },
+        "te": {
+          "text": "Ravi ఈరోజు full on fire లో ఉన్నాడు, lunch కి ముందే మూడు client deals close చేశాడు! సాయంత్రం ఐదు గంటలకి pantry లో team కోసం ఒక cake order చేద్దాం.",
+          "translit": "Ravi eeroju full on fire lo unnadu, lunch ki munde moodu client deals close chesadu! Saayantram aidu gantalaki pantry lo team kosam oka cake order cheddam."
+        },
+        "ta": {
+          "text": "ரவி இன்னைக்கு ஃபுல் ஆன் ஃபயர், லஞ்சுக்கு முன்னாடியே மூணு கிளைன்ட் டீல் முடிச்சுட்டான்! சாயங்காலம் அஞ்சு மணிக்கு பேன்ட்ரியில டீமுக்கு கேக் ஆர்டர் பண்ணலாம்.",
+          "translit": "Ravi innaikku full on fire, lunch-ukku munnaadiye moonu client deal mudichuttaan! Saayangalam anju manikku pantry-ila team-ukku cake order pannalaam."
+        }
+      }
+    },
+    {
+      "id": "OFF-009",
+      "source": "added",
+      "title": "Meeting-room booking request",
+      "category": "Non-incident",
+      "tests": "A facility request with a room, a time and equipment. Not an incident.",
+      "tags": [
+        "non_incident",
+        "keyword_trap"
+      ],
+      "gold": {
+        "is_incident": false,
+        "incident_type": null,
+        "incident_type_acceptable": [
+          null
+        ],
+        "severity_score": null,
+        "severity_label": null,
+        "severity_acceptable": [
+          null
+        ],
+        "app_severity": null,
+        "urgency": null,
+        "urgency_acceptable": [
+          null
+        ],
+        "status": null,
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": null,
+        "datetime": null,
+        "persons_involved": null,
+        "actions_taken": null,
+        "key_facts": []
+      },
+      "traps": [
+        "'projector' is an Equipment Failure keyword, so the rule-D safety net turns this booking into an Equipment Failure."
+      ],
+      "narrations": {
+        "en": {
+          "text": "Can you book the conference room on the third floor for tomorrow at eleven? We have a client visit and need the projector and video-call setup."
+        },
+        "hi": {
+          "text": "क्या आप third floor वाला conference room कल ग्यारह बजे के लिए book कर सकते हैं? हमारी client visit है, projector और video-call setup चाहिए।",
+          "translit": "Kya aap third floor wala conference room kal gyaarah baje ke liye book kar sakte hain? Hamari client visit hai, projector aur video-call setup chahiye."
+        },
+        "as": {
+          "text": "তিনি নম্বৰ মহলাৰ কনফাৰেন্স ৰুমটো কাইলৈ এঘাৰ বজাত বুক কৰি দিব পাৰিবনে? আমাৰ ক্লায়েণ্ট ভিজিট আছে, প্ৰজেক্টৰ আৰু ভিডিঅ'-কল ছেটআপ দৰকাৰ।",
+          "translit": "Tini nombor mohalar conference room'to kailoi eghar bojat book kori dibo paribone? Amar client visit ase, projector aru video-call setup dorkar."
+        },
+        "or": {
+          "text": "ଥାର୍ଡ ଫ୍ଲୋରର କନଫରେନ୍ସ ରୁମ୍ କାଲି ଏଗାରଟା ବେଳେ ବୁକ୍ କରିଦେବେ କି? ଆମର କ୍ଲାଏଣ୍ଟ ଭିଜିଟ୍ ଅଛି, ପ୍ରୋଜେକ୍ଟର ଆଉ ଭିଡିଓ-କଲ୍ ସେଟଅପ୍ ଦରକାର।",
+          "translit": "Third floor'ra conference room kali egarata bele book karidebe ki? Amara client visit achi, projector au video-call setup darakar."
+        },
+        "te": {
+          "text": "Third floor లో ఉన్న conference room ని రేపు పదకొండు గంటలకి book చేస్తారా? మాకు client visit ఉంది, projector ఇంకా video-call setup కావాలి.",
+          "translit": "Third floor lo unna conference room ni repu padakondu gantalaki book chestara? Maaku client visit undi, projector inka video-call setup kaavali."
+        },
+        "ta": {
+          "text": "தேர்ட் ஃப்ளோர்ல இருக்கிற கான்ஃபரன்ஸ் ரூமை நாளைக்கு பதினொரு மணிக்கு புக் பண்ண முடியுமா? கிளைன்ட் விசிட் இருக்கு, புரொஜெக்டரும் வீடியோ-கால் செட்டப்பும் வேணும்.",
+          "translit": "Third floor-la irukkira conference room-ai naalaikku pathinoru manikku book panna mudiyumaa? Client visit irukku, projector-um video-call setup-um venum."
+        }
+      }
+    },
+    {
+      "id": "OFF-010",
+      "source": "added",
+      "title": "Coffee spill in corridor",
+      "category": "Housekeeping",
+      "tests": "Minor spill already signposted. Low severity, short-term slip risk.",
+      "tags": [
+        "contained",
+        "negation",
+        "non_escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Spill",
+        "incident_type_acceptable": [
+          "Spill"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Contained",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "corridor outside the third-floor pantry",
+        "datetime": "about ten minutes ago",
+        "persons_involved": null,
+        "actions_taken": "wet-floor sign placed; housekeeping on the way",
+        "key_facts": [
+          "coffee spilled",
+          "wet-floor sign placed",
+          "nobody slipped"
+        ]
+      },
+      "traps": [
+        "'Nobody has slipped' is a negation; it must not create an Accident or Injury."
+      ],
+      "narrations": {
+        "en": {
+          "text": "Someone spilled coffee in the corridor outside the third-floor pantry about ten minutes ago. I've put a wet-floor sign there and housekeeping is on the way. Nobody has slipped."
+        },
+        "hi": {
+          "text": "करीब दस मिनट पहले third floor pantry के बाहर corridor में किसी ने coffee गिरा दी। मैंने वहाँ wet-floor sign लगा दिया है और housekeeping आ रही है। कोई फिसला नहीं है।",
+          "translit": "Kareeb das minute pehle third floor pantry ke bahar corridor mein kisi ne coffee gira di. Maine wahan wet-floor sign laga diya hai aur housekeeping aa rahi hai. Koi phisla nahi hai."
+        },
+        "as": {
+          "text": "প্ৰায় দহ মিনিট আগতে তিনি নম্বৰ মহলাৰ পেণ্ট্ৰিৰ বাহিৰত কৰিডৰত কোনোবাই কফি পেলাই দিলে। মই তাত ৱেট-ফ্লোৰ চাইন থৈ দিছোঁ আৰু হাউচকিপিং আহি আছে। কোনো পিছলি পৰা নাই।",
+          "translit": "Pray doh minute agote tini nombor mohalar pantry'r bahirot corridor'ot kunubai coffee pelai dile. Moi tat wet-floor sign thoi disu aru housekeeping ahi ase. Kunu pisoli pora nai."
+        },
+        "or": {
+          "text": "ପ୍ରାୟ ଦଶ ମିନିଟ୍ ଆଗରୁ ଥାର୍ଡ ଫ୍ଲୋର ପ୍ୟାଣ୍ଟ୍ରି ବାହାରେ କରିଡରରେ କେହି କଫି ଢାଳିଦେଲେ। ମୁଁ ସେଠି ୱେଟ୍-ଫ୍ଲୋର୍ ସାଇନ୍ ରଖିଦେଇଛି, ହାଉସକିପିଂ ଆସୁଛନ୍ତି। କେହି ଖସିପଡ଼ି ନାହାଁନ୍ତି।",
+          "translit": "Praya dasa minute agaru third floor pantry bahare corridor're kehi coffee dhalidele. Mun sethi wet-floor sign rakhideichi, housekeeping asuchhanti. Kehi khasipadi nahanti."
+        },
+        "te": {
+          "text": "సుమారు పది నిమిషాల క్రితం third floor pantry బయట corridor లో ఎవరో coffee ఒలికించారు. అక్కడ wet-floor sign పెట్టాను, housekeeping వస్తున్నారు. ఎవరూ జారలేదు.",
+          "translit": "Sumaru padi nimishala kritham third floor pantry bayata corridor lo evaro coffee olikincharu. Akkada wet-floor sign pettanu, housekeeping vastunnaru. Evaru jaaraledu."
+        },
+        "ta": {
+          "text": "பத்து நிமிஷம் முன்னாடி தேர்ட் ஃப்ளோர் பேன்ட்ரிக்கு வெளியே காரிடார்ல யாரோ காபி கொட்டிட்டாங்க. நான் அங்க வெட்-ஃப்ளோர் சைன் வெச்சிருக்கேன், ஹவுஸ்கீப்பிங் வந்துட்டிருக்காங்க. யாரும் வழுக்கி விழல.",
+          "translit": "Patthu nimisham munnaadi third floor pantry-kku veliye corridor-la yaaro coffee kottittaanga. Naan anga wet-floor sign vaitthurukken, housekeeping vandhuttirukkaanga. Yaarum vazhukki vizhala."
+        }
+      }
+    },
+    {
+      "id": "OFF-011",
+      "source": "added",
+      "title": "Projector not working before client meeting",
+      "category": "IT & Equipment",
+      "tests": "Equipment fault with a deadline. The meeting time is not the incident time.",
+      "tags": [
+        "time_confusion",
+        "non_escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Equipment Failure",
+        "incident_type_acceptable": [
+          "Equipment Failure"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          1,
+          2
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U1",
+          "U2"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "Board Room A",
+        "datetime": null,
+        "persons_involved": null,
+        "actions_taken": "tried another cable; changed remote batteries",
+        "key_facts": [
+          "projector not turning on",
+          "client presentation at 3:00",
+          "basic troubleshooting done"
+        ]
+      },
+      "traps": [
+        "'three o'clock' is the meeting time, not when the fault started; datetime should stay null (or 'now')."
+      ],
+      "narrations": {
+        "en": {
+          "text": "The projector in Board Room A is not turning on, and we have a client presentation at three o'clock. We've already tried another cable and changed the remote batteries, still nothing."
+        },
+        "hi": {
+          "text": "Board Room A का projector on नहीं हो रहा है, और तीन बजे हमारा client presentation है। हमने दूसरी cable try कर ली और remote की batteries भी बदल दीं, फिर भी कुछ नहीं हो रहा।",
+          "translit": "Board Room A ka projector on nahi ho raha hai, aur teen baje hamara client presentation hai. Humne doosri cable try kar li aur remote ki batteries bhi badal deen, phir bhi kuch nahi ho raha."
+        },
+        "as": {
+          "text": "বৰ্ড ৰুম এ-ৰ প্ৰজেক্টৰটো অন হোৱা নাই, তিনি বজাত আমাৰ ক্লায়েণ্ট প্ৰেজেণ্টেচন আছে। বেলেগ কেবল লগাই চালোঁ, ৰিম'টৰ বেটাৰীও সলালোঁ, তথাপিও একো হোৱা নাই।",
+          "translit": "Board Room A'r projector'to on howa nai, tini bojat amar client presentation ase. Beleg cable logai salu, remote'or battery'o xolalu, tothapio eko howa nai."
+        },
+        "or": {
+          "text": "ବୋର୍ଡ ରୁମ୍ ଏ-ର ପ୍ରୋଜେକ୍ଟର ଅନ୍ ହେଉନାହିଁ, ତିନିଟା ବେଳେ ଆମର କ୍ଲାଏଣ୍ଟ ପ୍ରେଜେଣ୍ଟେସନ୍ ଅଛି। ଆଉ ଗୋଟେ କେବଲ୍ ଲଗାଇ ଦେଖିଲୁ, ରିମୋଟ୍ ବ୍ୟାଟେରୀ ବି ବଦଳାଇଲୁ, ତଥାପି କିଛି ହେଉନାହିଁ।",
+          "translit": "Board Room A'ra projector on heunahi, tinita bele amara client presentation achi. Au gote cable lagai dekhilu, remote battery bi badalailu, tathapi kichhi heunahi."
+        },
+        "te": {
+          "text": "Board Room A లో projector on అవ్వట్లేదు, మూడు గంటలకి client presentation ఉంది. వేరే cable try చేశాం, remote batteries కూడా మార్చాం, అయినా ఏమీ రావట్లేదు.",
+          "translit": "Board Room A lo projector on avvatledu, moodu gantalaki client presentation undi. Vere cable try chesam, remote batteries kooda maarcham, ayina emi raavatledu."
+        },
+        "ta": {
+          "text": "போர்டு ரூம் ஏ-ல புரொஜெக்டர் ஆன் ஆகல, மூணு மணிக்கு கிளைன்ட் பிரசன்டேஷன் இருக்கு. வேற கேபிள் மாத்திப் பார்த்தோம், ரிமோட் பேட்டரியும் மாத்தினோம், ஆனாலும் ஒண்ணும் வரல.",
+          "translit": "Board Room A-la projector on aagala, moonu manikku client presentation irukku. Vera cable maathi paartthom, remote battery-um maatthinom, aanaalum onnum varala."
+        }
+      }
+    },
+    {
+      "id": "OFF-012",
+      "source": "added",
+      "title": "AC failure on a whole floor",
+      "category": "Facilities",
+      "tests": "Comfort problem, nobody unwell. Technician ETA is not the incident time.",
+      "tags": [
+        "time_confusion",
+        "non_escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Equipment Failure",
+        "incident_type_acceptable": [
+          "Equipment Failure"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          1,
+          2
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U1",
+          "U2"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "fifth floor",
+        "datetime": "around 2:00, right after lunch",
+        "persons_involved": null,
+        "actions_taken": "facilities informed; technician expected by 4:00",
+        "key_facts": [
+          "AC down on whole floor",
+          "hot and stuffy",
+          "nobody unwell",
+          "technician ETA 4:00"
+        ]
+      },
+      "traps": [
+        "'by four' is the technician's ETA, not the incident time."
+      ],
+      "narrations": {
+        "en": {
+          "text": "The AC on the whole fifth floor stopped working right after lunch, around two, and it's getting very hot and stuffy. People are uncomfortable but nobody is feeling unwell. Facilities said a technician will come by four."
+        },
+        "hi": {
+          "text": "Lunch के ठीक बाद, करीब दो बजे से पूरे fifth floor का AC बंद पड़ा है, बहुत गर्मी और घुटन हो रही है। सब परेशान हैं लेकिन किसी की तबीयत खराब नहीं है। Facilities ने कहा है कि technician चार बजे तक आ जाएगा।",
+          "translit": "Lunch ke theek baad, kareeb do baje se poore fifth floor ka AC band pada hai, bahut garmi aur ghutan ho rahi hai. Sab pareshaan hain lekin kisi ki tabiyat kharab nahi hai. Facilities ne kaha hai ki technician chaar baje tak aa jayega."
+        },
+        "as": {
+          "text": "লাঞ্চৰ ঠিক পিছতে, প্ৰায় দুই বজাৰ পৰা গোটেই পাঁচ নম্বৰ মহলাৰ এচি বন্ধ হৈ আছে, বৰ গৰম আৰু গুমোট লাগিছে। মানুহবোৰৰ অসুবিধা হৈছে কিন্তু কাৰো গা বেয়া লগা নাই। ফেচিলিটিজে কৈছে যে চাৰি বজাৰ ভিতৰত টেকনিচিয়ান আহিব।",
+          "translit": "Lunch'or thik pisote, pray dui bojar pora gutei pans nombor mohalar AC bondho hoi ase, bor gorom aru gumot lagise. Manuhburor oxubidha hoise kintu karo ga beya loga nai. Facilities'e koise je sari bojar bhitorot technician ahibo."
+        },
+        "or": {
+          "text": "ଲଞ୍ଚ ପରେ ପରେ, ପ୍ରାୟ ଦୁଇଟାରୁ ପୂରା ଫିଫ୍ଥ ଫ୍ଲୋରରେ ଏସି ବନ୍ଦ ହୋଇଯାଇଛି, ବହୁତ ଗରମ ଆଉ ଗୁମୁଟ ହେଉଛି। ଲୋକଙ୍କର ଅସୁବିଧା ହେଉଛି କିନ୍ତୁ କାହାରି ଦେହ ଖରାପ ହୋଇନାହିଁ। ଫାସିଲିଟିଜ୍ କହିଛନ୍ତି ଚାରିଟା ସୁଦ୍ଧା ଟେକ୍ନିସିଆନ୍ ଆସିବେ।",
+          "translit": "Lunch pare pare, praya duita ru pura fifth floor're AC banda hoijaichi, bahuta garama au gumuta heuchi. Lokankara asubidha heuchi kintu kahari deha kharap hoinahi. Facilities kahichhanti charita suddha technician asibe."
+        },
+        "te": {
+          "text": "Lunch అయిన వెంటనే, సుమారు రెండు గంటల నుంచి fifth floor మొత్తం AC పని చేయట్లేదు, చాలా వేడిగా, ఉక్కపోతగా ఉంది. అందరూ ఇబ్బంది పడుతున్నారు కానీ ఎవరికీ ఒంట్లో బాగోలేకపోవడం ఏమీ లేదు. Technician నాలుగు గంటలకల్లా వస్తారని facilities చెప్పారు.",
+          "translit": "Lunch ayina ventane, sumaru rendu gantala nunchi fifth floor mottam AC pani cheyatledu, chaala vediga, ukkapothaga undi. Andaru ibbandi padutunnaru kani evariki ontlo baagolekapovadam emi ledu. Technician naalugu gantalakalla vastarani facilities cheppaaru."
+        },
+        "ta": {
+          "text": "லஞ்சுக்கு அப்புறம், ரெண்டு மணியிலிருந்து ஃபிப்த் ஃப்ளோர் முழுக்க ஏசி ஓடல, ரொம்ப சூடாவும் புழுக்கமாவும் இருக்கு. எல்லாருக்கும் கஷ்டமா இருக்கு, ஆனா யாருக்கும் உடம்பு சரியில்லாம போகல. நாலு மணிக்குள்ள டெக்னீஷியன் வருவார்னு ஃபெசிலிட்டீஸ்-ல சொன்னாங்க.",
+          "translit": "Lunch-ukku appuram, rendu maniyilirundhu fifth floor muzhukka AC odala, romba soodaavum puzhukkamaavum irukku. Ellaarukkum kashtamaa irukku, aanaal yaarukkum udambu sariyillaama pogala. Naalu manikkulla technician varuvaarnu facilities-la sonnaanga."
+        }
+      }
+    },
+    {
+      "id": "OFF-013",
+      "source": "added",
+      "title": "Wi-Fi outage on a floor",
+      "category": "IT & Equipment",
+      "tests": "Localised service disruption affecting many people but no safety risk.",
+      "tags": [
+        "service_disruption",
+        "multiple_people"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Equipment Failure",
+        "incident_type_acceptable": [
+          "Equipment Failure",
+          "Other"
+        ],
+        "severity_score": 2,
+        "severity_label": "Moderate",
+        "severity_acceptable": [
+          1,
+          2
+        ],
+        "app_severity": "Medium",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U1",
+          "U2"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "entire third floor",
+        "datetime": "since 12:30",
+        "persons_involved": "around forty people (cannot connect)",
+        "actions_taken": "IT ticket acknowledged",
+        "key_facts": [
+          "Wi-Fi down on whole floor",
+          "about 40 people affected",
+          "2:00 client call affected",
+          "no fix time given"
+        ]
+      },
+      "traps": [
+        "'two o'clock' is the client call, not the outage start."
+      ],
+      "narrations": {
+        "en": {
+          "text": "Wi-Fi has been down on the entire third floor since twelve thirty. Around forty people can't connect, and our two o'clock client call is affected. IT has acknowledged the ticket but hasn't given a time."
+        },
+        "hi": {
+          "text": "साढ़े बारह बजे से पूरे third floor पर Wi-Fi बंद है। करीब चालीस लोग connect नहीं कर पा रहे, और दो बजे वाली client call रुक रही है। IT ने ticket देख लिया है लेकिन कोई time नहीं बताया।",
+          "translit": "Saadhe baarah baje se poore third floor par Wi-Fi band hai. Kareeb chaalees log connect nahi kar pa rahe, aur do baje wali client call ruk rahi hai. IT ne ticket dekh liya hai lekin koi time nahi bataya."
+        },
+        "as": {
+          "text": "সাৰে বাৰ বজাৰ পৰা গোটেই তিনি নম্বৰ মহলাত ৱাই-ফাই বন্ধ হৈ আছে। প্ৰায় চল্লিশজন মানুহে কানেক্ট কৰিব পৰা নাই, দুই বজাৰ ক্লায়েণ্ট কলটোত অসুবিধা হৈছে। আইটিয়ে টিকেটটো চাইছে কিন্তু কোনো সময় দিয়া নাই।",
+          "translit": "Xare baro bojar pora gutei tini nombor mohalat Wi-Fi bondho hoi ase. Pray sollixjon manuhe connect koribo pora nai, dui bojar client call'tot oxubidha hoise. IT'ye ticket'to saise kintu kunu xomoy diya nai."
+        },
+        "or": {
+          "text": "ସାଢ଼େ ବାରଟାରୁ ପୂରା ଥାର୍ଡ ଫ୍ଲୋରରେ ୱାଇ-ଫାଇ ବନ୍ଦ ଅଛି। ପ୍ରାୟ ଚାଳିଶ ଜଣ କନେକ୍ଟ କରିପାରୁନାହାଁନ୍ତି, ଦୁଇଟା କ୍ଲାଏଣ୍ଟ କଲ୍ ଅଟକି ଯାଇଛି। ଆଇଟି ଟିକେଟ୍ ଦେଖିଛି କିନ୍ତୁ କିଛି ସମୟ କହିନାହିଁ।",
+          "translit": "Sadhe barata ru pura third floor're Wi-Fi banda achi. Praya chalisa jana connect kariparunahaanti, duita client call ataki jaichi. IT ticket dekhichi kintu kichhi samaya kahinaahi."
+        },
+        "te": {
+          "text": "పన్నెండున్నర నుంచి third floor మొత్తం Wi-Fi పని చేయట్లేదు. సుమారు నలభై మంది connect అవ్వలేకపోతున్నారు, రెండు గంటల client call కి ఇబ్బంది అవుతోంది. IT ticket తీసుకుంది కానీ ఎప్పటికి అవుతుందో చెప్పలేదు.",
+          "translit": "Pannendunnara nunchi third floor mottam Wi-Fi pani cheyatledu. Sumaru nalabhai mandi connect avvalekapotunnaru, rendu gantala client call ki ibbandi avutondi. IT ticket teesukundi kani eppatiki avutundo cheppaledu."
+        },
+        "ta": {
+          "text": "பன்னிரண்டரையிலிருந்து தேர்ட் ஃப்ளோர் முழுக்க வைஃபை வேலை செய்யல. சுமார் நாற்பது பேருக்கு கனெக்ட் ஆகல, ரெண்டு மணி கிளைன்ட் காலும் பிரச்சனையா இருக்கு. ஐடி டிக்கெட் எடுத்துட்டாங்க, ஆனா எப்போ சரியாகும்னு சொல்லல.",
+          "translit": "Pannirandaraiyilirundhu third floor muzhukka Wi-Fi velai seiyyala. Sumaar naarpadhu perukku connect aagala, rendu mani client call-um prachchanaiyaa irukku. IT ticket yedutthuttaanga, aana eppo sariyaagumnu sollala."
+        }
+      }
+    },
+    {
+      "id": "OFF-014",
+      "source": "added",
+      "title": "Expired fire extinguisher",
+      "category": "Fire & Gas",
+      "tests": "Safety observation with explicit 'no fire'. Low severity, routine.",
+      "tags": [
+        "keyword_trap",
+        "negation",
+        "near_miss"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Other",
+        "incident_type_acceptable": [
+          "Other",
+          "Equipment Failure"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U0",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "near staircase two, third floor",
+        "datetime": null,
+        "persons_involved": null,
+        "actions_taken": "reported for replacement",
+        "key_facts": [
+          "extinguisher expired last month",
+          "found in monthly check",
+          "no fire"
+        ]
+      },
+      "traps": [
+        "'fire' appears twice, once negated. If typed as Fire, rule G in IncidentRules.kt raises it to at least Medium.",
+        "'last month' is the expiry date, not an incident time."
+      ],
+      "narrations": {
+        "en": {
+          "text": "During the monthly safety check I noticed that the fire extinguisher near staircase two on the third floor expired last month. There's no fire or anything, I'm just reporting it so it can be replaced."
+        },
+        "hi": {
+          "text": "Monthly safety check में मैंने देखा कि third floor पर सीढ़ी दो के पास वाला fire extinguisher पिछले महीने expire हो गया है। कहीं कोई आग नहीं लगी है, बस report कर रहा हूँ ताकि इसे बदल दिया जाए।",
+          "translit": "Monthly safety check mein maine dekha ki third floor par seedhi do ke paas wala fire extinguisher pichhle mahine expire ho gaya hai. Kahin koi aag nahi lagi hai, bas report kar raha hoon taaki ise badal diya jaaye."
+        },
+        "as": {
+          "text": "মাহেকীয়া চেফটি চেকৰ সময়ত মই দেখিলোঁ যে তিনি নম্বৰ মহলাৰ দুই নম্বৰ চিৰিৰ ওচৰৰ ফায়াৰ এক্সটিংগুইছাৰটো যোৱা মাহতে এক্সপায়াৰ হৈ গৈছে। ক'তো জুই লগা নাই, মাত্ৰ ৰিপ'ৰ্ট কৰিছোঁ যাতে ইয়াক সলনি কৰিব পাৰি।",
+          "translit": "Mahekiya safety check'or xomoyot moi dekhilu je tini nombor mohalar dui nombor siri'r osoror fire extinguisher'to juwa mahote expire hoi goise. Kotu zui loga nai, matro report korisu jate iyak xoloni koribo pari."
+        },
+        "or": {
+          "text": "ମାସିକ ସେଫ୍ଟି ଚେକ୍ ବେଳେ ମୁଁ ଦେଖିଲି ଯେ ଥାର୍ଡ ଫ୍ଲୋରରେ ଦୁଇ ନମ୍ବର ସିଡ଼ି ପାଖ ଫାୟାର୍ ଏକ୍ସଟିଙ୍ଗୁଇସର୍ ଗତ ମାସ ଏକ୍ସପାୟାର୍ ହୋଇଯାଇଛି। କିଛି ନିଆଁ ଲାଗିନାହିଁ, ଖାଲି ରିପୋର୍ଟ କରୁଛି ଯେମିତି ଏହାକୁ ବଦଳାଇ ଦିଆଯିବ।",
+          "translit": "Masika safety check bele mun dekhili je third floor're dui nambar sidi pakha fire extinguisher gata masa expire hoijaichi. Kichhi nian laginaahi, khali report karuchi jemiti ehaku badalai diajiba."
+        },
+        "te": {
+          "text": "Monthly safety check చేస్తున్నప్పుడు third floor లో మెట్ల దగ్గర ఉన్న fire extinguisher పోయిన నెలే expire అయిపోయిందని చూశాను. ఎక్కడా మంటలు ఏమీ లేవు, దాన్ని మార్చడం కోసం report చేస్తున్నాను అంతే.",
+          "translit": "Monthly safety check chestunnappudu third floor lo metla daggara unna fire extinguisher poyina nele expire ayipoyindani choosanu. Ekkada mantalu emi levu, daanni maarchadam kosam report chestunnanu ante."
+        },
+        "ta": {
+          "text": "மாச சேஃப்டி செக் பண்ணும்போது, தேர்ட் ஃப்ளோர் ரெண்டாவது படிக்கட்டு பக்கத்துல இருக்கிற ஃபயர் எக்ஸ்டிங்விஷர் போன மாசமே எக்ஸ்பையர் ஆகியிருக்கிறத பார்த்தேன். தீ எதுவும் இல்ல, அதை மாத்துறதுக்கு மட்டும் ரிப்போர்ட் பண்றேன்.",
+          "translit": "Maasa safety check pannumbodhu, third floor rendaavadhu padikkattu pakkatthula irukkira fire extinguisher pona maadhame expire aagiyirukkiradha paartthen. Thee edhuvum illa, adhai maatthuradhukku mattum report panren."
+        }
+      }
+    },
+    {
+      "id": "OFF-015",
+      "source": "added",
+      "title": "Rat in the pantry",
+      "category": "Housekeeping",
+      "tests": "Hygiene issue, nobody harmed. Low severity, prompt follow-up.",
+      "tags": [
+        "negation",
+        "non_escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Other",
+        "incident_type_acceptable": [
+          "Other"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "behind the fridge, ground-floor pantry",
+        "datetime": "lunch time today",
+        "persons_involved": null,
+        "actions_taken": "food covered; housekeeping asked to call pest control",
+        "key_facts": [
+          "rat seen",
+          "nobody bitten",
+          "pest control requested"
+        ]
+      },
+      "traps": [],
+      "narrations": {
+        "en": {
+          "text": "We saw a rat running behind the fridge in the ground-floor pantry at lunch time today. Nobody was bitten. We've covered the food and asked housekeeping to call pest control."
+        },
+        "hi": {
+          "text": "आज lunch time पर ground floor pantry में fridge के पीछे एक चूहा भागता हुआ दिखा। किसी को काटा नहीं है। हमने खाना ढक दिया है और housekeeping को pest control बुलाने को कहा है।",
+          "translit": "Aaj lunch time par ground floor pantry mein fridge ke peechhe ek chooha bhaagta hua dikha. Kisi ko kaata nahi hai. Humne khaana dhak diya hai aur housekeeping ko pest control bulaane ko kaha hai."
+        },
+        "as": {
+          "text": "আজি লাঞ্চৰ সময়ত গ্ৰাউণ্ড ফ্লোৰৰ পেণ্ট্ৰিত ফ্ৰিজৰ পিছফালে এটা নিগনি দৌৰি থকা দেখিলোঁ। কাকো কামোৰা নাই। আমি খাদ্যবোৰ ঢাকি থৈছোঁ আৰু হাউচকিপিঙক পেষ্ট কণ্ট্ৰ'ল মাতিবলৈ কৈছোঁ।",
+          "translit": "Aji lunch'or xomoyot ground floor'or pantry't fridge'or pisphale eta nigoni douri thoka dekhilu. Kako kamura nai. Ami khadyobur dhaki thoysu aru housekeeping'ok pest control matiboloi koisu."
+        },
+        "or": {
+          "text": "ଆଜି ଲଞ୍ଚ ବେଳେ ଗ୍ରାଉଣ୍ଡ ଫ୍ଲୋର ପ୍ୟାଣ୍ଟ୍ରିରେ ଫ୍ରିଜ୍ ପଛରେ ଗୋଟେ ମୂଷା ଦୌଡ଼ୁଥିବା ଦେଖିଲୁ। କାହାକୁ କାମୁଡ଼ିନାହିଁ। ଆମେ ଖାଦ୍ୟ ଘୋଡ଼ାଇ ଦେଇଛୁ ଆଉ ହାଉସକିପିଂକୁ ପେଷ୍ଟ କଣ୍ଟ୍ରୋଲ୍ ଡାକିବାକୁ କହିଛୁ।",
+          "translit": "Aaji lunch bele ground floor pantry're fridge pachhare gote musa dauduthiba dekhilu. Kahaku kamudinaahi. Ame khadya ghodai deichhu au housekeeping'ku pest control dakibaku kahichhu."
+        },
+        "te": {
+          "text": "ఈరోజు lunch time లో ground floor pantry లో fridge వెనకాల ఒక ఎలుక పరిగెడుతూ కనిపించింది. ఎవరినీ కరవలేదు. Food మొత్తం cover చేశాం, pest control ని పిలవమని housekeeping కి చెప్పాం.",
+          "translit": "Eeroju lunch time lo ground floor pantry lo fridge venakaala oka eluka parigedutu kanipinchindi. Evarini karavaledu. Food mottam cover chesam, pest control ni pilavamani housekeeping ki cheppam."
+        },
+        "ta": {
+          "text": "இன்னைக்கு லஞ்ச் டைம்ல கிரவுண்ட் ஃப்ளோர் பேன்ட்ரியில ஃப்ரிட்ஜுக்குப் பின்னால ஒரு எலி ஓடுறத பார்த்தோம். யாரையும் கடிக்கல. சாப்பாட்டை மூடி வெச்சிட்டோம், பெஸ்ட் கன்ட்ரோல் கூப்பிட சொல்லி ஹவுஸ்கீப்பிங்கிடம் சொல்லியாச்சு.",
+          "translit": "Innaikku lunch time-la ground floor pantry-ila fridge-kku pinnaala oru eli oduradha paartthom. Yaaraiyum kadikkala. Saappaattai moodi vaitthittom, pest control kooppida solli housekeeping-idam solliyaachu."
+        }
+      }
+    },
+    {
+      "id": "OFF-016",
+      "source": "added",
+      "title": "Loose cables across a walkway",
+      "category": "Facilities",
+      "tests": "Trip hazard with near-misses and a request. A request is not an action taken.",
+      "tags": [
+        "near_miss",
+        "negation",
+        "request_vs_action"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Other",
+        "incident_type_acceptable": [
+          "Other",
+          "Accident"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U1"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "walkway near the training room, fourth floor",
+        "datetime": "today",
+        "persons_involved": "two people (tripped, not hurt)",
+        "actions_taken": null,
+        "key_facts": [
+          "loose network cables",
+          "two near-trips",
+          "nobody fell or got hurt",
+          "asks for cables to be taped or rerouted"
+        ]
+      },
+      "traps": [
+        "The request to tape the cables is not an action already taken; actions_taken must stay null.",
+        "Romanised Hindi 'kisi ko chot nahi lagi' and Telugu 'evariki debba tagalaledu' contain injury keywords that are not in the NEGATIONS list of IncidentRules.kt, so rule E would wrongly raise them to Injury / High."
+      ],
+      "narrations": {
+        "en": {
+          "text": "There are loose network cables running across the walkway near the training room on the fourth floor. Two people have already tripped on them today, but nobody fell or got hurt. Can someone tape them down or route them properly?"
+        },
+        "hi": {
+          "text": "Fourth floor पर training room के पास रास्ते में network cables खुली पड़ी हैं। आज दो लोग उनमें अटक कर लड़खड़ा चुके हैं, लेकिन कोई गिरा नहीं और किसी को चोट नहीं लगी। क्या कोई इन्हें tape कर सकता है या ठीक से लगा सकता है? ",
+          "translit": "Fourth floor par training room ke paas raaste mein network cables khuli padi hain. Aaj do log unmein atak kar ladkhada chuke hain, lekin koi gira nahi aur kisi ko chot nahi lagi. Kya koi inhein tape kar sakta hai ya theek se laga sakta hai?"
+        },
+        "as": {
+          "text": "চাৰি নম্বৰ মহলাত ট্ৰেইনিং ৰুমৰ ওচৰৰ ৰাস্তাত নেটৱৰ্ক কেবলবোৰ খোলাকৈ পৰি আছে। আজি দুজন মানুহৰ ভৰি লাগি উজুটি খাইছে, কিন্তু কোনো পৰি যোৱা নাই বা দুখ পোৱা নাই। কোনোবাই এইবোৰ টেপ মাৰি দিব পাৰিবনে বা ঠিকমতে ৰাখিব পাৰিবনে?",
+          "translit": "Sari nombor mohalat training room'or osoror rastat network cable'bur khulakoi pori ase. Aji dujon manuhor bhori lagi uzuti khaise, kintu kunu pori juwa nai ba dukh powa nai. Kunubai eibur tape mari dibo paribone ba thikmote rakhibo paribone?"
+        },
+        "or": {
+          "text": "ଫୋର୍ଥ ଫ୍ଲୋରରେ ଟ୍ରେନିଂ ରୁମ୍ ପାଖ ବାଟରେ ନେଟୱର୍କ କେବଲ୍ ଖୋଲା ପଡ଼ିଛି। ଆଜି ଦୁଇଜଣ ସେଥିରେ ଗୋଡ଼ ବାଜି ଝୁଣ୍ଟିଲେଣି, କିନ୍ତୁ କେହି ପଡ଼ିନାହାଁନ୍ତି କି କାହାରି କିଛି ହୋଇନାହିଁ। କେହି ଏଗୁଡ଼ିକୁ ଟେପ୍ ମାରିଦେବେ କି ବା ଠିକ୍ ଭାବରେ ସଜାଡ଼ି ଦେବେ କି?",
+          "translit": "Fourth floor're training room pakha batare network cable khola padichi. Aaji duijana sethire goda baji jhuntileni, kintu kehi padinahaanti ki kahari kichhi hoinaahi. Kehi egudiku tape maridebe ki ba thik bhabare sajadi debe ki?"
+        },
+        "te": {
+          "text": "Fourth floor లో training room దగ్గర దారి మధ్యలో network cables వదులుగా పడి ఉన్నాయి. ఈరోజు ఇప్పటికే ఇద్దరు వాటికి కాలు తగిలి తడబడ్డారు, కానీ ఎవరూ పడలేదు, ఎవరికీ దెబ్బ తగలలేదు. ఎవరైనా వాటిని tape చేయగలరా లేదా సరిగ్గా పెట్టగలరా?",
+          "translit": "Fourth floor lo training room daggara daari madhyalo network cables vadulugaa padi unnayi. Eeroju ippatike iddaru vaatiki kaalu tagili tadabaddaru, kani evaru padaledu, evariki debba tagalaledu. Evaraina vaatini tape cheyagalara leda sarigga pettagalara?"
+        },
+        "ta": {
+          "text": "ஃபோர்த் ஃப்ளோர்ல ட்ரெய்னிங் ரூம் பக்கத்துல நடக்குற வழியில நெட்வொர்க் கேபிள் தளர்வா கிடக்கு. இன்னைக்கு ரெண்டு பேரு கால் தடுக்கிட்டாங்க, ஆனா யாரும் விழல, யாருக்கும் அடி படல. யாராவது இதை டேப் பண்ண முடியுமா இல்ல சரியா ரூட் பண்ண முடியுமா?",
+          "translit": "Fourth floor-la training room pakkatthula nadakkura vazhiyila network cable thalarva kidakku. Innaikku rendu peru kaal thadukkittaanga, aana yaarum vizhala, yaarukkum adi padala. Yaaraavadhu idhai tape panna mudiyumaa illa sariya route panna mudiyumaa?"
+        }
+      }
+    },
+    {
+      "id": "OFF-017",
+      "source": "added",
+      "title": "Paper-cutter finger cut",
+      "category": "Medical",
+      "tests": "Minor injury treated with first aid. Must not be inflated to High just because someone was hurt.",
+      "tags": [
+        "non_escalation",
+        "keyword_trap",
+        "resolved"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Injury",
+        "incident_type_acceptable": [
+          "Injury"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U0",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Resolved",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "admin room",
+        "datetime": "around 2:00",
+        "persons_involved": "an intern",
+        "actions_taken": "wound cleaned; band-aid applied from first-aid kit",
+        "key_facts": [
+          "small cut on finger",
+          "first aid given",
+          "bleeding stopped",
+          "back at desk"
+        ]
+      },
+      "traps": [
+        "'cut', 'finger' and 'bleeding' trigger rule E in IncidentRules.kt, which forces Injury / High. The extraction prompt also defines High as 'anyone hurt'. The severity framework puts first-aid-only injuries at Low."
+      ],
+      "narrations": {
+        "en": {
+          "text": "An intern cut their finger on the paper cutter in the admin room at around two. It was a small cut; we cleaned it and put a band-aid from the first-aid kit. The bleeding has stopped and they are back at their desk."
+        },
+        "hi": {
+          "text": "करीब दो बजे admin room में एक intern की उंगली paper cutter से कट गई। छोटा सा cut था; हमने उसे साफ़ किया और first-aid kit से band-aid लगा दी। Bleeding रुक गई है और वो अपनी desk पर वापस आ गए हैं।",
+          "translit": "Kareeb do baje admin room mein ek intern ki ungli paper cutter se kat gayi. Chhota sa cut tha; humne use saaf kiya aur first-aid kit se band-aid laga di. Bleeding ruk gayi hai aur wo apni desk par waapas aa gaye hain."
+        },
+        "as": {
+          "text": "প্ৰায় দুই বজাত এডমিন ৰুমত এজন ইণ্টাৰ্নৰ আঙুলি পেপাৰ কাটাৰত কাটিলে। সৰু কটা আছিল; আমি চাফা কৰি ফাৰ্ষ্ট-এইড কিটৰ পৰা বেণ্ড-এইড লগাই দিলোঁ। তেজ ওলোৱা বন্ধ হৈছে আৰু তেওঁ নিজৰ ডেস্কলৈ গৈছে।",
+          "translit": "Pray dui bojat admin room'ot ejon intern'or anguli paper cutter'ot katile. Xoru kota asil; ami safa kori first-aid kit'or pora band-aid lagai dilu. Tez oluwa bondho hoise aru teo nizor desk'oloi goise."
+        },
+        "or": {
+          "text": "ପ୍ରାୟ ଦୁଇଟା ବେଳେ ଆଡମିନ୍ ରୁମରେ ଜଣେ ଇଣ୍ଟର୍ନଙ୍କ ଆଙ୍ଗୁଠି ପେପର୍ କଟରରେ କଟିଗଲା। ଛୋଟ କଟା ଥିଲା; ଆମେ ସଫା କରି ଫାର୍ଷ୍ଟ-ଏଡ୍ କିଟରୁ ବ୍ୟାଣ୍ଡ-ଏଡ୍ ଲଗାଇଦେଲୁ। ରକ୍ତ ବନ୍ଦ ହୋଇଗଲାଣି ଆଉ ସେ ନିଜ ଡେସ୍କକୁ ଫେରିଗଲେଣି।",
+          "translit": "Praya duita bele admin room're jane intern'nka anguthi paper cutter're katigala. Chhota kata thila; ame safa kari first-aid kit ru band-aid lagaidelu. Rakta banda hoigalani au se nija desk'ku pherigaleni."
+        },
+        "te": {
+          "text": "సుమారు రెండు గంటలకి admin room లో ఒక intern కి paper cutter తో వేలు తెగింది. చిన్న cut మాత్రమే; దాన్ని శుభ్రం చేసి first-aid kit నుంచి band-aid వేశాం. రక్తం ఆగిపోయింది, మళ్ళీ desk దగ్గరికి వెళ్ళిపోయారు.",
+          "translit": "Sumaru rendu gantalaki admin room lo oka intern ki paper cutter tho velu tegindi. Chinna cut maatrame; daanni shubhram chesi first-aid kit nunchi band-aid vesam. Raktam aagipoyindi, malli desk daggariki vellipoyaru."
+        },
+        "ta": {
+          "text": "சுமார் ரெண்டு மணிக்கு அட்மின் ரூம்ல ஒரு இன்டர்னுக்கு பேப்பர் கட்டர்ல விரல் வெட்டிடுச்சு. சின்ன வெட்டுதான்; சுத்தம் பண்ணி ஃபர்ஸ்ட்-எய்ட் கிட்ல இருந்து பேண்ட்-எய்ட் போட்டோம். ரத்தம் நின்னுடுச்சு, அவர் டெஸ்க்குக்கு போயிட்டார்.",
+          "translit": "Sumaar rendu manikku admin room-la oru intern-ukku paper cutter-la viral vettiduchu. Chinna vettudhaan; suttham panni first-aid kit-la irundhu band-aid pottom. Rattham ninnuduchu, avar desk-ukku poyittaar."
+        }
+      }
+    },
+    {
+      "id": "OFF-018",
+      "source": "added",
+      "title": "Chair broke, minor fall",
+      "category": "Medical",
+      "tests": "Slip/fall with a bruise only, person refuses a doctor. Low severity.",
+      "tags": [
+        "non_escalation",
+        "resolved"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Injury",
+        "incident_type_acceptable": [
+          "Injury",
+          "Accident"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          1,
+          2
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Resolved",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "accounts section",
+        "datetime": "this morning around 10:00",
+        "persons_involved": "a colleague",
+        "actions_taken": "broken chair removed",
+        "key_facts": [
+          "chair broke",
+          "fell on floor",
+          "small bruise on elbow",
+          "walking fine",
+          "declined doctor"
+        ]
+      },
+      "traps": [
+        "The extraction prompt defines High as 'anyone hurt', which pushes a bruise to High."
+      ],
+      "narrations": {
+        "en": {
+          "text": "A chair broke under a colleague in the accounts section this morning around ten, and he fell on the floor. He has a small bruise on his elbow but can walk fine and doesn't want to see a doctor. We've removed the broken chair."
+        },
+        "hi": {
+          "text": "आज सुबह करीब दस बजे accounts section में एक colleague के नीचे कुर्सी टूट गई और वो नीचे गिर गए। उनकी elbow पर हल्की सी चोट है, लेकिन वो ठीक से चल पा रहे हैं और doctor के पास नहीं जाना चाहते। हमने टूटी कुर्सी हटा दी है।",
+          "translit": "Aaj subah kareeb das baje accounts section mein ek colleague ke neeche kursi toot gayi aur wo neeche gir gaye. Unki elbow par halki si chot hai, lekin wo theek se chal pa rahe hain aur doctor ke paas nahi jaana chahte. Humne tooti kursi hata di hai."
+        },
+        "as": {
+          "text": "আজি পুৱা প্ৰায় দহ বজাত একাউণ্টছত এজন সহকৰ্মী বহি থকা চকীখন ভাগি গ'ল আৰু তেওঁ মজিয়াত পৰিল। তেওঁৰ কিলাকুটিত অলপ দুখ পাইছে, কিন্তু ঠিকমতে খোজ কাঢ়িব পাৰিছে আৰু ডাক্তৰ দেখুৱাব নোখোজে। ভগা চকীখন আঁতৰাই দিলোঁ।",
+          "translit": "Aji puwa pray doh bojat accounts'ot ejon xohokormi bohi thoka sokikhon bhagi gol aru teo mojiyat poril. Teor kilakutit olop dukh paise, kintu thikmote khuz karhibo parise aru doctor dekhuwabo nukhuze. Bhoga sokikhon atorai dilu."
+        },
+        "or": {
+          "text": "ଆଜି ସକାଳ ପ୍ରାୟ ଦଶଟାରେ ଆକାଉଣ୍ଟସରେ ଜଣେ ସହକର୍ମୀ ବସିଥିବା ଚେୟାର୍ ଭାଙ୍ଗିଗଲା ଆଉ ସେ ତଳେ ପଡ଼ିଗଲେ। ତାଙ୍କ କହୁଣିରେ ଟିକେ ଆଘାତ ଲାଗିଛି, କିନ୍ତୁ ସେ ଠିକ୍ ଚାଲିପାରୁଛନ୍ତି ଆଉ ଡାକ୍ତର ଦେଖାଇବାକୁ ମନା କଲେ। ଭଙ୍ଗା ଚେୟାର୍ ହଟାଇ ଦିଆଗଲା।",
+          "translit": "Aaji sakala praya dasatare accounts're jane sahakarmi basithiba chair bhangigala au se tale padigale. Tanka kahunire tike aghata lagichi, kintu se thik chaliparuchhanti au daktar dekhaibaku mana kale. Bhanga chair hatai diagala."
+        },
+        "te": {
+          "text": "ఈరోజు ఉదయం సుమారు పది గంటలకి accounts section లో ఒక colleague కూర్చున్న chair విరిగిపోయి కింద పడ్డారు. మోచేతికి చిన్న దెబ్బ తగిలింది, కానీ బాగానే నడవగలుగుతున్నారు, doctor దగ్గరికి వెళ్ళనక్కర్లేదు అన్నారు. విరిగిన chair ని తీసేశాం.",
+          "translit": "Eeroju udayam sumaru padi gantalaki accounts section lo oka colleague koorchunna chair virigipoyi kinda paddaru. Mochethiki chinna debba tagilindi, kani baagaane nadavagalugutunnaru, doctor daggariki vellanakkarledu annaru. Virigina chair ni teesesam."
+        },
+        "ta": {
+          "text": "இன்னைக்கு காலையில பத்து மணிக்கு அக்கவுண்ட்ஸ்ல கொலீக் உட்கார்ந்திருந்த சேர் உடைஞ்சு தரையில விழுந்துட்டார். முழங்கையில சின்ன காயம், ஆனா நல்லா நடக்கிறார், டாக்டர்கிட்ட போக வேணாம்னு சொல்றார். உடைந்த சேரை எடுத்துட்டோம்.",
+          "translit": "Innaikku kaalaiyila patthu manikku accounts-la colleague utkaarndhirundha chair udainju tharaiyila vizhundhuttaar. Muzhangaiyila chinna kaayam, aana nallaa nadakkiraar, doctor-kitta poga venaamnu solraar. Udaindha chair-ai yedutthuttom."
+        }
+      }
+    },
+    {
+      "id": "OFF-019",
+      "source": "added",
+      "title": "Dizzy after skipping lunch, recovered",
+      "category": "Medical",
+      "tests": "Transient symptom with an obvious benign cause, fully resolved. Low severity.",
+      "tags": [
+        "keyword_trap",
+        "resolved",
+        "medical_boundary"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Other",
+        "incident_type_acceptable": [
+          "Other",
+          "Injury"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U0",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Resolved",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "Room 305",
+        "datetime": "around 4:00, during the meeting",
+        "persons_involved": "a colleague",
+        "actions_taken": "sat down; drank juice",
+        "key_facts": [
+          "felt dizzy",
+          "had skipped lunch",
+          "fine after 15 minutes",
+          "back at work"
+        ]
+      },
+      "traps": [
+        "'dizzy' (and romanised Hindi 'chakkar') is in the SYMPTOMS list of IncidentRules.kt, which forces High even though the symptom has resolved."
+      ],
+      "narrations": {
+        "en": {
+          "text": "A colleague felt a little dizzy during the four o'clock meeting in Room 305; she had skipped lunch. She sat down and drank some juice, and after fifteen minutes she feels completely fine and has gone back to work."
+        },
+        "hi": {
+          "text": "Room 305 में चार बजे की meeting में एक colleague को थोड़ा चक्कर आया; उन्होंने lunch नहीं किया था। वो बैठ गईं और थोड़ा juice पिया, पंद्रह मिनट बाद वो बिल्कुल ठीक हैं और वापस काम पर चली गई हैं।",
+          "translit": "Room 305 mein chaar baje ki meeting mein ek colleague ko thoda chakkar aaya; unhone lunch nahi kiya tha. Wo baith gayin aur thoda juice piya, pandrah minute baad wo bilkul theek hain aur waapas kaam par chali gayi hain."
+        },
+        "as": {
+          "text": "ৰুম ৩০৫ত চাৰি বজাৰ মিটিঙত এগৰাকী সহকৰ্মীৰ অলপ মূৰ ঘূৰাইছিল; তেওঁ লাঞ্চ খোৱা নাছিল। তেওঁ বহি অলপ জুচ খালে, আৰু পোন্ধৰ মিনিটৰ পিছত সম্পূৰ্ণ ঠিক হৈ কামলৈ ঘূৰি গ'ল।",
+          "translit": "Room 305-ot sari bojar meeting'ot egoraki xohokormir olop mur ghuraisil; teo lunch khuwa nasil. Teo bohi olop juice khale, aru pundhor minute'or pisot xompurno thik hoi kamoloi ghuri gol."
+        },
+        "or": {
+          "text": "ରୁମ୍ ୩୦୫ରେ ଚାରିଟା ମିଟିଂ ବେଳେ ଜଣେ ସହକର୍ମୀଙ୍କ ମୁଣ୍ଡ ଟିକେ ବୁଲାଇଲା; ସେ ଲଞ୍ଚ ଖାଇନଥିଲେ। ସେ ବସି ଟିକେ ଜୁସ୍ ପିଇଲେ, ପନ୍ଦର ମିନିଟ୍ ପରେ ପୂରା ଠିକ୍ ହୋଇ କାମକୁ ଫେରିଗଲେ।",
+          "translit": "Room 305-re charita meeting bele jane sahakarmi'nka munda tike bulaila; se lunch khainathile. Se basi tike juice piile, pandara minute pare pura thik hoi kamaku pherigale."
+        },
+        "te": {
+          "text": "Room 305 లో నాలుగు గంటల meeting లో ఒక colleague కి కొంచెం కళ్ళు తిరిగాయి; ఆమె lunch చేయలేదు. ఆమె కూర్చుని కొంచెం juice తాగారు, పదిహేను నిమిషాల తర్వాత పూర్తిగా బాగున్నారు, మళ్ళీ పనికి వెళ్ళిపోయారు.",
+          "translit": "Room 305 lo naalugu gantala meeting lo oka colleague ki konchem kallu tirigaayi; aame lunch cheyaledu. Aame koorchuni konchem juice taagaaru, padihenu nimishala tarvata poortigaa baagunnaru, malli paniki vellipoyaru."
+        },
+        "ta": {
+          "text": "ரூம் 305-ல நாலு மணி மீட்டிங்ல ஒரு கொலீக்குக்கு லேசா தலை சுத்துச்சு; அவங்க லஞ்ச் சாப்பிடல. உட்கார்ந்து கொஞ்சம் ஜூஸ் குடிச்சாங்க, பதினைஞ்சு நிமிஷத்துல சரியாகி திரும்ப வேலைக்கு போயிட்டாங்க.",
+          "translit": "Room 305-la naalu mani meeting-la oru colleague-ukku lesa thala sutthuchu; avanga lunch saappidala. Utkaarndhu konjam juice kudicchaanga, pathinainju nimishathula sariyaagi thirumba velaikku poyittaanga."
+        }
+      }
+    },
+    {
+      "id": "OFF-020",
+      "source": "added",
+      "title": "Microwave smoke, already resolved",
+      "category": "Fire & Gas",
+      "tests": "Smoke event that is over: unplugged, no flames, alarm did not trigger. Low severity.",
+      "tags": [
+        "keyword_trap",
+        "resolved",
+        "non_escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Fire",
+        "incident_type_acceptable": [
+          "Fire",
+          "Equipment Failure"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1,
+          2
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Resolved",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "second-floor pantry",
+        "datetime": "around 1:00",
+        "persons_involved": null,
+        "actions_taken": "microwave unplugged; kept aside for checking",
+        "key_facts": [
+          "popcorn overheated",
+          "smoke only, no flames",
+          "smoke cleared",
+          "fire alarm did not trigger",
+          "burnt smell"
+        ]
+      },
+      "traps": [
+        "'smoke' and 'fire alarm' look like the fire hard-rule family, but resolution phrases ('unplugged', 'smoke has cleared') should suppress it.",
+        "Rule G in IncidentRules.kt floors any Fire at Medium, so the app cannot output the gold Low."
+      ],
+      "narrations": {
+        "en": {
+          "text": "The microwave in the second-floor pantry started smoking at around one when someone over-heated popcorn. They unplugged it straight away, there were no flames, the smoke has cleared and the fire alarm didn't go off. The microwave smells burnt, so we've kept it aside for checking."
+        },
+        "hi": {
+          "text": "करीब एक बजे second floor pantry में microwave से धुआँ निकलने लगा, किसी ने popcorn ज़्यादा गर्म कर दिया था। तुरंत plug निकाल दिया, कोई आग नहीं लगी थी, धुआँ साफ़ हो गया है और fire alarm भी नहीं बजा। Microwave से जलने की smell आ रही है, इसलिए checking के लिए अलग रख दिया है।",
+          "translit": "Kareeb ek baje second floor pantry mein microwave se dhuaan nikalne laga, kisi ne popcorn zyada garam kar diya tha. Turant plug nikaal diya, koi aag nahi lagi thi, dhuaan saaf ho gaya hai aur fire alarm bhi nahi baja. Microwave se jalne ki smell aa rahi hai, isliye checking ke liye alag rakh diya hai."
+        },
+        "as": {
+          "text": "প্ৰায় এক বজাত দুই নম্বৰ মহলাৰ পেণ্ট্ৰিৰ মাইক্ৰ'ৱেভৰ পৰা ধোঁৱা ওলাল, কোনোবাই পপকৰ্ণ বেছি গৰম কৰিছিল। লগে লগে প্লাগ খুলি দিলে, জুই লগা নাছিল, ধোঁৱা নাইকিয়া হ'ল আৰু ফায়াৰ এলাৰ্মো বজা নাই। মাইক্ৰ'ৱেভৰ পৰা পোৰা গোন্ধ আহিছে, সেয়ে চেক কৰিবলৈ আঁতৰাই থৈছোঁ।",
+          "translit": "Pray ek bojat dui nombor mohalar pantry'r microwave'or pora dhuwa olal, kunubai popcorn besi gorom korisil. Loge loge plug khuli dile, zui loga nasil, dhuwa naikiya hol aru fire alarm'o boja nai. Microwave'or pora pura gondho ahi ase, xeye check koriboloi atorai thoysu."
+        },
+        "or": {
+          "text": "ପ୍ରାୟ ଗୋଟାଏ ବେଳେ ସେକେଣ୍ଡ ଫ୍ଲୋର ପ୍ୟାଣ୍ଟ୍ରି ମାଇକ୍ରୋୱେଭରୁ ଧୂଆଁ ବାହାରିଲା, କେହି ପପକର୍ଣ୍ଣ ବେଶୀ ଗରମ କରିଦେଇଥିଲେ। ସେ ସାଙ୍ଗେ ସାଙ୍ଗେ ପ୍ଲଗ୍ କାଢ଼ିଦେଲେ, ନିଆଁ ଲାଗିନଥିଲା, ଧୂଆଁ ସଫା ହୋଇଗଲା ଆଉ ଫାୟାର୍ ଆଲାର୍ମ ବି ବାଜିନି। ମାଇକ୍ରୋୱେଭରୁ ପୋଡ଼ା ଗନ୍ଧ ଆସୁଛି, ତେଣୁ ଚେକ୍ କରିବା ପାଇଁ ଅଲଗା ରଖିଦେଇଛୁ।",
+          "translit": "Praya gotae bele second floor pantry microwave ru dhuan baharila, kehi popcorn beshi garama karideithile. Se sange sange plug kadhidele, nian laginathila, dhuan safa hoigala au fire alarm bi bajini. Microwave ru poda gandha asuchi, tenu check kariba pain alaga rakhideichhu."
+        },
+        "te": {
+          "text": "సుమారు ఒంటి గంటకి second floor pantry లో microwave నుంచి పొగ రావడం మొదలైంది, ఎవరో popcorn ని ఎక్కువసేపు వేడి చేశారు. వెంటనే plug తీసేశారు, మంటలు ఏమీ రాలేదు, పొగ పోయింది, fire alarm కూడా మోగలేదు. Microwave నుంచి కాలిన వాసన వస్తోంది, అందుకే దాన్ని check చేయడానికి పక్కన పెట్టాం.",
+          "translit": "Sumaru onti gantaki second floor pantry lo microwave nunchi poga raavadam modalaindi, evaro popcorn ni ekkuvasepu vedi chesaru. Ventane plug teesesaru, mantalu emi raaledu, poga poyindi, fire alarm kooda mogaledu. Microwave nunchi kaalina vaasana vastondi, anduke daanni check cheyadaniki pakkana pettam."
+        },
+        "ta": {
+          "text": "சுமார் ஒரு மணிக்கு செகண்ட் ஃப்ளோர் பேன்ட்ரியில மைக்ரோவேவ்ல இருந்து புகை வந்தது, யாரோ பாப்கார்னை ரொம்ப சூடு பண்ணிட்டாங்க. உடனே பிளக்கை கழட்டிட்டாங்க, தீ எதுவும் இல்ல, புகையும் போயிடுச்சு, ஃபயர் அலாரமும் அடிக்கல. மைக்ரோவேவ்ல கருகின வாசனை வருது, அதனால செக் பண்ண தனியா வெச்சிருக்கோம்.",
+          "translit": "Sumaar oru manikku second floor pantry-ila microwave-la irundhu pugai vandhadhu, yaaro popcorn-ai romba soodu pannittaanga. Udane plug-ai kazhattittaanga, thee edhuvum illa, pugaiyum poyiduchu, fire alarm-um adikkala. Microwave-la karugina vaasanai varudhu, adhanaala check panna thaniyaa vaitthirukkom."
+        }
+      }
+    },
+    {
+      "id": "OFF-021",
+      "source": "added",
+      "title": "Ceiling tile fell, nobody around",
+      "category": "Facilities",
+      "tests": "Near-miss: structural item fell before anyone arrived. Severity 0-1, prompt inspection.",
+      "tags": [
+        "near_miss",
+        "negation",
+        "keyword_trap"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Other",
+        "incident_type_acceptable": [
+          "Other",
+          "Accident"
+        ],
+        "severity_score": 0,
+        "severity_label": "None / Near-miss",
+        "severity_acceptable": [
+          0,
+          1,
+          2
+        ],
+        "app_severity": "Low",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U1"
+        ],
+        "status": "Contained",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "corridor near the first-floor lift lobby",
+        "datetime": "about 7:00 this morning",
+        "persons_involved": null,
+        "actions_taken": "area cordoned off; facilities asked to check other tiles",
+        "key_facts": [
+          "false-ceiling tile fell",
+          "before anyone arrived",
+          "nobody hurt",
+          "area cordoned"
+        ]
+      },
+      "traps": [
+        "'lift' is an Equipment Failure keyword, so the type can be pulled toward Equipment Failure.",
+        "'fell' plus 'nobody was hurt': the injury rule must stay suppressed."
+      ],
+      "narrations": {
+        "en": {
+          "text": "A false-ceiling tile fell in the corridor near the first-floor lift lobby at about seven this morning, before anyone had come in. Nobody was hurt. Housekeeping has cordoned off the area and we've asked facilities to check the other tiles."
+        },
+        "hi": {
+          "text": "आज सुबह करीब सात बजे, किसी के आने से पहले, first floor लिफ्ट के पास रास्ते में false-ceiling की एक tile गिर गई। किसी को चोट नहीं लगी। Housekeeping ने वो जगह घेर दी है और facilities को बाकी tiles check करने को कहा है।",
+          "translit": "Aaj subah kareeb saat baje, kisi ke aane se pehle, first floor lift ke paas raaste mein false-ceiling ki ek tile gir gayi. Kisi ko chot nahi lagi. Housekeeping ne wo jagah gher di hai aur facilities ko baaki tiles check karne ko kaha hai."
+        },
+        "as": {
+          "text": "আজি পুৱা প্ৰায় সাত বজাত, কোনো অহাৰ আগতেই, এক নম্বৰ মহলাৰ লিফ্টৰ কাষত কৰিডৰত ফল্ছ-চিলিঙৰ টাইল এখন খহি পৰিল। কাৰো আঘাত লগা নাই। হাউচকিপিঙে ঠাইখিনি ঘেৰি দিছে আৰু ফেচিলিটিজক বাকী টাইলবোৰ চেক কৰিবলৈ কোৱা হৈছে।",
+          "translit": "Aji puwa pray xat bojat, kunu ohar agotei, ek nombor mohalar lift'or kaxot corridor'ot false-ceiling'or tile ekhon khohi poril. Karo aghat loga nai. Housekeeping'e thaikhini gheri dise aru facilities'ok baki tile'bur check koriboloi kowa hoise."
+        },
+        "or": {
+          "text": "ଆଜି ସକାଳ ପ୍ରାୟ ସାତଟାରେ, କେହି ଆସିବା ଆଗରୁ, ଫାର୍ଷ୍ଟ ଫ୍ଲୋର ଲିଫ୍ଟ ପାଖ କରିଡରରେ ଫଲ୍ସ-ସିଲିଂର ଗୋଟେ ଟାଇଲ୍ ଖସିପଡ଼ିଲା। କାହାରି କିଛି ହୋଇନାହିଁ। ହାଉସକିପିଂ ସେ ଜାଗା ଘେରି ଦେଇଛନ୍ତି ଆଉ ଫାସିଲିଟିଜକୁ ବାକି ଟାଇଲ୍ ଚେକ୍ କରିବାକୁ କୁହାଯାଇଛି।",
+          "translit": "Aaji sakala praya satatare, kehi asiba agaru, first floor lift pakha corridor're false-ceiling'ra gote tile khasipadila. Kahari kichhi hoinaahi. Housekeeping se jaga gheri deichhanti au facilities'ku baki tile check karibaku kuhajaichi."
+        },
+        "te": {
+          "text": "ఈరోజు ఉదయం సుమారు ఏడు గంటలకి, ఎవరూ రాకముందే, first floor lift దగ్గర corridor లో false-ceiling tile ఒకటి ఊడి పడింది. ఎవరికీ దెబ్బలు తగలలేదు. Housekeeping ఆ area ని cordon off చేశారు, మిగతా tiles check చేయమని facilities కి చెప్పాం.",
+          "translit": "Eeroju udayam sumaru edu gantalaki, evaru raakamunde, first floor lift daggara corridor lo false-ceiling tile okati oodi padindi. Evariki debbalu tagalaledu. Housekeeping aa area ni cordon off chesaru, migatha tiles check cheyamani facilities ki cheppam."
+        },
+        "ta": {
+          "text": "இன்னைக்கு காலையில ஏழு மணிக்கு, யாரும் வர்றதுக்கு முன்னாடி, ஃபர்ஸ்ட் ஃப்ளோர் லிஃப்ட் பக்கத்துல ஃபால்ஸ்-சீலிங் டைல் ஒண்ணு விழுந்துடுச்சு. யாருக்கும் அடி படல. ஹவுஸ்கீப்பிங் அந்த இடத்தை அடைச்சு வெச்சிருக்காங்க, மத்த டைல்ஸை செக் பண்ண ஃபெசிலிட்டீஸிடம் சொல்லியாச்சு.",
+          "translit": "Innaikku kaalaiyila ezhu manikku, yaarum varradhukku munnaadi, first floor lift pakkatthula false-ceiling tile onnu vizhundhuduchu. Yaarukkum adi padala. Housekeeping andha idathai adaichu vaitthirukkaanga, mattha tiles-ai check panna facilities-idam solliyaachu."
+        }
+      }
+    },
+    {
+      "id": "OFF-022",
+      "source": "added",
+      "title": "Tailgating at access gate, resolved",
+      "category": "Security",
+      "tests": "Security event that turned out benign and has been handled.",
+      "tags": [
+        "resolved",
+        "non_escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Security",
+        "incident_type_acceptable": [
+          "Security"
+        ],
+        "severity_score": 1,
+        "severity_label": "Low",
+        "severity_acceptable": [
+          0,
+          1
+        ],
+        "app_severity": "Low",
+        "urgency": "U0",
+        "urgency_acceptable": [
+          "U0",
+          "U1"
+        ],
+        "status": "Resolved",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "second-floor access gate",
+        "datetime": "around 9:15",
+        "persons_involved": "an unknown person (later identified as a vendor); an employee",
+        "actions_taken": "security checked; visitor badge issued",
+        "key_facts": [
+          "tailgated without swiping",
+          "turned out to be a vendor for admin team",
+          "visitor badge issued"
+        ]
+      },
+      "traps": [],
+      "narrations": {
+        "en": {
+          "text": "At around nine fifteen an unknown person followed an employee through the second-floor access gate without swiping a card. Security checked and found it was a vendor visiting the admin team, and the vendor has now been given a visitor badge."
+        },
+        "hi": {
+          "text": "करीब सवा नौ बजे एक अनजान आदमी बिना card swipe किए एक employee के पीछे-पीछे second floor के access gate से अंदर आ गया। Security ने check किया तो पता चला कि वो admin team से मिलने आया vendor था, और अब उसे visitor badge दे दिया गया है।",
+          "translit": "Kareeb sawa nau baje ek anjaan aadmi bina card swipe kiye ek employee ke peechhe-peechhe second floor ke access gate se andar aa gaya. Security ne check kiya to pata chala ki wo admin team se milne aaya vendor tha, aur ab use visitor badge de diya gaya hai."
+        },
+        "as": {
+          "text": "প্ৰায় সোৱা ন বজাত এজন অচিনাকি মানুহ কাৰ্ড চোৱাইপ নকৰাকৈ এজন কৰ্মচাৰীৰ পিছে পিছে দুই নম্বৰ মহলাৰ একচেছ গেটেৰে সোমাই আহিল। ছিকিউৰিটিয়ে চেক কৰি গম পালে যে তেওঁ এডমিন টিমক লগ কৰিবলৈ অহা এজন ভেণ্ডৰ, আৰু এতিয়া তেওঁক ভিজিটৰ বেজ দিয়া হৈছে।",
+          "translit": "Pray xuwa no bojat ejon osinaki manuh card swipe nokorakoi ejon kormosarir pise pise dui nombor mohalar access gate'ere xumai ahil. Security'ye check kori gom pale je teo admin team'ok log koriboloi oha ejon vendor, aru etiya teok visitor badge diya hoise."
+        },
+        "or": {
+          "text": "ପ୍ରାୟ ସୱା ନଅଟାରେ ଜଣେ ଅଜଣା ଲୋକ କାର୍ଡ ସ୍ୱାଇପ୍ ନକରି ଜଣେ କର୍ମଚାରୀଙ୍କ ପଛେ ପଛେ ସେକେଣ୍ଡ ଫ୍ଲୋର ଆକସେସ୍ ଗେଟ୍ ଦେଇ ଭିତରକୁ ଆସିଗଲେ। ସିକ୍ୟୁରିଟି ଚେକ୍ କରି ଦେଖିଲା ଯେ ସେ ଆଡମିନ୍ ଟିମକୁ ଦେଖା କରିବାକୁ ଆସିଥିବା ଭେଣ୍ଡର, ଆଉ ଏବେ ତାଙ୍କୁ ଭିଜିଟର୍ ବ୍ୟାଜ୍ ଦିଆଗଲାଣି।",
+          "translit": "Praya sawa naata re jane ajana loka card swipe nakari jane karmachari'nka pachhe pachhe second floor access gate dei bhitaraku asigale. Security check kari dekhila je se admin team'ku dekha karibaku asithiba vendor, au ebe tanku visitor badge diagalaani."
+        },
+        "te": {
+          "text": "సుమారు తొమ్మిదింపావుకి ఎవరో ఒకరు card swipe చేయకుండా ఒక employee వెనకాలే second floor access gate నుంచి లోపలికి వచ్చారు. Security check చేస్తే అతను admin team ని కలవడానికి వచ్చిన vendor అని తెలిసింది, ఇప్పుడు అతనికి visitor badge ఇచ్చారు.",
+          "translit": "Sumaru tommidimpaavuki evaro okaru card swipe cheyakunda oka employee venakaale second floor access gate nunchi lopaliki vachaaru. Security check cheste atanu admin team ni kalavadaniki vachina vendor ani telisindi, ippudu ataniki visitor badge ichaaru."
+        },
+        "ta": {
+          "text": "சுமார் ஒன்பதே கால் மணிக்கு, தெரியாத ஆள் ஒருத்தர் கார்டு ஸ்வைப் பண்ணாம ஒரு கொலீக் பின்னாலேயே செகண்ட் ஃப்ளோர் கேட் வழியா உள்ள வந்தார். செக்யூரிட்டி செக் பண்ணதுல அவர் அட்மின் டீமை பார்க்க வந்த வெண்டர்னு தெரிஞ்சது, இப்போ விசிட்டர் பேட்ஜ் கொடுத்தாச்சு.",
+          "translit": "Sumaar onbadhe kaal manikku, theriyaadha aal orutthar card swipe pannaama oru colleague pinnaaleye second floor gate vazhiyaa ulla vandhaar. Security check pannadhula avar admin team-ai paarkka vandha vendornu therinjadhu, ippo visitor badge kodutthaachu."
+        }
+      }
+    },
+    {
+      "id": "OFF-023",
+      "source": "added",
+      "title": "Laptop stolen overnight",
+      "category": "Security",
+      "tests": "Theft with a data-exposure angle and a time window rather than a time point.",
+      "tags": [
+        "time_window",
+        "data_risk"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Security",
+        "incident_type_acceptable": [
+          "Security"
+        ],
+        "severity_score": 2,
+        "severity_label": "Moderate",
+        "severity_acceptable": [
+          2,
+          3
+        ],
+        "app_severity": "Medium",
+        "urgency": "U1",
+        "urgency_acceptable": [
+          "U1",
+          "U2"
+        ],
+        "status": "Ongoing",
+        "emergency": false
+      },
+      "expected_extraction": {
+        "location": "bay C-7, fourth floor",
+        "datetime": "overnight, between about 7 PM yesterday and this morning",
+        "persons_involved": null,
+        "actions_taken": "security and IT informed",
+        "key_facts": [
+          "office laptop stolen",
+          "left at 7 PM yesterday",
+          "missing this morning",
+          "contains client data"
+        ]
+      },
+      "traps": [],
+      "narrations": {
+        "en": {
+          "text": "My office laptop was stolen from my desk overnight. I left it at bay C-7 on the fourth floor at around seven yesterday evening, and this morning it's gone. It has client data on it. I've informed security and IT."
+        },
+        "hi": {
+          "text": "मेरा office laptop रात में मेरी desk से चोरी हो गया। मैंने उसे कल शाम करीब सात बजे fourth floor पर bay C-7 में छोड़ा था, और आज सुबह वो वहाँ नहीं है। उसमें client data है। मैंने security और IT को बता दिया है।",
+          "translit": "Mera office laptop raat mein meri desk se chori ho gaya. Maine use kal shaam kareeb saat baje fourth floor par bay C-7 mein chhoda tha, aur aaj subah wo wahan nahi hai. Usmein client data hai. Maine security aur IT ko bata diya hai."
+        },
+        "as": {
+          "text": "মোৰ অফিচৰ লেপটপটো ৰাতি মোৰ ডেস্কৰ পৰা চুৰি হ'ল। কালি সন্ধিয়া প্ৰায় সাত বজাত চাৰি নম্বৰ মহলাৰ বে চি-৭ত থৈ গৈছিলোঁ, আজি পুৱা তাত নাই। ইয়াত ক্লায়েণ্ট ডাটা আছে। মই ছিকিউৰিটি আৰু আইটিক জনাই দিছোঁ।",
+          "translit": "Mor office'or laptop'to rati mor desk'or pora suri hol. Kali xondhiya pray xat bojat sari nombor mohalar bay C-7-ot thoi goisilu, aji puwa tat nai. Iyat client data ase. Moi security aru IT'k zonai disu."
+        },
+        "or": {
+          "text": "ମୋ ଅଫିସ୍ ଲାପଟପ୍ ରାତିରେ ମୋ ଡେସ୍କରୁ ଚୋରି ହୋଇଗଲା। କାଲି ସନ୍ଧ୍ୟା ପ୍ରାୟ ସାତଟାରେ ଫୋର୍ଥ ଫ୍ଲୋର ବେ ସି-୭ରେ ରଖିଥିଲି, ଆଜି ସକାଳେ ସେଠି ନାହିଁ। ସେଥିରେ କ୍ଲାଏଣ୍ଟ ଡାଟା ଅଛି। ମୁଁ ସିକ୍ୟୁରିଟି ଆଉ ଆଇଟିକୁ ଜଣାଇ ଦେଇଛି।",
+          "translit": "Mo office laptop ratire mo desk ru chori hoigala. Kali sandhya praya satatare fourth floor bay C-7-re rakhithili, aaji sakale sethi nahi. Sethire client data achi. Mun security au IT'ku janai deichi."
+        },
+        "te": {
+          "text": "నా office laptop రాత్రి నా desk దగ్గర నుంచి దొంగతనం అయింది. నిన్న సాయంత్రం సుమారు ఏడు గంటలకి fourth floor లో bay C-7 దగ్గర దాన్ని వదిలి వెళ్ళాను, ఈరోజు ఉదయం అది అక్కడ లేదు. దాంట్లో client data ఉంది. Security కి, IT కి చెప్పాను.",
+          "translit": "Naa office laptop raatri naa desk daggara nunchi dongatanam ayindi. Ninna saayantram sumaru edu gantalaki fourth floor lo bay C-7 daggara daanni vadili vellaanu, eeroju udayam adi akkada ledu. Daantlo client data undi. Security ki, IT ki cheppanu."
+        },
+        "ta": {
+          "text": "என் ஆபீஸ் லேப்டாப் ராத்திரி என் டெஸ்க்ல இருந்து திருடு போயிடுச்சு. நேத்து சாயங்காலம் ஏழு மணிக்கு ஃபோர்த் ஃப்ளோர் பே சி-7-ல வெச்சுட்டு போனேன், இன்னைக்கு காலையில காணோம். அதுல கிளைன்ட் டேட்டா இருக்கு. செக்யூரிட்டிக்கும் ஐடிக்கும் சொல்லிட்டேன்.",
+          "translit": "En office laptop raatthiri en desk-la irundhu thirudu poyiduchu. Nethu saayangalam ezhu manikku fourth floor bay C-7-la vaitthuttu ponen, innaikku kaalaiyila kaanom. Adhula client data irukku. Security-kkum IT-kkum sollitten."
+        }
+      }
+    },
+    {
+      "id": "OFF-024",
+      "source": "added",
+      "title": "Swollen laptop battery",
+      "category": "Electrical",
+      "tests": "Latent fire hazard that the reporter has partly contained. Moderate severity, urgent.",
+      "tags": [
+        "contained",
+        "latent_hazard"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Electrical Hazard",
+        "incident_type_acceptable": [
+          "Electrical Hazard",
+          "Equipment Failure",
+          "Fire"
+        ],
+        "severity_score": 2,
+        "severity_label": "Moderate",
+        "severity_acceptable": [
+          2,
+          3
+        ],
+        "app_severity": "Medium",
+        "urgency": "U2",
+        "urgency_acceptable": [
+          "U1",
+          "U2"
+        ],
+        "status": "Contained",
+        "emergency": null
+      },
+      "expected_extraction": {
+        "location": "desk D-14, fifth floor",
+        "datetime": "around 10:30",
+        "persons_involved": null,
+        "actions_taken": "laptop shut down; charger unplugged; placed on metal table away from papers",
+        "key_facts": [
+          "battery swollen",
+          "bottom panel bulging",
+          "hot to touch",
+          "shut down and unplugged"
+        ]
+      },
+      "traps": [
+        "None of the Electrical Hazard keywords in IncidentRules.kt appear in the English text, so rule D's grounding check rewrites 'Electrical Hazard' to 'Other'."
+      ],
+      "narrations": {
+        "en": {
+          "text": "My laptop battery has swollen up; the bottom panel is bulging and it feels hot. I noticed it at around ten thirty, shut it down, unplugged the charger and kept it on the metal table away from papers. It's at my desk, D-14 on the fifth floor."
+        },
+        "hi": {
+          "text": "मेरे laptop की battery फूल गई है; नीचे का panel बाहर आ गया है और laptop गर्म लग रहा है। करीब साढ़े दस बजे देखा, तो shut down किया, charger निकाला और कागज़ों से दूर लोहे की table पर रख दिया। ये fifth floor पर मेरी desk D-14 पर है।",
+          "translit": "Mere laptop ki battery phool gayi hai; neeche ka panel bahar aa gaya hai aur laptop garam lag raha hai. Kareeb saadhe das baje dekha, to shut down kiya, charger nikaala aur kaagzon se door lohe ki table par rakh diya. Ye fifth floor par meri desk D-14 par hai."
+        },
+        "as": {
+          "text": "মোৰ লেপটপৰ বেটাৰী ফুলি উঠিছে; তলৰ পেনেলটো ফুলি ওলাই আহিছে আৰু লেপটপটো গৰম লাগিছে। সাৰে দহ বজাত দেখি শ্বাট ডাউন কৰিলোঁ, চাৰ্জাৰ খুলিলোঁ আৰু কাগজৰ পৰা আঁতৰত লোৰ টেবুলত থৈ দিলোঁ। এইটো পাঁচ নম্বৰ মহলাত মোৰ ডেস্ক ডি-১৪ত আছে।",
+          "translit": "Mor laptop'or battery phuli uthise; tolor panel'to phuli olai ahise aru laptop'to gorom lagise. Xare doh bojat dekhi shut down korilu, charger khulilu aru kagozor pora atorot lor table'ot thoi dilu. Eito pans nombor mohalat mor desk D-14-ot ase."
+        },
+        "or": {
+          "text": "ମୋ ଲାପଟପ୍ ବ୍ୟାଟେରୀ ଫୁଲିଯାଇଛି; ତଳ ପ୍ୟାନେଲ୍ ବାହାରି ପଡ଼ିଛି ଆଉ ଲାପଟପ୍ ଗରମ ଲାଗୁଛି। ସାଢ଼େ ଦଶଟାରେ ଦେଖି ସଟ୍ ଡାଉନ୍ କଲି, ଚାର୍ଜର କାଢ଼ି କାଗଜଠୁ ଦୂରରେ ଲୁହା ଟେବୁଲ ଉପରେ ରଖିଦେଲି। ଏହା ଫିଫ୍ଥ ଫ୍ଲୋରରେ ମୋ ଡେସ୍କ ଡି-୧୪ରେ ଅଛି।",
+          "translit": "Mo laptop battery phulijaichi; tala panel bahari padichi au laptop garama laguchi. Sadhe dasatare dekhi shut down kali, charger kadhi kagajathu durare luha table upare rakhideli. Eha fifth floor're mo desk D-14-re achi."
+        },
+        "te": {
+          "text": "నా laptop battery ఉబ్బిపోయింది; కింద panel పైకి వచ్చింది, laptop వేడిగా ఉంది. పదిన్నరకి చూసి shut down చేశాను, charger తీసేసి కాగితాలకి దూరంగా metal table మీద పెట్టాను. ఇది fifth floor లో నా desk D-14 దగ్గర ఉంది.",
+          "translit": "Naa laptop battery ubbipoyindi; kinda panel paiki vachindi, laptop vediga undi. Padinnaraki choosi shut down chesanu, charger teesesi kaagitaalaki dooranga metal table meeda pettanu. Idi fifth floor lo naa desk D-14 daggara undi."
+        },
+        "ta": {
+          "text": "என் லேப்டாப் பேட்டரி உப்பிடுச்சு; கீழ் பேனல் வெளிய வந்துடுச்சு, லேப்டாப்பும் ரொம்ப சூடா இருக்கு. பத்தரை மணிக்கு பார்த்துட்டு ஷட் டவுன் பண்ணேன், சார்ஜரை கழட்டி பேப்பர்களுக்கு எட்ட இரும்பு மேஜை மேல வெச்சிருக்கேன். இது ஃபிப்த் ஃப்ளோர் என் டெஸ்க் டி-14-ல இருக்கு.",
+          "translit": "En laptop battery uppiduchu; keezh panel veliya vandhuduchu, laptop-um romba soodaa irukku. Pattharai manikku paartthuttu shut down pannen, charger-ai kazhatti paper-galukku yetta irumbu mejai mela vaitthirukken. Idhu fifth floor en desk D-14-la irukku."
+        }
+      }
+    },
+    {
+      "id": "OFF-025",
+      "source": "added",
+      "title": "Water dispenser leak reaching a power strip",
+      "category": "Facilities",
+      "tests": "Minimal pair with OFF-001: a small leak becomes urgent because water reaches a live power strip and nobody has cut the power.",
+      "tags": [
+        "minimal_pair",
+        "unresolved_mitigation",
+        "escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Water Leak",
+        "incident_type_acceptable": [
+          "Water Leak",
+          "Electrical Hazard"
+        ],
+        "severity_score": 2,
+        "severity_label": "Moderate",
+        "severity_acceptable": [
+          2,
+          3
+        ],
+        "app_severity": "Medium",
+        "urgency": "U2",
+        "urgency_acceptable": [
+          "U2",
+          "U3"
+        ],
+        "status": "Ongoing",
+        "emergency": null
+      },
+      "expected_extraction": {
+        "location": "printer area, second floor (water dispenser)",
+        "datetime": "about twenty minutes ago",
+        "persons_involved": null,
+        "actions_taken": null,
+        "key_facts": [
+          "dispenser leaking",
+          "water reached printers' power strip",
+          "power still on"
+        ]
+      },
+      "traps": [
+        "'Nobody has switched off the power yet' is a missing action; actions_taken must stay null."
+      ],
+      "narrations": {
+        "en": {
+          "text": "The water dispenser near the printer area on the second floor is leaking, and the water has spread to the power strip on the floor that the printers are plugged into. It started maybe twenty minutes ago. Nobody has switched off the power yet."
+        },
+        "hi": {
+          "text": "Second floor पर printer के पास वाला water dispenser leak हो रहा है, और पानी नीचे power strip तक पहुँच गया है जहाँ printers plugged हैं। करीब बीस मिनट पहले शुरू हुआ। अभी तक किसी ने power बंद नहीं किया है।",
+          "translit": "Second floor par printer ke paas wala water dispenser leak ho raha hai, aur paani neeche power strip tak pahunch gaya hai jahan printers plugged hain. Kareeb bees minute pehle shuru hua. Abhi tak kisi ne power band nahi kiya hai."
+        },
+        "as": {
+          "text": "দুই নম্বৰ মহলাত প্ৰিণ্টাৰ ওচৰৰ ৱাটাৰ ডিচপেঞ্চাৰটো লিক হৈছে, আৰু পানী মজিয়াৰ পাৱাৰ ষ্ট্ৰিপলৈ গৈছে য'ত প্ৰিণ্টাৰ প্লাগ কৰা আছে। প্ৰায় বিশ মিনিট আগতে আৰম্ভ হৈছিল। এতিয়ালৈকে কোনেও পাৱাৰ অফ কৰা নাই।",
+          "translit": "Dui nombor mohalat printer osoror water dispenser'to leak hoise, aru paani moziyar power strip'oloi goise jot printer plug kora ase. Pray bix minute agote arombho hoisil. Etiyaloike kuneo power off kora nai."
+        },
+        "or": {
+          "text": "ସେକେଣ୍ଡ ଫ୍ଲୋରରେ ପ୍ରିଣ୍ଟର ପାଖ ୱାଟର୍ ଡିସପେନ୍ସର୍ ଲିକ୍ ହେଉଛି, ଆଉ ପାଣି ତଳ ପାୱାର୍ ଷ୍ଟ୍ରିପ୍ ଯାଏଁ ଚାଲିଗଲାଣି ଯେଉଁଥିରେ ପ୍ରିଣ୍ଟର ଲାଗିଛି। ପ୍ରାୟ କୋଡ଼ିଏ ମିନିଟ୍ ଆଗରୁ ଆରମ୍ଭ ହୋଇଥିଲା। ଏଯାଏଁ କେହି ପାୱାର୍ ବନ୍ଦ କରିନାହାଁନ୍ତି।",
+          "translit": "Second floor're printer pakha water dispenser leak heuchi, au pani tala power strip jaen chaligalani jeunthire printer lagichi. Praya kodie minute agaru arambha hoithila. Ejaen kehi power banda karinahaanti."
+        },
+        "te": {
+          "text": "Second floor లో printer area దగ్గర ఉన్న water dispenser leak అవుతోంది, ఆ నీళ్ళు printers plug చేసి ఉన్న floor మీది power strip దాకా వచ్చేశాయి. బహుశా ఇరవై నిమిషాల క్రితం మొదలైంది. ఇంకా ఎవరూ power off చేయలేదు.",
+          "translit": "Second floor lo printer area daggara unna water dispenser leak avutondi, aa neellu printers plug chesi unna floor meedi power strip daaka vachesaayi. Bahusaa iravai nimishala kritham modalaindi. Inka evaru power off cheyaledu."
+        },
+        "ta": {
+          "text": "செகண்ட் ஃப்ளோர் பிரிண்டர் பக்கத்துல இருக்கிற வாட்டர் டிஸ்பென்சர் லீக் ஆகுது, பிரிண்டர் மாட்டியிருக்கிற பவர் ஸ்ட்ரிப் வரைக்கும் தண்ணி போயிடுச்சு. ஒரு இருபது நிமிஷம் முன்னாடி ஆரம்பிச்சிருக்கும். இன்னும் யாரும் பவரை ஆஃப் பண்ணல.",
+          "translit": "Second floor printer pakkatthula irukkira water dispenser leak aagudhu, printer maattiyirukkira power strip varaikkum thanni poyiduchu. Oru irupadhu nimisham munnaadi aarambichirukkum. Innum yaarum power-ai off pannala."
+        }
+      }
+    },
+    {
+      "id": "OFF-026",
+      "source": "added",
+      "title": "Food poisoning after catered lunch",
+      "category": "Medical",
+      "tests": "Several people ill, one sent to hospital. Moderate severity, urgent.",
+      "tags": [
+        "multiple_people",
+        "escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Other",
+        "incident_type_acceptable": [
+          "Other",
+          "Injury"
+        ],
+        "severity_score": 2,
+        "severity_label": "Moderate",
+        "severity_acceptable": [
+          2,
+          3
+        ],
+        "app_severity": "Medium",
+        "urgency": "U2",
+        "urgency_acceptable": [
+          "U1",
+          "U2"
+        ],
+        "status": "Ongoing",
+        "emergency": null
+      },
+      "expected_extraction": {
+        "location": "sick room (where affected staff are resting)",
+        "datetime": "after lunch today; one taken to hospital about half an hour ago",
+        "persons_involved": "five people from the finance team",
+        "actions_taken": "one person taken to hospital; others resting in sick room; leftover food kept aside",
+        "key_facts": [
+          "5 people ill",
+          "stomach pain and vomiting",
+          "after catered lunch",
+          "1 taken to hospital",
+          "food sample kept"
+        ]
+      },
+      "traps": [],
+      "narrations": {
+        "en": {
+          "text": "After the catered lunch today, five people from the finance team have stomach pain and are vomiting. One of them was taken to the hospital by a colleague about half an hour ago, and the others are resting in the sick room. We've kept the leftover food aside."
+        },
+        "hi": {
+          "text": "आज catered lunch के बाद finance team के पाँच लोगों को पेट में दर्द है और उल्टियाँ हो रही हैं। उनमें से एक को करीब आधे घंटे पहले एक colleague hospital ले गए, बाकी sick room में आराम कर रहे हैं। हमने बचा हुआ खाना अलग रख दिया है।",
+          "translit": "Aaj catered lunch ke baad finance team ke paanch logon ko pet mein dard hai aur ultiyaan ho rahi hain. Unmein se ek ko kareeb aadhe ghante pehle ek colleague hospital le gaye, baaki sick room mein aaraam kar rahe hain. Humne bacha hua khaana alag rakh diya hai."
+        },
+        "as": {
+          "text": "আজি কেটাৰড লাঞ্চৰ পিছত ফাইনেঞ্চ টিমৰ পাঁচজনৰ পেটৰ বিষ আৰু বমি হৈছে। এজনক আধা ঘণ্টা আগতে এজন কলিগে হস্পিতাললৈ নিলে, বাকীসকলে চিক ৰুমত আৰাম কৰি আছে। আমি বাকি থকা খাবাৰখিনি বেলেগে থৈছোঁ।",
+          "translit": "Aji catered lunch'or pisot finance team'or pansjonor petor bikh aru bomi hoise. Ejonok adha ghonta agote ejon colleague'e hospital'oloi nile, bakixokole sick room'ot aaram kori ase. Ami baki thoka khabarkhini belege thoysu."
+        },
+        "or": {
+          "text": "ଆଜି କ୍ୟାଟର୍ଡ ଲଞ୍ଚ ପରେ ଫାଇନାନ୍ସ ଟିମର ପାଞ୍ଚ ଜଣଙ୍କର ପେଟ କାଟୁଛି ଆଉ ବାନ୍ତି ହେଉଛି। ଜଣଙ୍କୁ ଅଧଘଣ୍ଟା ଆଗରୁ ଜଣେ ସହକର୍ମୀ ହସ୍ପିଟାଲ ନେଇଗଲେଣି, ବାକି ସମସ୍ତେ ସିକ୍ ରୁମରେ ରେଷ୍ଟ ନେଉଛନ୍ତି। ବଳକା ଖାଦ୍ୟ ଅଲଗା ରଖି ଦିଆଯାଇଛି।",
+          "translit": "Aaji catered lunch pare finance team'ra pancha jananka peta katuchi au banti heuchi. Jananku adhaghanta agaru jane sahakarmi hospital neigaleni, baki samaste sick room're rest neuchhanti. Balaka khadya alaga rakhi diagalaani."
+        },
+        "te": {
+          "text": "ఈరోజు catered lunch తర్వాత finance team లో ఐదుగురికి కడుపు నొప్పి, వాంతులు అవుతున్నాయి. వాళ్ళలో ఒకరిని సుమారు అరగంట క్రితం ఒక colleague hospital కి తీసుకెళ్ళారు, మిగతావాళ్ళు sick room లో rest తీసుకుంటున్నారు. మిగిలిన food ని పక్కన పెట్టాం.",
+          "translit": "Eeroju catered lunch tarvata finance team lo aiduguriki kadupu noppi, vaanthulu avutunnaayi. Vallalo okarini sumaru aragantha kritham oka colleague hospital ki teesukellaru, migathavallu sick room lo rest teesukuntunnaru. Migilina food ni pakkana pettam."
+        },
+        "ta": {
+          "text": "இன்னைக்கு லஞ்சுக்கு அப்புறம் ஃபைனான்ஸ் டீம்ல அஞ்சு பேருக்கு வயித்து வலியும் வாந்தியும் வந்திருக்கு. ஒருத்தரை அரை மணி நேரத்துக்கு முன்னாடி ஒரு கொலீக் ஹாஸ்பிடலுக்கு கூட்டிட்டு போயிட்டார், மத்தவங்க சிக் ரூம்ல ரெஸ்ட் எடுக்குறாங்க. மிச்ச சாப்பாட்டை தனியா வெச்சிட்டோம்.",
+          "translit": "Innaikku lunch-ukku appuram finance team-la anju perukku vayitthu valiyum vaandhiyum vandhirukku. Oruttharai arai mani nerathukku munnaadi oru colleague hospital-ukku koottittu poyittaar, matthavanga sick room-la rest yedukkuraanga. Miccha saappaattai thaniyaa vaitthittom."
+        }
+      }
+    },
+    {
+      "id": "OFF-027",
+      "source": "added",
+      "title": "Sparking wall socket",
+      "category": "Electrical",
+      "tests": "Active electrical hazard with no mitigation and an unknown breaker location.",
+      "tags": [
+        "unresolved_mitigation",
+        "escalation"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Electrical Hazard",
+        "incident_type_acceptable": [
+          "Electrical Hazard"
+        ],
+        "severity_score": 3,
+        "severity_label": "High",
+        "severity_acceptable": [
+          2,
+          3
+        ],
+        "app_severity": "High",
+        "urgency": "U2",
+        "urgency_acceptable": [
+          "U2",
+          "U3"
+        ],
+        "status": "Ongoing",
+        "emergency": null
+      },
+      "expected_extraction": {
+        "location": "wall socket next to the reception desk",
+        "datetime": "about five minutes ago",
+        "persons_involved": null,
+        "actions_taken": null,
+        "key_facts": [
+          "socket sparked twice",
+          "burning smell",
+          "kettle still plugged in",
+          "MCB panel location unknown"
+        ]
+      },
+      "traps": [
+        "'nobody has touched it' is not a mitigation; actions_taken must stay null."
+      ],
+      "narrations": {
+        "en": {
+          "text": "The wall socket next to the reception desk sparked twice when the kettle was plugged in about five minutes ago, and now there's a burning smell. The kettle is still plugged in, nobody has touched it, and we don't know where the MCB panel for this floor is."
+        },
+        "hi": {
+          "text": "करीब पाँच मिनट पहले reception desk के पास वाले wall socket में kettle लगाते ही दो बार spark हुआ, और अब जलने की smell आ रही है। Kettle अभी भी plugged in है, किसी ने उसे छुआ नहीं है, और हमें नहीं पता कि इस floor का MCB panel कहाँ है।",
+          "translit": "Kareeb paanch minute pehle reception desk ke paas wale wall socket mein kettle lagaate hi do baar spark hua, aur ab jalne ki smell aa rahi hai. Kettle abhi bhi plugged in hai, kisi ne use chhua nahi hai, aur humein nahi pata ki is floor ka MCB panel kahan hai."
+        },
+        "as": {
+          "text": "প্ৰায় পাঁচ মিনিট আগতে ৰিচেপচন ডেস্কৰ কাষৰ ৱাল চকেটত কেটল প্লাগ কৰোঁতেই দুবাৰ স্পাৰ্ক হ'ল, আৰু পোৰা গোন্ধ আহিছে। কেটলটো এতিয়াও প্লাগতে আছে, কোনেও চুই চোৱা নাই, আৰু এই মহলাৰ এমচিবি পেনেল ক'ত আছে নাজানো।",
+          "translit": "Pray pans minute agote reception desk'or kaxor wall socket'ot kettle plug korutei dubar spark hol, aru pura gondho ahise. Kettle'to etiyao plug'ote ase, kuneo sui suwa nai, aru ei mohalar MCB panel kot ase nazanu."
+        },
+        "or": {
+          "text": "ପାଞ୍ଚ ମିନିଟ୍ ଆଗରୁ ରିସେପସନ୍ ପାଖ କାନ୍ଥ ସକେଟରେ କେଟଲ୍ ଲଗାଉ ଲଗାଉ ଦୁଇଥର ସ୍ପାର୍କ ହେଲା, ପୋଡ଼ା ଗନ୍ଧ ଆସୁଛି। କେଟଲ୍ ଏବେ ବି ଲାଗି ରହିଛି, କେହି ଛୁଇଁନାହାଁନ୍ତି, ଆଉ ଏ ଫ୍ଲୋରର ଏମସିବି ପ୍ୟାନେଲ କେଉଁଠି ଅଛି ଜଣାନାହିଁ।",
+          "translit": "Pancha minute agaru reception pakha kantha socket're kettle lagau lagau duithara spark hela, poda gandha asuchi. Kettle ebe bi lagi rahichi, kehi chhuinnahaanti, au e floor'ra MCB panel keunthi achi jananahi."
+        },
+        "te": {
+          "text": "సుమారు ఐదు నిమిషాల క్రితం reception desk పక్కన ఉన్న wall socket లో kettle plug చేయగానే రెండుసార్లు spark వచ్చింది, ఇప్పుడు కాలిన వాసన వస్తోంది. Kettle ఇంకా plug లోనే ఉంది, ఎవరూ దాన్ని ముట్టుకోలేదు, ఈ floor MCB panel ఎక్కడుందో మాకు తెలియదు.",
+          "translit": "Sumaru aidu nimishala kritham reception desk pakkana unna wall socket lo kettle plug cheyagaane rendusaarlu spark vachindi, ippudu kaalina vaasana vastondi. Kettle inka plug lone undi, evaru daanni muttukoledu, ee floor MCB panel ekkadundo maaku teliyadu."
+        },
+        "ta": {
+          "text": "அஞ்சு நிமிஷத்துக்கு முன்னாடி ரிசப்ஷன் பக்கத்துல இருக்கிற சாக்கெட்ல கெட்டில் போட்டதும் ரெண்டு வாட்டி ஸ்பார்க் ஆச்சு, கருகின வாசனை வருது. கெட்டில் இன்னும் பிளக்லதான் இருக்கு, யாரும் தொடல, இந்த ஃப்ளோர் எம்சிபி பேனல் எங்க இருக்குன்னு தெரியல.",
+          "translit": "Anju nimishathukku munnaadi reception pakkatthula irukkira socket-la kettle pottadhum rendu vaatti spark aachu, karugina vaasanai varudhu. Kettle innum plug-ladhaan irukku, yaarum thodala, indha floor MCB panel enga irukkunnu theriyala."
+        }
+      }
+    },
+    {
+      "id": "OFF-028",
+      "source": "added",
+      "title": "Person stuck in a lift",
+      "category": "Facilities",
+      "tests": "Entrapment with no injury yet. Must be treated as immediate even though the person says they are okay.",
+      "tags": [
+        "escalation",
+        "entrapment"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Equipment Failure",
+        "incident_type_acceptable": [
+          "Equipment Failure",
+          "Accident",
+          "Other"
+        ],
+        "severity_score": 3,
+        "severity_label": "High",
+        "severity_acceptable": [
+          2,
+          3
+        ],
+        "app_severity": "High",
+        "urgency": "U3",
+        "urgency_acceptable": [
+          "U2",
+          "U3"
+        ],
+        "status": "Ongoing",
+        "emergency": true
+      },
+      "expected_extraction": {
+        "location": "Tower B lift, between the 4th and 5th floors",
+        "datetime": "about five minutes ago",
+        "persons_involved": "one employee (inside the lift)",
+        "actions_taken": "lift maintenance company called",
+        "key_facts": [
+          "lift stuck between floors",
+          "one person inside",
+          "talking via intercom, scared but okay",
+          "maintenance company called"
+        ]
+      },
+      "traps": [
+        "The text says 'stuck', not 'trapped'; the EMERGENCY list in IncidentRules.kt only has 'trapped', so the app does not raise the emergency banner.",
+        "'they're okay' must not lower urgency."
+      ],
+      "narrations": {
+        "en": {
+          "text": "The lift in Tower B has been stuck between the fourth and fifth floors for about five minutes with one employee inside. They are talking to us through the intercom and say they're okay but scared. We've called the lift maintenance company."
+        },
+        "hi": {
+          "text": "Tower B की lift करीब पाँच मिनट से चौथे और पाँचवें floor के बीच में फँसी हुई है, अंदर एक employee है। वो intercom से हमसे बात कर रहे हैं और कह रहे हैं कि वो ठीक हैं लेकिन डरे हुए हैं। हमने lift maintenance company को call कर दिया है।",
+          "translit": "Tower B ki lift kareeb paanch minute se chauthe aur paanchve floor ke beech mein phansi hui hai, andar ek employee hai. Wo intercom se humse बात kar rahe hain aur keh rahe hain ki wo theek hain lekin dare hue hain. Humne lift maintenance company ko call kar diya hai."
+        },
+        "as": {
+          "text": "টাৱাৰ বি-ৰ লিফ্টটো প্ৰায় পাঁচ মিনিটৰ পৰা চাৰি আৰু পাঁচ নম্বৰ মহলাৰ মাজত আটকি আছে, ভিতৰত এজন মানুহ আছে। তেওঁ ইণ্টাৰকমেৰে কথা পাতিছে, ঠিকে আছে কিন্তু ভয় খাইছে বুলি কৈছে। আমি লিফ্ট মেইণ্টেনেন্স কোম্পানীক ফোন কৰিছোঁ।",
+          "translit": "Tower B'r lift'to pray pans minute'or pora sari aru pans nombor mohalar majot atoki ase, bhitorot ejon manuh ase. Teo intercom'ere kotha patise, thike ase kintu bhoy khaise buli koise. Ami lift maintenance company'k phone korisu."
+        },
+        "or": {
+          "text": "ଟାୱାର୍ ବି-ର ଲିଫ୍ଟ ପ୍ରାୟ ପାଞ୍ଚ ମିନିଟ୍ ହେଲା ଚାରି ଆଉ ପାଞ୍ଚ ନମ୍ବର ଫ୍ଲୋର ମଝିରେ ଅଟକି ଯାଇଛି, ଭିତରେ ଜଣେ ଲୋକ ଅଛନ୍ତି। ସେ ଇଣ୍ଟରକମରେ କଥା ହେଉଛନ୍ତି, ଠିକ୍ ଅଛନ୍ତି କିନ୍ତୁ ଡରିଯାଇଛନ୍ତି। ଆମେ ଲିଫ୍ଟ କମ୍ପାନୀକୁ ଫୋନ୍ କରିଛୁ।",
+          "translit": "Tower B'ra lift praya pancha minute hela chari au pancha nambar floor majhire ataki jaichi, bhitare jane loka achhanti. Se intercom're katha heuchhanti, thik achhanti kintu darijaichhanti. Ame lift company'ku phone karichhu."
+        },
+        "te": {
+          "text": "Tower B lift సుమారు ఐదు నిమిషాలుగా నాలుగో, ఐదో floor మధ్యలో ఇరుక్కుపోయింది, లోపల ఒక employee ఉన్నారు. వాళ్ళు intercom ద్వారా మాతో మాట్లాడుతున్నారు, బాగానే ఉన్నాం కానీ భయంగా ఉంది అంటున్నారు. Lift maintenance company కి call చేశాం.",
+          "translit": "Tower B lift sumaru aidu nimishaalugaa naalugo, aido floor madhyalo irukkupoyindi, lopala oka employee unnaru. Vallu intercom dwaaraa maatho maatladutunnaru, baagaane unnam kani bhayangaa undi antunnaru. Lift maintenance company ki call chesam."
+        },
+        "ta": {
+          "text": "டவர் பி-ல லிஃப்ட் ஒரு அஞ்சு நிமிஷமா நாலாவது அஞ்சாவது மாடி நடுவுல மாட்டியிருக்கு, உள்ள ஒருத்தர் இருக்கார். அவர் இன்டர்காம்ல பேசுறார், நல்லாத்தான் இருக்கார் ஆனா பயமா இருக்குன்னு சொல்றார். லிஃப்ட் கம்பெனிக்கு போன் பண்ணிட்டோம்.",
+          "translit": "Tower B-la lift oru anju nimishamaa naalaavadhu anjaavadhu maadi naduvula maattiyirukku, ulla orutthar irukkaar. Avar intercom-la pesuraar, nallaadhaan irukkaar aana bayamaa irukkunnu solraar. Lift company-kku phone pannittom."
+        }
+      }
+    },
+    {
+      "id": "OFF-029",
+      "source": "added",
+      "title": "Gas smell in pantry with dizziness",
+      "category": "Fire & Gas",
+      "tests": "Active gas leak with symptoms. Correct first steps taken but the supplier has not been called.",
+      "tags": [
+        "escalation",
+        "unresolved_mitigation",
+        "multiple_people"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Gas Leak",
+        "incident_type_acceptable": [
+          "Gas Leak"
+        ],
+        "severity_score": 3,
+        "severity_label": "High",
+        "severity_acceptable": [
+          3,
+          4
+        ],
+        "app_severity": "High",
+        "urgency": "U3",
+        "urgency_acceptable": [
+          "U3"
+        ],
+        "status": "Ongoing",
+        "emergency": true
+      },
+      "expected_extraction": {
+        "location": "sixth-floor pantry",
+        "datetime": "for about ten minutes",
+        "persons_involved": "two people feeling dizzy",
+        "actions_taken": "windows opened; everyone moved out; no switches operated",
+        "key_facts": [
+          "strong gas smell from cylinder",
+          "2 people dizzy",
+          "area evacuated",
+          "gas agency not yet called"
+        ]
+      },
+      "traps": [
+        "No word from the EMERGENCY list in IncidentRules.kt appears, so the app will show High without the emergency banner."
+      ],
+      "narrations": {
+        "en": {
+          "text": "There's a strong smell of gas from the cylinder in the sixth-floor pantry for about ten minutes, and two people there are feeling dizzy. We've opened the windows and moved everyone out, and nobody has switched anything on or off. The gas agency hasn't been called yet."
+        },
+        "hi": {
+          "text": "Sixth floor pantry में cylinder से करीब दस मिनट से gas की तेज़ smell आ रही है, और वहाँ दो लोगों को चक्कर आ रहे हैं। हमने खिड़कियाँ खोल दी हैं और सबको बाहर निकाल दिया है, किसी ने कोई switch on या off नहीं किया है। Gas agency को अभी तक call नहीं किया गया है।",
+          "translit": "Sixth floor pantry mein cylinder se kareeb das minute se gas ki tez smell aa rahi hai, aur wahan do logon ko chakkar aa rahe hain. Humne khidkiyaan khol di hain aur sabko bahar nikaal diya hai, kisi ne koi switch on ya off nahi kiya hai. Gas agency ko abhi tak call nahi kiya gaya hai."
+        },
+        "as": {
+          "text": "ছয় নম্বৰ মহলাৰ পেণ্ট্ৰিৰ চিলিণ্ডাৰৰ পৰা দহ মিনিটমান ধৰি গেছৰ গোন্ধ বৰকৈ আহিছে, তাত দুজন মানুহৰ মূৰ ঘূৰাইছে। আমি খিৰিকী খুলি দিলোঁ আৰু সকলোকে বাহিৰলৈ উলিয়াই আনিলোঁ, কোনেও কোনো চুইচ অন বা অফ কৰা নাই। গেছ এজেঞ্চীক এতিয়াও ফোন কৰা হোৱা নাই।",
+          "translit": "Soi nombor mohalar pantry'r cylinder'or pora doh minute'man dhori gas'or gondho borkoi ahise, tat dujon manuhor mur ghuraise. Ami khiriki khuli dilu aru xokoluke bahirolai uliyai anilu, kuneo kunu switch on ba off kora nai. Gas agency'k etiyao phone kora howa nai."
+        },
+        "or": {
+          "text": "ସିକ୍ସଥ ଫ୍ଲୋର ପ୍ୟାଣ୍ଟ୍ରି ସିଲିଣ୍ଡରରୁ ଦଶ ମିନିଟ୍ ହେଲା ବହୁତ ଗ୍ୟାସ୍ ଗନ୍ଧ ଆସୁଛି, ସେଠି ଦୁଇଜଣଙ୍କ ମୁଣ୍ଡ ବୁଲାଉଛି। ଆମେ ଝରକା ଖୋଲି ସମସ୍ତଙ୍କୁ ବାହାରକୁ ଆଣିଛୁ, କେହି ସୁଇଚ୍ ଅନ୍ କି ଅଫ୍ କରିନାହାଁନ୍ତି। ଗ୍ୟାସ୍ ଏଜେନ୍ସିକୁ ଏଯାଏଁ ଫୋନ୍ କରାହୋଇନାହିଁ।",
+          "translit": "Sixth floor pantry cylinder ru dasa minute hela bahuta gas gandha asuchi, sethi duijananka munda bulauchi. Ame jharaka kholi samastanku baharaku anichhu, kehi switch on ki off karinahaanti. Gas agency'ku ejaen phone karahoinaahi."
+        },
+        "te": {
+          "text": "Sixth floor pantry లో cylinder నుంచి సుమారు పది నిమిషాలుగా gas వాసన బలంగా వస్తోంది, అక్కడ ఇద్దరికి కళ్ళు తిరుగుతున్నాయి. Windows తెరిచాం, అందరినీ బయటకు పంపించాం, ఎవరూ ఏ switch ని on కానీ off కానీ చేయలేదు. Gas agency కి ఇంకా call చేయలేదు.",
+          "translit": "Sixth floor pantry lo cylinder nunchi sumaru padi nimishaalugaa gas vaasana balangaa vastondi, akkada iddariki kallu tirugutunnaayi. Windows terichaam, andarini bayataku pampinchaam, evaru e switch ni on kaani off kaani cheyaledu. Gas agency ki inka call cheyaledu."
+        },
+        "ta": {
+          "text": "சிக்ஸ்த் ஃப்ளோர் பேன்ட்ரியில சிலிண்டர்ல இருந்து ஒரு பத்து நிமிஷமா கேஸ் வாசனை ரொம்ப வருது, அங்க ரெண்டு பேருக்கு தலை சுத்துது. ஜன்னலை திறந்து எல்லாரையும் வெளிய அனுப்பிட்டோம், யாரும் எந்த சுவிட்சையும் ஆன் இல்ல ஆஃப் பண்ணல. கேஸ் ஏஜென்சிக்கு இன்னும் போன் பண்ணல.",
+          "translit": "Sixth floor pantry-ila cylinder-la irundhu oru patthu nimishamaa gas vaasanai romba varudhu, anga rendu perukku thala sutthudhu. Jannalai thirandhu ellaaraiyum veliya anuppittom, yaarum endha switch-aiyum on illa off pannala. Gas agency-kku innum phone pannala."
+        }
+      }
+    },
+    {
+      "id": "OFF-030",
+      "source": "added",
+      "title": "Collapse, not breathing, CPR in progress",
+      "category": "Medical",
+      "tests": "Life-threatening emergency. Must be Critical / Immediate. The request for help is not an action already taken.",
+      "tags": [
+        "critical",
+        "request_vs_action"
+      ],
+      "gold": {
+        "is_incident": true,
+        "incident_type": "Injury",
+        "incident_type_acceptable": [
+          "Injury",
+          "Other"
+        ],
+        "severity_score": 4,
+        "severity_label": "Critical",
+        "severity_acceptable": [
+          3,
+          4
+        ],
+        "app_severity": "Critical",
+        "urgency": "U3",
+        "urgency_acceptable": [
+          "U3"
+        ],
+        "status": "Ongoing",
+        "emergency": true
+      },
+      "expected_extraction": {
+        "location": "ground-floor cafeteria",
+        "datetime": "just now",
+        "persons_involved": "one person (collapsed, not breathing)",
+        "actions_taken": "CPR started; ambulance called",
+        "key_facts": [
+          "collapsed",
+          "not breathing",
+          "CPR in progress",
+          "ambulance called",
+          "first-aid team and AED requested"
+        ]
+      },
+      "traps": [
+        "'Please send the first-aid team and the AED' is a request, not an action taken."
+      ],
+      "narrations": {
+        "en": {
+          "text": "Someone has just collapsed in the ground-floor cafeteria and isn't breathing. A colleague has started CPR and we've called an ambulance. Please send the first-aid team and the AED right now!"
+        },
+        "hi": {
+          "text": "Ground floor cafeteria में अभी-अभी कोई गिर पड़ा है और साँस नहीं ले रहा। एक colleague ने CPR शुरू कर दिया है और हमने ambulance बुला ली है। Please first-aid team और AED तुरंत भेजिए!",
+          "translit": "Ground floor cafeteria mein abhi-abhi koi gir pada hai aur saans nahi le raha. Ek colleague ne CPR shuru kar diya hai aur humne ambulance bula li hai. Please first-aid team aur AED turant bhejiye!"
+        },
+        "as": {
+          "text": "গ্ৰাউণ্ড ফ্লোৰৰ কেফেটেৰিয়াত এইমাত্ৰ এজন ঢলি পৰিছে আৰু উশাহ লোৱা নাই। এজন কলিগে চিপিআৰ আৰম্ভ কৰিছে আৰু আমি এম্বুলেন্স মাতিছোঁ। প্লিজ ফাৰ্ষ্ট-এইড টিম আৰু এইডি এতিয়াই পঠিয়াওক!",
+          "translit": "Ground floor'or cafeteria't eimatro ejon dholi porise aru uxah luwa nai. Ejon colleague'e CPR arombho korise aru ami ambulance matisu. Please first-aid team aru AED etiyai pothiyauk!"
+        },
+        "or": {
+          "text": "ଗ୍ରାଉଣ୍ଡ ଫ୍ଲୋର କ୍ୟାଫେଟେରିଆରେ ଏଇମାତ୍ର ଜଣେ ତଳେ ପଡ଼ିଗଲେ ଆଉ ନିଶ୍ୱାସ ନେଉନାହାଁନ୍ତି। ଜଣେ ସହକର୍ମୀ ସିପିଆର୍ ଆରମ୍ଭ କରିଛନ୍ତି ଆଉ ଆମେ ଆମ୍ବୁଲାନ୍ସ ଡାକିଛୁ। ପ୍ଲିଜ୍ ଫାର୍ଷ୍ଟ-ଏଡ୍ ଟିମ୍ ଆଉ ଏଇଡି ଏବେ ହିଁ ପଠାନ୍ତୁ!",
+          "translit": "Ground floor cafeteria're eimatra jane tale padigale au nishwasa neunahaanti. Jane sahakarmi CPR arambha karichhanti au ame ambulance dakichhu. Please first-aid team au AED ebe hin pathantu!"
+        },
+        "te": {
+          "text": "Ground floor cafeteria లో ఇప్పుడే ఒకరు కుప్పకూలిపోయారు, ఊపిరి తీసుకోవట్లేదు. ఒక colleague CPR మొదలుపెట్టారు, ambulance కి call చేశాం. దయచేసి first-aid team ని, AED ని వెంటనే పంపండి!",
+          "translit": "Ground floor cafeteria lo ippude okaru kuppakoolipoyaru, oopiri teesukovatledu. Oka colleague CPR modalupettaaru, ambulance ki call chesam. Dayachesi first-aid team ni, AED ni ventane pampandi!"
+        },
+        "ta": {
+          "text": "கிரவுண்ட் ஃப்ளோர் கஃபேடீரியாவில இப்பதான் ஒருத்தர் மயங்கி விழுந்துட்டார், மூச்சு விடல. ஒரு கொலீக் சிபிஆர் ஆரம்பிச்சிருக்கார், ஆம்புலன்ஸை கூப்பிட்டுட்டோம். ப்ளீஸ் ஃபர்ஸ்ட்-எய்ட் டீமையும் ஏஇடி-யையும் உடனே அனுப்புங்க!",
+          "translit": "Ground floor cafeteria-vila ippadhaan orutthar mayangi vizhundhuttaar, moochu vidala. Oru colleague CPR aarambichirukkaar, ambulance-ai kooppittuttom. Please first-aid team-aiyum AED-yaiyum udane anuppunga!"
+        }
+      }
+    }
+  ]
+}
