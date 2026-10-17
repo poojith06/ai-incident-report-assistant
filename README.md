@@ -1,6 +1,6 @@
 # AI Incident Report Assistant
 
-**Winner, Megathon X (IIIT Hyderabad), Qualcomm track**
+**Overall Winner and Qualcomm Track Winner, Megathon X (IIIT Hyderabad)**
 
 An Android app that turns a spoken (or photographed) incident into a structured, reviewable incident report,
 running entirely on a Qualcomm QIDK (Snapdragon 8 Elite, Hexagon NPU). There is no cloud API and no
